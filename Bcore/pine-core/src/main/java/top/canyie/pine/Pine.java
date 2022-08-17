@@ -71,6 +71,7 @@ public final class Pine {
      */
     public static void ensureInitialized() {
         if (initialized) return;
+        Log.d("Pine", "ensureInitialized");
         synchronized (Pine.class) {
             if (initialized) return;
             initialize();

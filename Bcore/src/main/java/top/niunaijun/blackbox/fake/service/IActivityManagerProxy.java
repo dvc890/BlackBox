@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.pm.ProviderInfo;
 import android.content.pm.ResolveInfo;
+import android.net.Proxy;
 import android.os.IBinder;
 import android.os.IInterface;
 import android.util.Log;
@@ -130,7 +131,7 @@ public class IActivityManagerProxy extends ClassInvocationStub {
                     args[1] = BlackBoxCore.getHostPkg();
                 }
 
-                if (auth.equals("settings") || auth.equals("media") || auth.equals("telephony")) {
+                if (auth.equals("settings") || auth.equals("media") || auth.equals("telephony") || auth.equals("com.android.externalstorage.documents"))  {
                     content = method.invoke(who, args);
                     ContentProviderDelegate.update(content, (String) auth);
                     return content;
@@ -138,7 +139,7 @@ public class IActivityManagerProxy extends ClassInvocationStub {
                     Log.d(TAG, "hook getContentProvider: " + auth);
                     ProviderInfo providerInfo = BlackBoxCore.getBPackageManager().resolveContentProvider((String) auth, GET_META_DATA, BActivityThread.getUserId());
                     if (providerInfo == null) {
-//                        Log.d(TAG, "hook system: " + auth);
+                        Log.d(TAG, "hook system: " + auth);
 //                        Object invoke = method.invoke(who, args);
 //                        if (invoke != null) {
 //                            Object provider = Reflector.with(invoke)

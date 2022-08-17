@@ -1271,6 +1271,8 @@ public final class XposedHelpers {
 			throw e;
 		} catch (InvocationTargetException e) {
 			throw new InvocationTargetError(e.getCause());
+		} catch (Exception e) {
+			throw e;
 		}
 	}
 

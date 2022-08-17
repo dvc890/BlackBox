@@ -3,12 +3,15 @@ package top.niunaijun.blackboxa.view.main
 import android.app.Application
 import android.content.Context
 import android.util.Log
+import de.robv.android.xposed.XC_MethodHook
+import de.robv.android.xposed.XposedHelpers
 import top.niunaijun.blackbox.BlackBoxCore
 import top.niunaijun.blackbox.app.BActivityThread
 import top.niunaijun.blackbox.app.configuration.AppLifecycleCallback
 import top.niunaijun.blackbox.app.configuration.ClientConfiguration
 import top.niunaijun.blackboxa.app.App
 import top.niunaijun.blackboxa.biz.cache.AppSharedPreferenceDelegate
+import top.niunaijun.blackboxa.util.HookHelper
 import java.io.File
 
 /**
@@ -74,6 +77,53 @@ class BlackBoxLoader {
                     TAG,
                     "beforeCreateApplication: pkg $packageName, processName $processName,userID:${BActivityThread.getUserId()}"
                 )
+                HookHelper.dumpDex(packageName)
+                if(packageName.equals("xyz.aethersx2.android")) {
+                    HookHelper.hookClassAllMethods(context!!.classLoader,
+                        object : XC_MethodHook() {
+                            override fun afterHookedMethod(param: MethodHookParam?) {
+                                super.afterHookedMethod(param)
+                                var argsstr = "("
+                                for (item in param!!.args) {
+                                    argsstr += item.toString()
+                                    argsstr += ","
+                                }
+                                if(param.args.size > 0) {
+                                    argsstr = argsstr.subSequence(0,argsstr.length-1) as String
+                                }
+                                argsstr += ")"
+                                var result = ""
+                                if (param.result is String) {
+                                    result = param.result as String
+                                } else if (param.result is Array<*>) {
+                                    val r = param.result as Array<*>
+                                    result += "["
+                                    for (t in r) {
+                                        if (t is String) {
+                                            result += t
+                                        } else {
+                                            result += t.toString()
+                                        }
+                                        result += "|"
+                                    }
+                                    if(r.size > 0) {
+                                        result = result.subSequence(0,result.length-1) as String
+                                    }
+                                    result += "]"
+                                } else if(param.result == null) {
+                                    result = "void"
+                                } else {
+                                    result = param.result.toString()
+                                }
+                                Log.d(
+                                    "Pipedvc",
+                                    "callafterHooked:" +
+                                    "NativeLibrary" + "->" + param.method.name + "" + argsstr + "=" + result
+                                )
+
+                            }
+                        }, "xyz.aethersx2.android.NativeLibrary")
+                }
             }
 
 

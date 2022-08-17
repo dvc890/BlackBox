@@ -7,10 +7,13 @@ buildscript {
         mavenCentral()
         google()
         maven { url 'https://jitpack.io' }
+        gradlePluginPortal()
 //        maven { url 'https://dl.bintray.com/umsdk/release' }
+        // 保留本地仓库
+        mavenLocal()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:7.2.0'
+        classpath 'com.android.tools.build:gradle:4.1.0'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
     }
 }
@@ -22,6 +25,8 @@ allprojects {
         google()
         maven { url 'https://jitpack.io' }
 //        maven { url 'https://dl.bintray.com/umsdk/release' }
+        // 保留本地仓库
+        mavenLocal()
     }
 }
 
@@ -34,10 +39,10 @@ ext {
     minSdkVersion = 21
     compileSdkVersion = 30
     buildToolsVersion = "30.0.3"
-    targetSdkVersion = 30
+    targetSdkVersion = 28
     abiFilters = "armeabi-v7a,arm64-v8a"
 
-    ndkVersion = "23.1.7779620"
+    ndkVersion = "22.1.7171670"
     cmakeVersion = "3.18.1"
 
     versionName = '1.0'
