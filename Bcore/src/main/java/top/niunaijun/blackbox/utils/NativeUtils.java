@@ -47,7 +47,7 @@ public class NativeUtils {
         Log.d(TAG, "Try to copy plugin's cup arch: " + cpuArch);
         boolean findLib = false;
         boolean findSo = false;
-        byte buffer[] = null;
+        byte[] buffer = null;
         String libPrefix = "lib/" + cpuArch + "/";
         ZipEntry entry;
         Enumeration e = zipfile.entries();

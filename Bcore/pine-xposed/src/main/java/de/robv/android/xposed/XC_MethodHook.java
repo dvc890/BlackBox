@@ -155,6 +155,5 @@ public abstract class XC_MethodHook extends XCallback {
 		public void unhook() {
 			XposedBridge.unhookMethod(hookMethod, XC_MethodHook.this);
 		}
-
 	}
 }

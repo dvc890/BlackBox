@@ -12,9 +12,7 @@ import top.niunaijun.blackboxa.view.base.BaseViewModel
  * @CreateDate: 2021/4/29 22:36
  */
 class ListViewModel(private val repo: AppsRepository) : BaseViewModel() {
-
     val appsLiveData = MutableLiveData<List<InstalledAppBean>>()
-
     val loadingLiveData = MutableLiveData<Boolean>()
 
     fun previewInstalledList() {
@@ -34,5 +32,4 @@ class ListViewModel(private val repo: AppsRepository) : BaseViewModel() {
             repo.getInstalledModuleList(loadingLiveData, appsLiveData)
         }
     }
-
 }

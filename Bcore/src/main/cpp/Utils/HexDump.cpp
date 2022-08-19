@@ -3,7 +3,7 @@
 //
 
 #include <jni.h>
-#include <stdio.h>
+#include <cstdio>
 #include "HexDump.h"
 #include "Log.h"
 

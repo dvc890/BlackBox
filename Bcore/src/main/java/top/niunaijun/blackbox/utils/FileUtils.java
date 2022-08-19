@@ -193,7 +193,7 @@ public class FileUtils {
         final int BUFFER = 1024;
         BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(target));
         int count;
-        byte data[] = new byte[BUFFER];
+        byte[] data = new byte[BUFFER];
         while ((count = dataIns.read(data, 0, BUFFER)) != -1) {
             bos.write(data, 0, count);
         }
@@ -368,7 +368,7 @@ public class FileUtils {
      */
     public static class FileLock {
         private static FileLock singleton;
-        private Map<String, FileLockCount> mRefCountMap = new ConcurrentHashMap<String, FileLockCount>();
+        private final Map<String, FileLockCount> mRefCountMap = new ConcurrentHashMap<String, FileLockCount>();
 
         public static FileLock getInstance() {
             if (singleton == null) {

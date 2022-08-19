@@ -12,11 +12,8 @@ import top.niunaijun.blackboxa.R
  * @CreateDate: 2022/3/20 16:58
  */
 class EnFloatView(mContext: Context) : FloatingMagnetView(mContext) {
-
     private val TAG = "RockerManager"
-
     private var rockerView: RockerView? = null
-
     private var mListener: LocationListener? = null
 
     init {
@@ -25,7 +22,6 @@ class EnFloatView(mContext: Context) : FloatingMagnetView(mContext) {
     }
 
     private fun initRockerView() {
-
         rockerView = findViewById(R.id.rocker)
         rockerView?.setListener { type, currentAngle, currentDistance ->
             if (type == RockerView.EVENT_CLOCK && currentAngle != -1F) {
@@ -34,7 +30,6 @@ class EnFloatView(mContext: Context) : FloatingMagnetView(mContext) {
                 //拉满的话，大概就是一秒五米
 
                 mListener?.invoke(realAngle, realDistance)
-
             }
         }
     }
@@ -51,7 +46,6 @@ class EnFloatView(mContext: Context) : FloatingMagnetView(mContext) {
     fun setListener(listener: LocationListener) {
         this.mListener = listener
     }
-
 }
 
 typealias LocationListener = (angle: Float, distance: Float) -> Unit

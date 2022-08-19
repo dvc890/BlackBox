@@ -13,10 +13,8 @@ import top.niunaijun.blackbox.BlackBoxCore
  * @CreateDate: 2022/2/11 23:13
  */
 class ShortcutActivity:AppCompatActivity() {
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         val pkg = intent.getStringExtra("pkg")
         val userID = intent.getIntExtra("userId",0)
 

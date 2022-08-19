@@ -11,9 +11,7 @@ import top.niunaijun.blackboxa.view.apps.AppsFragment
  * @Author: wukaicheng
  * @CreateDate: 2021/4/29 22:00
  */
-
 class ViewPagerAdapter(appCompatActivity: AppCompatActivity) : FragmentStateAdapter(appCompatActivity) {
-
     private var fragmentList = mutableListOf<AppsFragment>()
 
     fun replaceData(list: MutableList<AppsFragment>){
@@ -28,5 +26,4 @@ class ViewPagerAdapter(appCompatActivity: AppCompatActivity) : FragmentStateAdap
     override fun createFragment(position: Int): Fragment {
         return fragmentList[position]
     }
-
 }

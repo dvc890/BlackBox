@@ -8,15 +8,10 @@
 using namespace pine::art;
 
 JitCompiler* Jit::self_compiler = nullptr;
-
 bool (*Jit::jit_compile_method)(void*, void*, void*, bool) = nullptr;
-
 bool (*Jit::jit_compile_method_q)(void*, void*, void*, bool, bool) = nullptr;
-
 void** Jit::jit_update_options_ptr = nullptr;
-
 JitCompiler** Jit::global_compiler_ptr = nullptr;
-
 Member<void, size_t>* Jit::CompilerOptions_inline_max_code_units = nullptr;
 
 void Jit::Init(const ElfImg* art_lib_handle, const ElfImg* jit_lib_handle) {

@@ -15,20 +15,18 @@ import top.niunaijun.blackboxa.databinding.ItemGmsBinding
  * @CreateDate: 2022/3/2 21:13
  */
 class GmsAdapter : RVHolderFactory() {
-
     override fun createViewHolder(parent: ViewGroup?, viewType: Int, item: Any): RVHolder<out Any> {
         return GmsVH(inflate(R.layout.item_gms,parent))
     }
 
-
     class GmsVH(itemView:View):RVHolder<GmsBean>(itemView){
-
         private val binding = ItemGmsBinding.bind(itemView)
+
         override fun setContent(item: GmsBean, isSelected: Boolean, payload: Any?) {
             binding.tvTitle.text = item.userName
             binding.checkbox.isChecked = item.isInstalledGms
             binding.checkbox.setOnCheckedChangeListener  { buttonView, _ ->
-                if(buttonView.isPressed){
+                if (buttonView.isPressed) {
                     binding.root.performClick()
                 }
             }

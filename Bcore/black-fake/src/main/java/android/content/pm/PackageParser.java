@@ -18,7 +18,6 @@ import java.util.List;
 import java.util.Set;
 
 public class PackageParser {
-
     public final static int PARSE_IS_SYSTEM = 1 << 0;
     public final static int PARSE_CHATTY = 1 << 1;
     public final static int PARSE_MUST_BE_APK = 1 << 2;
@@ -50,7 +49,7 @@ public class PackageParser {
         }
     }
 
-    public static final PackageParser.NewPermissionInfo NEW_PERMISSIONS[] = new PackageParser.NewPermissionInfo[]{
+    public static final PackageParser.NewPermissionInfo[] NEW_PERMISSIONS = new PackageParser.NewPermissionInfo[]{
             new PackageParser.NewPermissionInfo(android.Manifest.permission.WRITE_EXTERNAL_STORAGE, android.os.Build.VERSION_CODES.DONUT, 0),
             new PackageParser.NewPermissionInfo(android.Manifest.permission.READ_PHONE_STATE, android.os.Build.VERSION_CODES.DONUT, 0)
     };
@@ -191,7 +190,7 @@ public class PackageParser {
         throw new RuntimeException("Stub!");
     }
 
-    public static PackageInfo generatePackageInfo(final PackageParser.Package p, final int gids[], final int flags, final long firstInstallTime, final long lastUpdateTime, final Set<String> grantedPermissions, final PackageUserState state) {
+    public static PackageInfo generatePackageInfo(final PackageParser.Package p, final int[] gids, final int flags, final long firstInstallTime, final long lastUpdateTime, final Set<String> grantedPermissions, final PackageUserState state) {
         throw new RuntimeException("Stub!");
     }
 
@@ -199,7 +198,7 @@ public class PackageParser {
         throw new RuntimeException("Stub!");
     }
 
-    public static PackageInfo generatePackageInfo(final PackageParser.Package p, final int gids[], final int flags, final long firstInstallTime, final long lastUpdateTime, final Set<String> grantedPermissions, final PackageUserState state, final int userId) {
+    public static PackageInfo generatePackageInfo(final PackageParser.Package p, final int[] gids, final int flags, final long firstInstallTime, final long lastUpdateTime, final Set<String> grantedPermissions, final PackageUserState state, final int userId) {
         throw new RuntimeException("Stub!");
     }
 
@@ -275,7 +274,6 @@ public class PackageParser {
      * consists of a single base APK, and zero or more split APKs.
      */
     public final static class Package {
-
         public String packageName;
 
         /** Names of any split APKs, ordered by parsed splitName */

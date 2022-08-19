@@ -101,10 +101,7 @@ public abstract class IntentResolver<F extends BPackage.IntentInfo, R extends Ob
         }
         s1 = f1.countDataSchemeSpecificParts();
         s2 = f2.countDataSchemeSpecificParts();
-        if (s1 != s2) {
-            return false;
-        }
-        return true;
+        return s1 == s2;
     }
 
     private ArrayList<F> collectFilters(F[] array, IntentFilter matching) {

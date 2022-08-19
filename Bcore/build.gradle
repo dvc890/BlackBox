@@ -25,27 +25,33 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+
     externalNativeBuild {
         cmake {
             path file('./src/main/cpp/CMakeLists.txt')
         }
     }
+
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+
     aaptOptions {
         cruncherEnabled = false
         useNewCruncher = false
     }
+
     testOptions {
         unitTests.returnDefaultValues = true
     }
+
     defaultConfig {
         ndk {
             abiFilters 'armeabi-v7a', 'arm64-v8a'
         }
     }
+
     lintOptions {
         checkReleaseBuilds false
         abortOnError false
@@ -55,21 +61,21 @@ android {
         textReport false
         checkOnly 'NewApi', 'InlinedApi'
     }
+
     buildFeatures {
         prefab true
     }
+
     packagingOptions {
         exclude '**/libshadowhook.so'
     }
 }
-
 
 tasks.withType(Javadoc) {
     options.addStringOption('Xdoclint:none', '-quiet')
     options.addStringOption('encoding', 'UTF-8')
     options.addStringOption('charSet', 'UTF-8')
 }
-
 
 dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar", "*.aar"])
@@ -89,9 +95,8 @@ dependencies {
     implementation project(':Bcore:pine-xposed-res')
     implementation "androidx.core:core-ktx:$ktx_version"
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-
-    implementation 'com.bytedance.android:shadowhook:1.0.3'
 }
+
 repositories {
     mavenCentral()
 }

@@ -49,7 +49,7 @@ import top.niunaijun.blackbox.utils.compat.BuildCompat;
 public class HCallbackProxy implements IInjectHook, Handler.Callback {
     public static final String TAG = "HCallbackProxy";
     private Handler.Callback mOtherCallback;
-    private AtomicBoolean mBeing = new AtomicBoolean(false);
+    private final AtomicBoolean mBeing = new AtomicBoolean(false);
 
     private Handler.Callback getHCallback() {
         return BRHandler.get(getH()).mCallback();

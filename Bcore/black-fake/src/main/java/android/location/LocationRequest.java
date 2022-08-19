@@ -4,11 +4,9 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 public final class LocationRequest implements Parcelable {
-
     public String getProvider() {
         return null;
     }
-
 
     public static final Creator<LocationRequest> CREATOR = new Creator<LocationRequest>() {
         @Override

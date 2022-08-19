@@ -1723,5 +1723,4 @@ public final class XposedHelpers {
 	- find the first child that is an instance of a specified class
 	- find all (direct or indirect) children of a specified class
 	*/
-
 }

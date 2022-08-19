@@ -6,7 +6,6 @@ import top.niunaijun.blackreflection.annotation.BStaticMethod;
 
 @BClassName("android.app.ActivityTaskManager")
 public interface ActivityTaskManager {
-
     @BStaticMethod
     Object getService();
 

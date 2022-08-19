@@ -39,7 +39,7 @@ public class IOCore {
     private static final IOCore sIOCore = new IOCore();
     private static final TrieTree mTrieTree = new TrieTree();
     private static final TrieTree sBlackTree = new TrieTree();
-    private static final int systemUserId = BlackBoxCore.getHostUserId();;
+    private static final int systemUserId = BlackBoxCore.getHostUserId();
     private final Map<String, String> mRedirectMap = new LinkedHashMap<>();
 
     private static final Map<String, Map<String, String>> sCachePackageRedirect = new HashMap<>();

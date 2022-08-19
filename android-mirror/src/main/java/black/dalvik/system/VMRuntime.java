@@ -1,6 +1,5 @@
 package black.dalvik.system;
 
-
 import top.niunaijun.blackreflection.annotation.BClassName;
 import top.niunaijun.blackreflection.annotation.BMethod;
 import top.niunaijun.blackreflection.annotation.BStaticMethod;

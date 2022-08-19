@@ -1,6 +1,5 @@
 package black.android.app;
 
-
 import android.app.ActivityThread;
 import android.app.Application;
 import android.content.Context;

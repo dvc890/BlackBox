@@ -6,7 +6,6 @@
 cmake_minimum_required(VERSION 3.4.1)
 enable_language(ASM)
 project(blackbox)
-find_package(shadowhook REQUIRED CONFIG)
 # Creates and names a library, sets it as either STATIC
 # or SHARED, and provides the relative paths to its source code.
 # You can define multiple libraries, and CMake builds them for you.
@@ -14,6 +13,17 @@ find_package(shadowhook REQUIRED CONFIG)
 include_directories(JniHook)
 include_directories(./)
 
+set(DobbyHome Dobby)
+include_directories(
+        ${DobbyHome}/include
+)
+macro(SET_OPTION option value)
+    set(${option} ${value} CACHE INTERNAL "" FORCE)
+endmacro()
+SET_OPTION(DOBBY_DEBUG OFF)
+SET_OPTION(DOBBY_GENERATE_SHARED OFF)
+
+add_subdirectory(${DobbyHome} dobby)
 aux_source_directory(./ SRC1)
 aux_source_directory(Utils SRC2)
 aux_source_directory(Hook SRC3)
@@ -54,5 +64,5 @@ target_link_libraries( # Specifies the target library.
         # included in the NDK.
         ${log-lib}
         z
-        shadowhook::shadowhook
+        dobby
         )

@@ -498,7 +498,7 @@ public class BPackage implements Parcelable {
             this.intentFilter = intentInfo.intentFilter;
             this.hasDefault = intentInfo.hasDefault;
             this.labelRes = intentInfo.labelRes;
-            this.nonLocalizedLabel = intentInfo.nonLocalizedLabel == null ? null : intentInfo.nonLocalizedLabel.toString();
+            this.nonLocalizedLabel = intentInfo.nonLocalizedLabel == null ? null : intentInfo.nonLocalizedLabel;
             this.icon = intentInfo.icon;
             this.logo = intentInfo.logo;
             this.banner = intentInfo.banner;

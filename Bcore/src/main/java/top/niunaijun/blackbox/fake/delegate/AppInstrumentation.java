@@ -51,7 +51,7 @@ public final class AppInstrumentation extends BaseInstrumentationDelegate implem
             Instrumentation mInstrumentation = getCurrInstrumentation();
             if (mInstrumentation == this || checkInstrumentation(mInstrumentation))
                 return;
-            mBaseInstrumentation = (Instrumentation) mInstrumentation;
+            mBaseInstrumentation = mInstrumentation;
             BRActivityThread.get(BlackBoxCore.mainThread())._set_mInstrumentation(this);
         } catch (Exception e) {
             e.printStackTrace();

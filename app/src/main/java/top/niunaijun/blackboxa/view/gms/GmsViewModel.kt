@@ -13,9 +13,7 @@ import top.niunaijun.blackboxa.view.base.BaseViewModel
  * @CreateDate: 2022/3/2 21:11
  */
 class GmsViewModel(private val mRepo: GmsRepository) : BaseViewModel() {
-
     val mInstalledLiveData = MutableLiveData<List<GmsBean>>()
-
     val mUpdateInstalledLiveData = MutableLiveData<GmsInstallBean>()
 
     fun getInstalledUser() {

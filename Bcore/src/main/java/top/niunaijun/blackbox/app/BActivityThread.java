@@ -216,7 +216,7 @@ public class BActivityThread extends IBActivityThread.Stub {
         } catch (Exception e) {
             e.printStackTrace();
             Slog.e(TAG, "Unable to instantiate service " + serviceInfo.name
-                    + ": " + e.toString());
+                    + ": " + e);
             return null;
         }
 
@@ -240,7 +240,7 @@ public class BActivityThread extends IBActivityThread.Stub {
         } catch (Exception e) {
             throw new RuntimeException(
                     "Unable to create service " + serviceInfo.name
-                            + ": " + e.toString(), e);
+                            + ": " + e, e);
         }
     }
 
@@ -255,7 +255,7 @@ public class BActivityThread extends IBActivityThread.Stub {
         } catch (Exception e) {
             e.printStackTrace();
             Slog.e(TAG, "Unable to create JobService " + serviceInfo.name
-                    + ": " + e.toString());
+                    + ": " + e);
             return null;
         }
 
@@ -280,7 +280,7 @@ public class BActivityThread extends IBActivityThread.Stub {
         } catch (Exception e) {
             throw new RuntimeException(
                     "Unable to create JobService " + serviceInfo.name
-                            + ": " + e.toString(), e);
+                            + ": " + e, e);
         }
     }
 

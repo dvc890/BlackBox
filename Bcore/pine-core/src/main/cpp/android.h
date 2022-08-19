@@ -32,11 +32,13 @@ namespace pine {
             ElfImg handle("libart.so");
             DisableHiddenApiPolicy(&handle, application, platform);
         }
+
         static bool DisableProfileSaver();
         static void SetClassLinker(void* class_linker) {
             LOGI("Got class linker %p", class_linker);
             class_linker_ = class_linker;
         }
+
         static void* GetClassLinker() {
             return class_linker_;
         }

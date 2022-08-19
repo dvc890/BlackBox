@@ -47,7 +47,7 @@ public final class FileResult {
         }
         if (stream != null) {
             sb.append("stream: ");
-            sb.append(stream.toString());
+            sb.append(stream);
             sb.append(", ");
         }
         sb.append("size: ");

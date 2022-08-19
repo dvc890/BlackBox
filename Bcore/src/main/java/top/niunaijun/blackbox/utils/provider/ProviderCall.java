@@ -35,12 +35,12 @@ public class ProviderCall {
 
     public static final class Builder {
 
-        private Context context;
+        private final Context context;
 
-        private Bundle bundle = new Bundle();
+        private final Bundle bundle = new Bundle();
 
         private String method;
-        private String auth;
+        private final String auth;
         private String arg;
         private int retryCount = 5;
 

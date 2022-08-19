@@ -24,15 +24,10 @@ import top.niunaijun.blackboxa.view.fake.FakeManagerActivity
 import top.niunaijun.blackboxa.view.list.ListActivity
 import top.niunaijun.blackboxa.view.setting.SettingActivity
 
-
 class MainActivity : LoadingActivity() {
-
     private val viewBinding: ActivityMainBinding by inflate()
-
     private lateinit var mViewPagerAdapter: ViewPagerAdapter
-
     private val fragmentList = mutableListOf<AppsFragment>()
-
     private var currentUser = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -66,7 +61,6 @@ class MainActivity : LoadingActivity() {
     }
 
     private fun initViewPager() {
-
         val userList = BlackBoxCore.get().users
         userList.forEach {
             fragmentList.add(AppsFragment.newInstance(it.id))
@@ -88,7 +82,6 @@ class MainActivity : LoadingActivity() {
                 showFloatButton(true)
             }
         })
-
     }
 
     private fun initFab() {
@@ -122,7 +115,6 @@ class MainActivity : LoadingActivity() {
         }
 
         mViewPagerAdapter.notifyDataSetChanged()
-
     }
 
     private fun updateUserRemark(userId: Int) {
@@ -144,7 +136,6 @@ class MainActivity : LoadingActivity() {
                         fragmentList[userId].installApk(source)
                     }
                 }
-
             }
         }
 
@@ -154,7 +145,7 @@ class MainActivity : LoadingActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item?.itemId) {
+        when (item.itemId) {
             R.id.main_git -> {
                 val intent =
                     Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/BlackBoxing/BlackBox"))
@@ -172,13 +163,12 @@ class MainActivity : LoadingActivity() {
             }
 
             R.id.fake_location -> {
-///                toast("Still Developing")
+                //toast("Still Developing")
                 val intent = Intent(this, FakeManagerActivity::class.java)
                 intent.putExtra("userID", currentUser)
                 startActivity(intent)
             }
         }
-
         return true
     }
 
@@ -188,5 +178,4 @@ class MainActivity : LoadingActivity() {
             context.startActivity(intent)
         }
     }
-
 }

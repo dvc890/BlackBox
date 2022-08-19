@@ -13,7 +13,6 @@ import androidx.viewbinding.ViewBinding
  * @Author: wukaicheng
  * @CreateDate: 2021/4/29 21:23
  */
-
 inline fun <reified T : ViewBinding> Activity.inflate(): Lazy<T> = lazy {
     inflateBinding(layoutInflater)
 }
@@ -25,7 +24,6 @@ inline fun <reified T : ViewBinding> Fragment.inflate(): Lazy<T> = lazy {
 inline fun <reified T : ViewBinding> Dialog.inflate(): Lazy<T> = lazy {
     inflateBinding(layoutInflater)
 }
-
 
 inline fun <reified T : ViewBinding> inflateBinding(layoutInflater: LayoutInflater): T {
     val method = T::class.java.getMethod("inflate", LayoutInflater::class.java)

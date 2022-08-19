@@ -29,16 +29,11 @@ import top.niunaijun.blackboxa.view.base.BaseActivity
  */
 class FakeManagerActivity : BaseActivity() {
     val TAG: String = "FakeManagerActivity"
-
     private val viewBinding: ActivityListBinding by inflate()
-
-    //    private lateinit var mAdapter: ListAdapter
+    //private lateinit var mAdapter: ListAdapter
     private lateinit var mAdapter: RVAdapter<FakeLocationBean>
-
     private lateinit var viewModel: FakeLocationViewModel
-
     private var appList: List<FakeLocationBean> = ArrayList()
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -59,7 +54,6 @@ class FakeManagerActivity : BaseActivity() {
             }
 
         viewBinding.recyclerView.layoutManager = LinearLayoutManager(this)
-
 
         initSearchView()
         initViewModel()
@@ -127,7 +121,6 @@ class FakeManagerActivity : BaseActivity() {
     private val locationResult =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
             if (it.resultCode == RESULT_OK) {
-
                 it.data?.let { data ->
                     val latitude = data.getDoubleExtra("latitude", 0.0)
                     val longitude = data.getDoubleExtra("longitude", 0.0)
@@ -140,10 +133,8 @@ class FakeManagerActivity : BaseActivity() {
 
                     loadAppList()
                 }
-
             }
         }
-
 
     private fun filterApp(newText: String) {
         val newList = this.appList.filter {
@@ -162,7 +153,6 @@ class FakeManagerActivity : BaseActivity() {
         finish()
     }
 
-
     override fun onBackPressed() {
         if (viewBinding.searchView.isSearchOpen) {
             viewBinding.searchView.closeSearch()
@@ -177,7 +167,6 @@ class FakeManagerActivity : BaseActivity() {
         viewBinding.searchView.setMenuItem(item)
         return true
     }
-
 
     companion object {
         fun start(context: Context) {

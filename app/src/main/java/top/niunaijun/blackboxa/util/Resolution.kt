@@ -7,6 +7,7 @@ import android.content.Context
 import android.graphics.Point
 import android.os.Build
 import android.os.Handler
+import android.os.Looper
 import android.util.DisplayMetrics
 import android.view.Display
 import android.view.View
@@ -169,14 +170,14 @@ object Resolution {
     /**
      * 获取屏幕分辨率：宽
      */
-    fun getScreenPixWidth(context: Context): Int {
+    private fun getScreenPixWidth(context: Context): Int {
         return context.resources.displayMetrics.widthPixels
     }
 
     /**
      * 获取屏幕分辨率：高
      */
-    fun getScreenPixHeight(context: Context): Int {
+    private fun getScreenPixHeight(context: Context): Int {
         return context.resources.displayMetrics.heightPixels
     }
 
@@ -213,16 +214,16 @@ object Resolution {
     fun hideInputMethod(view: View) {
         val imm = view.context
             .getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-        imm?.hideSoftInputFromWindow(view.windowToken, 0)
+        imm.hideSoftInputFromWindow(view.windowToken, 0)
     }
 
     /**
      * 显示软键盘
      */
-    fun showInputMethod(view: View) {
+    private fun showInputMethod(view: View) {
         val imm = view.context
             .getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-        imm?.showSoftInput(view, InputMethodManager.SHOW_IMPLICIT)
+        imm.showSoftInput(view, InputMethodManager.SHOW_IMPLICIT)
     }
 
     /**
@@ -230,7 +231,7 @@ object Resolution {
      */
     fun showInputMethod(view: View, delayMillis: Long) {
         // 显示输入法
-        Handler().postDelayed({ showInputMethod(view) }, delayMillis)
+        Handler(Looper.getMainLooper()!!).postDelayed({ showInputMethod(view) }, delayMillis)
     }
 
     /**
@@ -266,10 +267,10 @@ object Resolution {
         val appUsableSize = getScreenSize(context, null)
         val realScreenSize = getRealScreenSize(context)
 
-//        // navigation bar on the right
-//        if (appUsableSize.x < realScreenSize.x) {
-//            return new Point(realScreenSize.x - appUsableSize.x, appUsableSize.y);
-//        }
+        // navigation bar on the right
+        /*if (appUsableSize.x < realScreenSize.x) {
+            return new Point(realScreenSize.x - appUsableSize.x, appUsableSize.y);
+        }*/
 
         // navigation bar at the bottom
         return if (appUsableSize.y < realScreenSize.y) {
@@ -279,7 +280,7 @@ object Resolution {
         // navigation bar is not present
     }
 
-    fun getRealScreenSize(context: Context): Point {
+    private fun getRealScreenSize(context: Context): Point {
         val windowManager = context.getSystemService(Context.WINDOW_SERVICE) as WindowManager
         val display = windowManager.defaultDisplay
         val size = Point()

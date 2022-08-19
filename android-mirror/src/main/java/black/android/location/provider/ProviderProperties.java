@@ -1,6 +1,5 @@
 package black.android.location.provider;
 
-
 import top.niunaijun.blackreflection.annotation.BClassName;
 import top.niunaijun.blackreflection.annotation.BField;
 

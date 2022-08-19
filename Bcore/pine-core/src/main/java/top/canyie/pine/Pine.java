@@ -58,7 +58,6 @@ public final class Pine {
     };
 
     private static HookListener sHookListener;
-
     /** Internal API, used by enhances library. DO NOT USE IT. */
     public static long openElf, findElfSymbol, closeElf;
 
@@ -98,7 +97,8 @@ public final class Pine {
         return buildCodename.compareTo(codename.toUpperCase(Locale.ROOT)) >= 0;
     }
 
-    @SuppressLint("ObsoleteSdkInt") private static void initialize() {
+    @SuppressLint("ObsoleteSdkInt")
+    private static void initialize() {
         int sdkLevel = PineConfig.sdkLevel;
         if (sdkLevel < Build.VERSION_CODES.KITKAT)
             throw new RuntimeException("Unsupported android sdk level " + sdkLevel);
@@ -843,7 +843,7 @@ public final class Pine {
         public boolean isStatic;
         public int paramNumber;
         public Class<?>[] paramTypes;
-        private Set<MethodHook> callbacks = new HashSet<>();
+        private final Set<MethodHook> callbacks = new HashSet<>();
 
         public HookRecord(Member target, long artMethod) {
             this.target = target;
@@ -894,7 +894,7 @@ public final class Pine {
         private Object result;
         private Throwable throwable;
         /* package */ boolean returnEarly;
-        private HookRecord hookRecord;
+        private final HookRecord hookRecord;
 
         public CallFrame(HookRecord hookRecord, Object thisObject, Object[] args) {
             this.hookRecord = hookRecord;

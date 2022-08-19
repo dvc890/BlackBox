@@ -19,13 +19,13 @@ import java.util.concurrent.atomic.AtomicInteger;
  */
 public class ServiceRecord {
     private Service mService;
-    private Map<Intent.FilterComparison, BoundInfo> mBounds = new HashMap<>();
+    private final Map<Intent.FilterComparison, BoundInfo> mBounds = new HashMap<>();
     private boolean rebind;
     private int mStartId;
 
     public class BoundInfo {
         private IBinder mIBinder;
-        private AtomicInteger mBindCount = new AtomicInteger(0);
+        private final AtomicInteger mBindCount = new AtomicInteger(0);
 
         public int incrementAndGetBindCount() {
             return mBindCount.incrementAndGet();
@@ -102,11 +102,8 @@ public class ServiceRecord {
         if (boundInfo == null)
             return true;
         int i = boundInfo.decrementAndGetBindCount();
-        if (i <= 0) {
-//            mBounds.remove(filterComparison);
-            return true;
-        }
-        return false;
+        //            mBounds.remove(filterComparison);
+        return i <= 0;
     }
 
     public BoundInfo getOrCreateBoundInfo(Intent intent) {

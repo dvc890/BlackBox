@@ -230,7 +230,6 @@ public final class Arm64Entry {
             if (crLength == 6) break;
             coreRegisters[6] = x7;
         } while(false);
-
         return new Three<>(coreRegisters, stack, fpRegisters);
     }
 }

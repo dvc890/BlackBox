@@ -15,7 +15,6 @@ import top.niunaijun.blackbox.entity.pm.InstallResult;
 import top.niunaijun.blackbox.entity.pm.InstallOption;
 import top.niunaijun.blackbox.entity.pm.InstalledPackage;
 
-
 interface IBPackageManagerService {
     int getUidByPid(int pid);
 

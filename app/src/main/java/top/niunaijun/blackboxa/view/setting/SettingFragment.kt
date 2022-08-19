@@ -19,9 +19,7 @@ import top.niunaijun.blackboxa.view.xp.XpActivity
  * @CreateDate: 2021/5/6 22:13
  */
 class SettingFragment : PreferenceFragmentCompat() {
-
     private lateinit var xpEnable: SwitchPreferenceCompat
-
     private lateinit var xpModule: Preference
 
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
@@ -69,7 +67,6 @@ class SettingFragment : PreferenceFragmentCompat() {
         val gmsManagerPreference: Preference = (findPreference("gms_manager")!!)
 
         if (BlackBoxCore.get().isSupportGms) {
-
             gmsManagerPreference.setOnPreferenceClickListener {
                 GmsManagerActivity.start(requireContext())
                 true
@@ -90,7 +87,6 @@ class SettingFragment : PreferenceFragmentCompat() {
                 }
 
                 "root_hide" -> {
-
                     AppManager.mBlackBoxLoader.invalidHideRoot(tmpHide)
                 }
 

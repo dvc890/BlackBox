@@ -28,7 +28,6 @@ import kotlin.math.abs
 import android.view.MotionEvent
 import android.graphics.Point
 
-
 /**
  *
  * @Description:
@@ -36,15 +35,10 @@ import android.graphics.Point
  * @CreateDate: 2021/4/29 22:21
  */
 class AppsFragment : Fragment() {
-
     var userID: Int = 0
-
     private lateinit var viewModel: AppsViewModel
-
     private lateinit var mAdapter: RVAdapter<AppInfo>
-
     private val viewBinding: FragmentAppsBinding by inflate()
-
     private var popupMenu: PopupMenu? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -59,7 +53,6 @@ class AppsFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-
         viewBinding.stateView.showEmpty()
 
         mAdapter =
@@ -79,7 +72,6 @@ class AppsFragment : Fragment() {
             showLoading()
             viewModel.launchApk(data.packageName, userID)
         }
-
 
         interceptTouch()
         setOnLongClick()
@@ -201,39 +193,38 @@ class AppsFragment : Fragment() {
         }
     }
 
-//        interceptTouch()
-//        setOnLongClick()
-//        return viewBinding.root
-//    }
-//
-//    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-//        super.onViewCreated(view, savedInstanceState)
-//        initData()
-//    }
-//
-//    override fun onStart() {
-//        super.onStart()
-//        viewModel.getInstalledApps(userID)
-//    }
-//
-//    private fun onItemMove(fromPosition:Int, toPosition:Int){
-//        if (fromPosition < toPosition) {
-//            for (i in fromPosition until toPosition) {
-//                Collections.swap(mAdapter.getItems(), i, i + 1)
-//            }
-//        } else {
-//            for (i in fromPosition downTo toPosition + 1) {
-//                Collections.swap(mAdapter.getItems(), i, i - 1)
-//            }
-//        }
-//        mAdapter.notifyItemMoved(fromPosition, toPosition)
-//    }
+    /*interceptTouch()
+        setOnLongClick()
+        return viewBinding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        initData()
+    }
+
+    override fun onStart() {
+        super.onStart()
+        viewModel.getInstalledApps(userID)
+    }
+
+    private fun onItemMove(fromPosition:Int, toPosition:Int){
+        if (fromPosition < toPosition) {
+            for (i in fromPosition until toPosition) {
+                Collections.swap(mAdapter.getItems(), i, i + 1)
+            }
+        } else {
+            for (i in fromPosition downTo toPosition + 1) {
+                Collections.swap(mAdapter.getItems(), i, i - 1)
+            }
+        }
+        mAdapter.notifyItemMoved(fromPosition, toPosition)
+    }*/
 
     private fun initData() {
         viewBinding.stateView.showLoading()
         viewModel.getInstalledApps(userID)
         viewModel.appsLiveData.observe(viewLifecycleOwner) {
-
             if (it != null) {
                 mAdapter.setItems(it)
                 if (it.isEmpty()) {
@@ -251,7 +242,6 @@ class AppsFragment : Fragment() {
                 viewModel.getInstalledApps(userID)
                 scanUser()
             }
-
         }
 
         viewModel.launchLiveData.observe(viewLifecycleOwner) {
@@ -320,12 +310,10 @@ class AppsFragment : Fragment() {
         }
     }
 
-
     fun installApk(source: String) {
         showLoading()
         viewModel.install(source, userID)
     }
-
 
     private fun scanUser() {
         (requireActivity() as MainActivity).scanUser()
@@ -337,15 +325,13 @@ class AppsFragment : Fragment() {
         }
     }
 
-
     private fun hideLoading() {
         if(requireActivity() is LoadingActivity){
             (requireActivity() as LoadingActivity).hideLoading()
         }
     }
 
-
-    companion object{
+    companion object {
         fun newInstance(userID:Int): AppsFragment {
             val fragment = AppsFragment()
             val bundle = bundleOf("userID" to userID)
@@ -353,7 +339,4 @@ class AppsFragment : Fragment() {
             return fragment
         }
     }
-
-
-
 }

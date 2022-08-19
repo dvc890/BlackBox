@@ -23,11 +23,8 @@ import top.niunaijun.blackboxa.view.base.LoadingActivity
  * @CreateDate: 2022/3/2 21:06
  */
 class GmsManagerActivity : LoadingActivity() {
-
     private lateinit var viewModel: GmsViewModel
-
     private lateinit var mAdapter: RVAdapter<GmsBean>
-
     private val viewBinding: ActivityGmsBinding by inflate()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -92,7 +89,6 @@ class GmsManagerActivity : LoadingActivity() {
                 }
             }
         viewBinding.recyclerView.layoutManager = LinearLayoutManager(this)
-
     }
 
     private fun installGms(userID: Int, checkbox: Switch){
@@ -122,7 +118,6 @@ class GmsManagerActivity : LoadingActivity() {
             }
         }
     }
-
 
     companion object{
         fun start(context: Context){

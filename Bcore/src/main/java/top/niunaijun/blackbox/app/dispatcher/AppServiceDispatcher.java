@@ -32,7 +32,7 @@ public class AppServiceDispatcher {
 
     private static final AppServiceDispatcher sServiceDispatcher = new AppServiceDispatcher();
 
-    private Map<Intent.FilterComparison, ServiceRecord> mService = new HashMap<>();
+    private final Map<Intent.FilterComparison, ServiceRecord> mService = new HashMap<>();
 
     public static AppServiceDispatcher get() {
         return sServiceDispatcher;

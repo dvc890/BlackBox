@@ -6,7 +6,6 @@
         android:gravity="center"
         android:orientation="vertical"
         android:paddingTop="16dp">
-
     <FrameLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
@@ -37,6 +36,4 @@
             android:layout_marginTop="2dp"
             android:textColor="@color/primary_text"
             android:textSize="12sp" />
-
-
 </LinearLayout>

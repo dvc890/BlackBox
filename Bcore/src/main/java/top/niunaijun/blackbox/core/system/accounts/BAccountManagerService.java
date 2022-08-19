@@ -77,7 +77,7 @@ import top.niunaijun.blackbox.utils.compat.AccountManagerCompat;
 public class BAccountManagerService extends IBAccountManagerService.Stub implements ISystemService , PackageMonitor {
     private static final String TAG = "AccountManagerService";
 
-    private static BAccountManagerService sService = new BAccountManagerService();
+    private static final BAccountManagerService sService = new BAccountManagerService();
 
     private static final Account[] EMPTY_ACCOUNT_ARRAY = new Account[]{};
 
@@ -606,7 +606,7 @@ public class BAccountManagerService extends IBAccountManagerService.Stub impleme
             protected String toDebugString(long now) {
                 if (loginOptions != null) loginOptions.keySet();
                 return super.toDebugString(now) + ", getAuthToken"
-                        + ", " + account.toString()
+                        + ", " + account
                         + ", authTokenType " + authTokenType
                         + ", loginOptions " + loginOptions
                         + ", notifyOnAuthFailure " + notifyOnAuthFailure;
@@ -719,7 +719,7 @@ public class BAccountManagerService extends IBAccountManagerService.Stub impleme
             protected String toDebugString(long now) {
                 if (loginOptions != null) loginOptions.keySet();
                 return super.toDebugString(now) + ", updateCredentials"
-                        + ", " + account.toString()
+                        + ", " + account
                         + ", authTokenType " + authTokenType
                         + ", loginOptions " + loginOptions;
             }
@@ -1164,8 +1164,7 @@ public class BAccountManagerService extends IBAccountManagerService.Stub impleme
         Account account = accounts[0];
         BUserAccounts userAccounts = getUserAccounts(userId);
         int visibility = resolveAccountVisibility(account, callingPackage, userAccounts);
-        if (visibility == AccountManager.VISIBILITY_USER_MANAGED_NOT_VISIBLE) return true;
-        return false;
+        return visibility == AccountManager.VISIBILITY_USER_MANAGED_NOT_VISIBLE;
     }
 
     private String readUserDataInternal(BUserAccounts accounts, Account account, String key) {
@@ -1534,11 +1533,8 @@ public class BAccountManagerService extends IBAccountManagerService.Stub impleme
             long bid = Binder.clearCallingIdentity();
             try {
                 ResolveInfo resolveInfo = mPms.resolveActivity(intent, 0, null, mAccounts.userId);
-                if (resolveInfo == null) {
-                    return false;
-                }
+                return resolveInfo != null;
                 // check hasSignatureCapability
-                return true;
             } finally {
                 Binder.restoreCallingIdentity(bid);
             }

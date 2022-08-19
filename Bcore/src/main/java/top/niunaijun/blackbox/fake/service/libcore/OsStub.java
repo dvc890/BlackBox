@@ -26,7 +26,7 @@ import top.niunaijun.blackbox.utils.Reflector;
  */
 public class OsStub extends ClassInvocationStub {
     public static final String TAG = "OsStub";
-    private Object mBase;
+    private final Object mBase;
 
     public OsStub() {
         mBase = BRLibcore.get().os();

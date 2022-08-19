@@ -70,7 +70,7 @@ public class BCell implements Parcelable {
 
     public  BCell(){}
     public BCell(int MCC, int MNC, int LAC, int CID) {
-        this.TYPE = this.PHONE_TYPE_GSM;
+        this.TYPE = PHONE_TYPE_GSM;
         this.MCC = MCC;
         this.CID = CID;
         this.MNC = MNC;

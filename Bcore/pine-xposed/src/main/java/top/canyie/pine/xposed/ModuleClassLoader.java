@@ -74,7 +74,8 @@ public class ModuleClassLoader extends PathClassLoader {
     }
 
     // Pine added: public findClass
-    @Override public Class<?> findClass(String name) throws ClassNotFoundException {
+    @Override
+    public Class<?> findClass(String name) throws ClassNotFoundException {
         return super.findClass(name);
     }
 
@@ -102,7 +103,8 @@ public class ModuleClassLoader extends PathClassLoader {
     }
 
     // Pine added: public findResource
-    @Override public URL findResource(String name) {
+    @Override
+    public URL findResource(String name) {
         return super.findResource(name);
     }
 

@@ -77,10 +77,7 @@ public class AppSystemEnv {
     public static boolean isBlackPackage(String packageName) {
         if (BlackBoxCore.get().isHideRoot() && sSuPackages.contains(packageName)) {
             return true;
-        } else if (BlackBoxCore.get().isHideXposed() && sXposedPackages.contains(packageName)) {
-            return true;
-        }
-        return false;
+        } else return BlackBoxCore.get().isHideXposed() && sXposedPackages.contains(packageName);
     }
 
     public static List<String> getPreInstallPackages() {

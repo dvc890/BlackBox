@@ -17,13 +17,9 @@ import top.niunaijun.blackboxa.view.xp.XpFactory
  * @CreateDate: 2021/4/29 22:38
  */
 object InjectionUtil {
-
     private val appsRepository = AppsRepository()
-
     private val xpRepository = XpRepository()
-
     private val gmsRepository = GmsRepository()
-
     private val fakeLocationRepository = FakeLocationRepository()
 
     fun getAppsFactory() : AppsFactory {

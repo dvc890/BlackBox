@@ -9,6 +9,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
@@ -24,7 +25,7 @@ public class Md5Utils {
             return null;
         try {
             MessageDigest messageDigest = MessageDigest.getInstance("MD5");
-            byte[] inputByteArray = input.getBytes("utf-8");
+            byte[] inputByteArray = input.getBytes(StandardCharsets.UTF_8);
             messageDigest.update(inputByteArray);
             byte[] resultByteArray = messageDigest.digest();
             return byteArrayToHex(resultByteArray);

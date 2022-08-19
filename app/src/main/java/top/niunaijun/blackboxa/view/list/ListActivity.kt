@@ -19,15 +19,10 @@ import top.niunaijun.blackboxa.util.InjectionUtil
 import top.niunaijun.blackboxa.util.inflate
 import top.niunaijun.blackboxa.view.base.BaseActivity
 
-
 class ListActivity : BaseActivity() {
-
     private val viewBinding: ActivityListBinding by inflate()
-
     private lateinit var mAdapter: RVAdapter<InstalledAppBean>
-
     private lateinit var viewModel: ListViewModel
-
     private var appList: List<InstalledAppBean> = ArrayList()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -41,7 +36,6 @@ class ListActivity : BaseActivity() {
         }
 
         viewBinding.recyclerView.layoutManager = LinearLayoutManager(this)
-
 
         initSearchView()
         initViewModel()
@@ -61,7 +55,6 @@ class ListActivity : BaseActivity() {
             override fun onQueryTextSubmit(query: String): Boolean {
                 return true
             }
-
         })
     }
 
@@ -125,7 +118,6 @@ class ListActivity : BaseActivity() {
         finish()
     }
 
-
     override fun onBackPressed() {
         if (viewBinding.searchView.isSearchOpen) {
             viewBinding.searchView.closeSearch()
@@ -158,7 +150,7 @@ class ListActivity : BaseActivity() {
     }
 
 
-    companion object{
+    companion object {
         fun start(context: Context,onlyShowXp:Boolean){
             val intent = Intent(context,ListActivity::class.java)
             intent.putExtra("onlyShowXp",onlyShowXp)

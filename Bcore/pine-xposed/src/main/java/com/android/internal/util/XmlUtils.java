@@ -14,7 +14,7 @@ public final class XmlUtils {
     private XmlUtils() {
     }
 
-    public static final HashMap<String, ?> readMapXml(InputStream in) throws XmlPullParserException, IOException {
+    public static HashMap<String, ?> readMapXml(InputStream in) throws XmlPullParserException, IOException {
         throw new IllegalStateException("Hidden API Stub called: com.android.internal.util.XmlUtils#readMapXml(InputStream)");
     }
 }

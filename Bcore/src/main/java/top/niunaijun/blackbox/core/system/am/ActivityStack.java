@@ -155,10 +155,7 @@ public class ActivityStack {
         // 移至前台
         mAms.moveTaskToFront(taskRecord.id, 0);
 
-        boolean notStartToFront = false;
-        if (clearTop || singleTop || clearTask) {
-            notStartToFront = true;
-        }
+        boolean notStartToFront = clearTop || singleTop || clearTask;
 
         boolean startTaskToFront = !notStartToFront
                 && ComponentUtils.intentFilterEquals(taskRecord.rootIntent, intent)

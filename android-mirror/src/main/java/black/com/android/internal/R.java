@@ -1,6 +1,5 @@
 package black.com.android.internal;
 
-
 import top.niunaijun.blackreflection.annotation.BClassName;
 import top.niunaijun.blackreflection.annotation.BStaticField;
 

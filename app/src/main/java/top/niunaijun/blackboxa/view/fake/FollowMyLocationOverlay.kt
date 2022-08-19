@@ -26,20 +26,16 @@ import top.niunaijun.blackboxa.util.toast
  */
 class FollowMyLocationOverlay : AppCompatActivity() {
     val TAG: String = "FollowMyLocationOverlay"
-
     private val REQUEST_PERMISSIONS_REQUEST_CODE = 1
-
     private val binding: ActivityOsmdroidBinding by inflate()
-
     lateinit var startPoint: GeoPoint
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         //handle permissions first, before map is created. not depicted here
 
         //load/initialize the osmdroid configuration, this can be done
-        // This won't work unless you have imported this: org.osmdroid.config.Configuration.*
+        //This won't work unless you have imported this: org.osmdroid.config.Configuration.*
         Configuration.getInstance().load(this, PreferenceManager.getDefaultSharedPreferences(this))
         //setting this before the layout is inflated is a good idea
         //it 'should' ensure that the map has a writable location for the map cache, even without permissions
@@ -82,7 +78,7 @@ class FollowMyLocationOverlay : AppCompatActivity() {
         binding.map.overlays.add(MapEventsOverlay(mReceive))
         val mapController = binding.map.controller
         mapController.setZoom(12.5)
-//        val startPoint = GeoPoint(30.2736, 120.1563)
+        //val startPoint = GeoPoint(30.2736, 120.1563)
         mapController.setCenter(startPoint)
         binding.map.setTileSource(TileSourceFactory.MAPNIK)
     }
@@ -139,5 +135,4 @@ class FollowMyLocationOverlay : AppCompatActivity() {
         }
         finish()
     }
-
 }

@@ -51,7 +51,6 @@ namespace pine::art {
 
         DISALLOW_IMPLICIT_CONSTRUCTORS(Jit);
     };
-
 }
 
 #endif //PINE_JIT_H

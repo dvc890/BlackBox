@@ -7,19 +7,13 @@
 using namespace pine::art;
 
 Thread* (*Thread::current)() = nullptr;
-
 jclass Thread::Thread_ = nullptr;
 jfieldID Thread::nativePeer = nullptr;
 jmethodID Thread::currentThread = nullptr;
-
 pthread_key_t* Thread::key_self = nullptr;
-
 jobject (*Thread::new_local_ref)(JNIEnv*, void*) = nullptr;
-
 jweak (*Thread::add_weak_global_ref)(JavaVM*, Thread*, void*) = nullptr;
-
 void* (*Thread::decode_jobject)(Thread*, jobject) = nullptr;
-
 void* (*Thread::alloc_non_movable)(void*, Thread*) = nullptr;
 
 void Thread::Init(const ElfImg* handle) {

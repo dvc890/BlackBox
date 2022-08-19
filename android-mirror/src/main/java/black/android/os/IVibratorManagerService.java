@@ -11,7 +11,6 @@ import top.niunaijun.blackreflection.annotation.BStaticMethod;
  */
 @BClassName("android.os.IVibratorManagerService")
 public interface IVibratorManagerService {
-
     @BClassName("android.os.IVibratorManagerService$Stub")
     interface Stub {
         @BStaticMethod

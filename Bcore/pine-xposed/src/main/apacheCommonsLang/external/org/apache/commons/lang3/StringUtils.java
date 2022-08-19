@@ -731,7 +731,7 @@ public class StringUtils {
                 Class<?> normalizerClass = Thread.currentThread().getContextClassLoader()
                     .loadClass("java.text.Normalizer");//$NON-NLS-1$
                 _java6NormalizeMethod = normalizerClass.getMethod("normalize",//$NON-NLS-1$
-                        new Class[] {CharSequence.class, normalizerFormClass});//$NON-NLS-1$
+                        CharSequence.class, normalizerFormClass);//$NON-NLS-1$
             } catch (Exception e1) {
                 // Only check for Sun method if Java 6 method is not available
                 _java6Exception = e1;
@@ -740,7 +740,7 @@ public class StringUtils {
                     Class<?> normalizerClass = Thread.currentThread().getContextClassLoader()
                         .loadClass("sun.text.Normalizer");//$NON-NLS-1$
                     _sunDecomposeMethod = normalizerClass.getMethod("decompose",//$NON-NLS-1$
-                            new Class[] {String.class, Boolean.TYPE, Integer.TYPE});//$NON-NLS-1$
+                            String.class, Boolean.TYPE, Integer.TYPE);//$NON-NLS-1$
                 } catch (Exception e2) {
                     _sunException = e2;
                 }
@@ -6098,9 +6098,9 @@ public class StringUtils {
             m = t.length();
         }
 
-        int p[] = new int[n + 1]; //'previous' cost array, horizontally
-        int d[] = new int[n + 1]; // cost array, horizontally
-        int _d[]; //placeholder to assist in swapping p and d
+        int[] p = new int[n + 1]; //'previous' cost array, horizontally
+        int[] d = new int[n + 1]; // cost array, horizontally
+        int[] _d; //placeholder to assist in swapping p and d
 
         // indexes into strings s and t
         int i; // iterates through s
@@ -6238,9 +6238,9 @@ public class StringUtils {
             m = t.length();
         }
 
-        int p[] = new int[n + 1]; // 'previous' cost array, horizontally
-        int d[] = new int[n + 1]; // cost array, horizontally
-        int _d[]; // placeholder to assist in swapping p and d
+        int[] p = new int[n + 1]; // 'previous' cost array, horizontally
+        int[] d = new int[n + 1]; // cost array, horizontally
+        int[] _d; // placeholder to assist in swapping p and d
 
         // fill in starting table values
         int boundary = Math.min(n, threshold) + 1;

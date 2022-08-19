@@ -253,7 +253,7 @@ public class ComponentResolver {
         synchronized (mLock) {
             for (int i = mProviders.mProviders.size() - 1; i >= 0; --i) {
                 final BPackage.Provider p = mProviders.mProviders.valueAt(i);
-                final BPackageSettings ps = (BPackageSettings) p.owner.mExtras;
+                final BPackageSettings ps = p.owner.mExtras;
                 if (ps == null) {
                     continue;
                 }
@@ -392,9 +392,9 @@ public class ComponentResolver {
 
         @Override
         protected ResolveInfo newResult(BPackage.ServiceIntentInfo filter, int match, int userId) {
-            final BPackage.ServiceIntentInfo info = (BPackage.ServiceIntentInfo) filter;
+            final BPackage.ServiceIntentInfo info = filter;
             final BPackage.Service service = info.service;
-            BPackageSettings ps = (BPackageSettings) service.owner.mExtras;
+            BPackageSettings ps = service.owner.mExtras;
             if (ps == null) {
                 return null;
             }
@@ -497,7 +497,7 @@ public class ComponentResolver {
         @Override
         protected ResolveInfo newResult(BPackage.ActivityIntentInfo info, int match, int userId) {
             final BPackage.Activity activity = info.activity;
-            BPackageSettings ps = (BPackageSettings) activity.owner.mExtras;
+            BPackageSettings ps = activity.owner.mExtras;
             if (ps == null) {
                 return null;
             }
@@ -616,7 +616,7 @@ public class ComponentResolver {
         protected ResolveInfo newResult(BPackage.ProviderIntentInfo filter, int match, int userId) {
             final BPackage.ProviderIntentInfo info = filter;
             final BPackage.Provider provider = info.provider;
-            BPackageSettings ps = (BPackageSettings) provider.owner.mExtras;
+            BPackageSettings ps = provider.owner.mExtras;
             if (ps == null) {
                 return null;
             }

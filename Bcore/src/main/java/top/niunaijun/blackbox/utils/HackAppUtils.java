@@ -38,7 +38,7 @@ public class HackAppUtils {
                 }
 
                 @Override public void afterCall(Pine.CallFrame callFrame) {
-                    Log.i(TAG, "After getValue:" + String.valueOf(callFrame.getResult()));
+                    Log.i(TAG, "After getValue:" + callFrame.getResult());
                 }
             });
         } catch (Throwable e) {

@@ -53,7 +53,7 @@ public class DexFileCompat {
             try {
                 dexFiles.add(Reflector.with(dexElement)
                         .field("dexFile")
-                        .<DexFile>get());
+                        .get());
             } catch (Exception e) {
                 e.printStackTrace();
             }

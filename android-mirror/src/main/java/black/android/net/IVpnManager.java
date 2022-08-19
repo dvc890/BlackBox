@@ -11,7 +11,6 @@ import top.niunaijun.blackreflection.annotation.BStaticMethod;
  */
 @BClassName("android.net.IVpnManager")
 public interface IVpnManager {
-
     @BClassName("android.net.IVpnManager$Stub")
     interface Stub {
         @BStaticMethod

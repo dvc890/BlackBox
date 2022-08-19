@@ -340,10 +340,7 @@ public class PackageManagerCompat {
         if (AppSystemEnv.isBlackPackage(appInfo.packageName))
             return false;
         // Returns false if the package is hidden system app until installed.
-        if (!state.installed || state.hidden) {
-            return false;
-        }
-        return true;
+        return state.installed && !state.hidden;
     }
 
     private static void fixJar(ApplicationInfo info) {

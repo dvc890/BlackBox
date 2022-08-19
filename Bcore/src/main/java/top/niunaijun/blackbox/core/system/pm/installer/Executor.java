@@ -12,7 +12,7 @@ import top.niunaijun.blackbox.entity.pm.InstallOption;
  * 此处无Bug
  */
 public interface Executor {
-    public static final String TAG = "InstallExecutor";
+    String TAG = "InstallExecutor";
 
     int exec(BPackageSettings ps, InstallOption option, int userId);
 }

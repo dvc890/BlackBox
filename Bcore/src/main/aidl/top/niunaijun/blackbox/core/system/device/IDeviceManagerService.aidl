@@ -2,7 +2,6 @@
 package top.niunaijun.blackbox.core.system.device;
 
 // Declare any non-default types here with import statements
-
 interface IDeviceManagerService {
     /**
      * Demonstrates some basic types that you can use as parameters
