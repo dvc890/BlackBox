@@ -39,7 +39,6 @@ import top.niunaijun.blackbox.proxy.record.ProxyServiceRecord;
 @SuppressLint("NewApi")
 public class ActiveServices {
     public static final String TAG = "ActiveServices";
-
     private final Map<Intent.FilterComparison, RunningServiceRecord> mRunningServiceRecords = new HashMap<>();
     private final Map<IBinder, RunningServiceRecord> mRunningTokens = new HashMap<>();
     private final Map<IBinder, ConnectedServiceRecord> mConnectedServices = new HashMap<>();
@@ -48,7 +47,7 @@ public class ActiveServices {
         ResolveInfo resolveInfo = resolveService(intent, resolvedType, userId);
         if (resolveInfo == null)
             return;
-//            throw new RuntimeException("resolveService service exception");
+            //throw new RuntimeException("resolveService service exception");
         ServiceInfo serviceInfo = resolveInfo.serviceInfo;
         ProcessRecord processRecord = BProcessManagerService.get().startProcessLocked(serviceInfo.packageName, serviceInfo.processName, userId, -1, Binder.getCallingPid());
         if (processRecord == null) {
@@ -72,7 +71,7 @@ public class ActiveServices {
     }
 
     public int stopService(Intent intent, String resolvedType, int userId) {
-//        ResolveInfo resolveInfo = resolveService(intent, resolvedType, userId);
+        //ResolveInfo resolveInfo = resolveService(intent, resolvedType, userId);
         synchronized (mRunningServiceRecords) {
             RunningServiceRecord runningServiceRecord = findRunningServiceRecord(intent);
             if (runningServiceRecord == null) {
@@ -284,16 +283,16 @@ public class ActiveServices {
         private ServiceInfo mServiceInfo;
         private Intent mIntent;
 
-        public int getAndIncrementStartId() {
-            return mStartId.getAndIncrement();
+        public void getAndIncrementStartId() {
+            mStartId.getAndIncrement();
         }
 
         public int decrementBindCountAndGet() {
             return mBindCount.decrementAndGet();
         }
 
-        public int incrementBindCountAndGet() {
-            return mBindCount.incrementAndGet();
+        public void incrementBindCountAndGet() {
+            mBindCount.incrementAndGet();
         }
     }
 

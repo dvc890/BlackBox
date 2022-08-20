@@ -11,7 +11,6 @@ import java.io.File;
  * 此处无Bug
  */
 public abstract class ClientConfiguration {
-
     public boolean isHideRoot() {
         return false;
     }

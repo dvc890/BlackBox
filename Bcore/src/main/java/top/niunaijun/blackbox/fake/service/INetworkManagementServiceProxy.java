@@ -1,7 +1,5 @@
 package top.niunaijun.blackbox.fake.service;
 
-import static top.niunaijun.blackbox.app.BActivityThread.getUid;
-
 import java.lang.reflect.Method;
 
 import black.android.os.BRINetworkManagementServiceStub;

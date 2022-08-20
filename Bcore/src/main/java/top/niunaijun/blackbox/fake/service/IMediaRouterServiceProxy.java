@@ -15,7 +15,6 @@ import top.niunaijun.blackbox.utils.MethodParameterUtils;
  * Created by BlackBox on 2022/3/1.
  */
 public class IMediaRouterServiceProxy extends BinderInvocationStub {
-
     public IMediaRouterServiceProxy() {
         super(BRServiceManager.get().getService(Context.MEDIA_ROUTER_SERVICE));
     }
@@ -37,7 +36,6 @@ public class IMediaRouterServiceProxy extends BinderInvocationStub {
 
     @ProxyMethod("registerClientAsUser")
     public static class registerClientAsUser extends MethodHook {
-
         @Override
         protected Object hook(Object who, Method method, Object[] args) throws Throwable {
             MethodParameterUtils.replaceFirstAppPkg(args);
@@ -47,7 +45,6 @@ public class IMediaRouterServiceProxy extends BinderInvocationStub {
 
     @ProxyMethod("registerRouter2")
     public static class registerRouter2 extends MethodHook {
-
         @Override
         protected Object hook(Object who, Method method, Object[] args) throws Throwable {
             MethodParameterUtils.replaceFirstAppPkg(args);

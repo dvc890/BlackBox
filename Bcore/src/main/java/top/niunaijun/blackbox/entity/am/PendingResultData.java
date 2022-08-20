@@ -6,6 +6,8 @@ import android.os.IBinder;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import androidx.annotation.NonNull;
+
 import java.util.UUID;
 
 import black.android.content.BRBroadcastReceiverPendingResult;
@@ -66,7 +68,6 @@ public class PendingResultData implements Parcelable {
             return BRBroadcastReceiverPendingResult.get()._new(mResultCode, mResultData, mResultExtras, mType, mOrderedHint, mInitialStickyHint, mToken, mSendingUser);
         }
     }
-
 
     @Override
     public int describeContents() {
@@ -131,6 +132,7 @@ public class PendingResultData implements Parcelable {
         }
     };
 
+    @NonNull
     @Override
     public String toString() {
         return "PendingResultData{" +

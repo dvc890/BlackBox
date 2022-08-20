@@ -36,7 +36,7 @@ public class BStorageManagerService extends IBStorageManagerService.Stub impleme
     }
 
     @Override
-    public StorageVolume[] getVolumeList(int uid, String packageName, int flags, int userId) throws RemoteException {
+    public StorageVolume[] getVolumeList(int uid, String packageName, int flags, int userId) {
         if (BRStorageManager.get().getVolumeList(0, 0) == null) {
             return null;
         }
@@ -58,7 +58,7 @@ public class BStorageManagerService extends IBStorageManagerService.Stub impleme
     }
 
     @Override
-    public Uri getUriForFile(String file) throws RemoteException {
+    public Uri getUriForFile(String file) {
         return FileProvider.getUriForFile(BlackBoxCore.getContext(), ProxyManifest.getProxyFileProvider(), new File(file));
     }
 

@@ -42,7 +42,6 @@ public class NativeUtils {
         }
     }
 
-
     private static boolean findAndCopyNativeLib(ZipFile zipfile, String cpuArch, File nativeLibDir) throws Exception {
         Log.d(TAG, "Try to copy plugin's cup arch: " + cpuArch);
         boolean findLib = false;
@@ -71,10 +70,10 @@ public class NativeUtils {
 
             String libName = entryName.substring(entryName.lastIndexOf('/') + 1);
             Log.d(TAG, "verify so " + libName);
-//            File abiDir = new File(nativeLibDir, cpuArch);
-//            if (!abiDir.exists()) {
-//                abiDir.mkdirs();
-//            }
+            /*File abiDir = new File(nativeLibDir, cpuArch);
+            if (!abiDir.exists()) {
+                abiDir.mkdirs();
+            }*/
 
             File libFile = new File(nativeLibDir, libName);
             if (libFile.exists() && libFile.length() == entry.getSize()) {

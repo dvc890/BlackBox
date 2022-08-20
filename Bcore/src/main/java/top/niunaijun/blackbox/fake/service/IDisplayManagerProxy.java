@@ -20,7 +20,6 @@ import top.niunaijun.blackbox.utils.MethodParameterUtils;
  * 此处无Bug
  */
 public class IDisplayManagerProxy extends ClassInvocationStub {
-
     public IDisplayManagerProxy() {
     }
 
@@ -42,10 +41,8 @@ public class IDisplayManagerProxy extends ClassInvocationStub {
         return mDm != getProxyInvocation();
     }
 
-
     @ProxyMethod("createVirtualDisplay")
     public static class CreateVirtualDisplay extends MethodHook {
-
         @Override
         protected String getMethodName() {
             return "createVirtualDisplay";

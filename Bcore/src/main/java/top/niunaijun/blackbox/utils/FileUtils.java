@@ -27,7 +27,6 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class FileUtils {
-
     public static int count(File file) {
         if (!file.exists()) {
             return -1;
@@ -408,7 +407,6 @@ public class FileUtils {
         }
 
         public boolean LockExclusive(File targetFile) {
-
             if (targetFile == null) {
                 return false;
             }
@@ -434,7 +432,6 @@ public class FileUtils {
          * unlock odex file
          **/
         public void unLock(File targetFile) {
-
             File lockFile = new File(targetFile.getParentFile().getAbsolutePath().concat("/lock"));
             if (!lockFile.exists()) {
                 return;
@@ -508,5 +505,4 @@ public class FileUtils {
     private static boolean isMediaDocument(Uri uri) {
         return "com.android.providers.media.documents".equals(uri.getAuthority());
     }
-
 }

@@ -71,7 +71,6 @@ public class IOCore {
     }
 
     public String redirectPath(String path) {
-
         if (TextUtils.isEmpty(path))
             return path;
         if (path.contains("/blackbox/")) {
@@ -85,7 +84,6 @@ public class IOCore {
         String key = mTrieTree.search(path);
         if (!TextUtils.isEmpty(key))
             path = path.replace(key, Objects.requireNonNull(mRedirectMap.get(key)));
-
         return path;
     }
 
@@ -99,12 +97,10 @@ public class IOCore {
     public String redirectPath(String path, Map<String, String> rule) {
         if (TextUtils.isEmpty(path))
             return path;
-
         //Search the key from TrieTree
         String key = mTrieTree.search(path);
         if (!TextUtils.isEmpty(key))
             path = path.replace(key, Objects.requireNonNull(rule.get(key)));
-
         return path;
     }
 

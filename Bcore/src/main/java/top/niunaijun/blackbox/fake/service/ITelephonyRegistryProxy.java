@@ -39,7 +39,6 @@ public class ITelephonyRegistryProxy extends BinderInvocationStub {
 
     @ProxyMethod("listenForSubscriber")
     public static class ListenForSubscriber extends MethodHook {
-
         @Override
         protected Object hook(Object who, Method method, Object[] args) throws Throwable {
             MethodParameterUtils.replaceFirstAppPkg(args);
@@ -49,7 +48,6 @@ public class ITelephonyRegistryProxy extends BinderInvocationStub {
 
     @ProxyMethod("listen")
     public static class Listen extends MethodHook {
-
         @Override
         protected Object hook(Object who, Method method, Object[] args) throws Throwable {
             MethodParameterUtils.replaceFirstAppPkg(args);

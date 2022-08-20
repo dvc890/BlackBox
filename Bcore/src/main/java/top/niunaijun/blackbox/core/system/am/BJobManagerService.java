@@ -41,7 +41,7 @@ public class BJobManagerService extends IBJobManagerService.Stub implements ISys
     }
 
     @Override
-    public JobInfo schedule(JobInfo info, int userId) throws RemoteException {
+    public JobInfo schedule(JobInfo info, int userId) {
         ComponentName componentName = info.getService();
         Intent intent = new Intent();
         intent.setComponent(componentName);
@@ -63,7 +63,7 @@ public class BJobManagerService extends IBJobManagerService.Stub implements ISys
     }
 
     @Override
-    public JobRecord queryJobRecord(String processName, int jobId, int userId) throws RemoteException {
+    public JobRecord queryJobRecord(String processName, int jobId, int userId) {
         return mJobRecords.get(formatKey(processName, jobId));
     }
 
@@ -78,14 +78,14 @@ public class BJobManagerService extends IBJobManagerService.Stub implements ISys
     }
 
     @Override
-    public void cancelAll(String processName, int userId) throws RemoteException {
-        if (TextUtils.isEmpty(processName)) return;
+    public void cancelAll(String processName, int userId) {
+        /*if (TextUtils.isEmpty(processName)) return;
         for (String key : mJobRecords.keySet()) {
             if (key.startsWith(processName + "_")) {
                 JobRecord jobRecord = mJobRecords.get(key);
                 // todo
             }
-        }
+        }*/
     }
 
     @Override

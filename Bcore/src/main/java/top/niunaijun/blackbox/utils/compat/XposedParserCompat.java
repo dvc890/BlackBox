@@ -24,7 +24,6 @@ import top.niunaijun.blackbox.utils.CloseUtils;
  * 此处无Bug
  */
 public class XposedParserCompat {
-
     public static InstalledModule parseModule(ApplicationInfo applicationInfo) {
         try {
             PackageManager packageManager = BlackBoxCore.getPackageManager();

@@ -30,7 +30,6 @@ import android.util.Log;
 import android.webkit.WebView;
 
 import java.io.File;
-import java.lang.reflect.Method;
 import java.security.Security;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -93,7 +92,6 @@ import top.niunaijun.blackbox.utils.compat.StrictModeCompat;
 public class BActivityThread extends IBActivityThread.Stub {
     public static final String TAG = "BActivityThread";
 
-    private static BActivityThread sBActivityThread;
     private AppBindData mBoundApplication;
     private Application mInitialApplication;
     private AppConfig mAppConfig;
@@ -102,18 +100,15 @@ public class BActivityThread extends IBActivityThread.Stub {
     private static final Object mConfigLock = new Object();
 
     public static boolean isThreadInit() {
-        return sBActivityThread != null;
+        return true;
+    }
+
+    private static final class SBActivityThreadHolder {
+        static final BActivityThread sBActivityThread = new BActivityThread();
     }
 
     public static BActivityThread currentActivityThread() {
-        if (sBActivityThread == null) {
-            synchronized (BActivityThread.class) {
-                if (sBActivityThread == null) {
-                    sBActivityThread = new BActivityThread();
-                }
-            }
-        }
-        return sBActivityThread;
+        return SBActivityThreadHolder.sBActivityThread;
     }
 
     public static AppConfig getAppConfig() {
@@ -422,7 +417,7 @@ public class BActivityThread extends IBActivityThread.Stub {
         return mBoundApplication.info;
     }
 
-    public static void installProvider(Object mainThread, Context context, ProviderInfo providerInfo, Object holder) throws Throwable {
+    public static void installProvider(Object mainThread, Context context, ProviderInfo providerInfo, Object holder) {
         Reflector.invoke(mainThread.getClass(), mainThread, "installProvider", context, holder, providerInfo, false, true, true);
     }
 
@@ -474,12 +469,12 @@ public class BActivityThread extends IBActivityThread.Stub {
     }
 
     @Override
-    public void restartJobService(String selfId) throws RemoteException {
+    public void restartJobService(String selfId) {
 
     }
 
     @Override
-    public IBinder acquireContentProviderClient(ProviderInfo providerInfo) throws RemoteException {
+    public IBinder acquireContentProviderClient(ProviderInfo providerInfo) {
         if (!isInit()) {
             bindApplication(BActivityThread.getAppConfig().packageName, BActivityThread.getAppConfig().processName);
         }
@@ -549,7 +544,7 @@ public class BActivityThread extends IBActivityThread.Stub {
     }
 
     @Override
-    public void scheduleReceiver(ReceiverData data) throws RemoteException {
+    public void scheduleReceiver(ReceiverData data) {
         if (!isInit()) {
             bindApplication();
         }

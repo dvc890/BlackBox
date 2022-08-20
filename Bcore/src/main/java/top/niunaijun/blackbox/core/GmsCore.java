@@ -97,7 +97,6 @@ public class GmsCore {
         GOOGLE_APP.remove(packageName);
     }
 
-
     public static boolean isSupportGms() {
         try {
             BlackBoxCore.getPackageManager().getPackageInfo(GMS_PKG, 0);

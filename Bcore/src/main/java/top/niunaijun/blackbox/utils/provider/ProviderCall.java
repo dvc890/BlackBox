@@ -34,9 +34,7 @@ public class ProviderCall {
     }
 
     public static final class Builder {
-
         private final Context context;
-
         private final Bundle bundle = new Bundle();
 
         private String method;
@@ -73,8 +71,6 @@ public class ProviderCall {
                     bundle.putBundle(key, (Bundle) value);
                 } else if (value instanceof Parcelable) {
                     bundle.putParcelable(key, (Parcelable) value);
-                } else if (value instanceof int[]) {
-                    bundle.putIntArray(key, (int[]) value);
                 } else {
                     throw new IllegalArgumentException("Unknown type " + value.getClass() + " in Bundle.");
                 }

@@ -22,7 +22,6 @@ import top.niunaijun.blackbox.app.BActivityThread;
  */
 public class ContextCompat {
     public static final String TAG = "ContextCompat";
-
     public static void fixAttributionSourceState(Object obj, int uid) {
         Object mAttributionSourceState;
         if (obj != null && BRAttributionSource.get(obj)._check_mAttributionSourceState() != null) {

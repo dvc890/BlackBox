@@ -27,7 +27,6 @@ public class InstalledModule implements Parcelable {
     public InstalledModule() {
     }
 
-
     public ApplicationInfo getApplication() {
         return BlackBoxCore.getBPackageManager().getApplicationInfo(packageName, PackageManager.GET_META_DATA, BUserHandle.USER_XPOSED);
     }

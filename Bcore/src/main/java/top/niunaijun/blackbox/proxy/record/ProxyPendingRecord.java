@@ -2,6 +2,8 @@ package top.niunaijun.blackbox.proxy.record;
 
 import android.content.Intent;
 
+import androidx.annotation.NonNull;
+
 /**
  * Created by Milk on 3/31/21.
  * * ∧＿∧
@@ -30,6 +32,7 @@ public class ProxyPendingRecord {
         return new ProxyPendingRecord(target, userId);
     }
 
+    @NonNull
     @Override
     public String toString() {
         return "ProxyPendingActivityRecord{" +

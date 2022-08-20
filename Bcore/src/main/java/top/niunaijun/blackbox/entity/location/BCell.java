@@ -2,9 +2,10 @@ package top.niunaijun.blackbox.entity.location;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+
 /*
- * created by BlackBoxing at 2022/03/06
- * */
+ * Created by BlackBoxing at 2022/03/06
+ */
 public class BCell implements Parcelable {
     /**
      * mnc : 1
@@ -19,7 +20,6 @@ public class BCell implements Parcelable {
      * CID/CI( 2G(1~65535), 3G/4G(1~268435455))，Cell Identity，基站编号；
      * TYPE: Cdma/Lte/Gsm/Wcdma
      */
-
     public int MCC;
     public int MNC;
     public int LAC;
@@ -42,7 +42,6 @@ public class BCell implements Parcelable {
     public static final int NETWORK_TYPE_1xRTT = 7;
     /**
      * No phone module
-     *
      */
     public static final int PHONE_TYPE_NONE = 0;
     /**
@@ -68,7 +67,7 @@ public class BCell implements Parcelable {
         dest.writeInt(this.TYPE);
     }
 
-    public  BCell(){}
+    public BCell(){}
     public BCell(int MCC, int MNC, int LAC, int CID) {
         this.TYPE = PHONE_TYPE_GSM;
         this.MCC = MCC;
@@ -97,4 +96,3 @@ public class BCell implements Parcelable {
         }
     };
 }
-

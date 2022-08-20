@@ -19,7 +19,6 @@ import top.niunaijun.blackbox.fake.hook.ProxyMethod;
  * 此处无Bug
  */
 public class IAlarmManagerProxy extends BinderInvocationStub {
-
     public IAlarmManagerProxy() {
         super(BRServiceManager.get().getService(Context.ALARM_SERVICE));
     }

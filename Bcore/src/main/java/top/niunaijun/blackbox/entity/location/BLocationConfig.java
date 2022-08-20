@@ -9,7 +9,6 @@ import java.util.List;
  * Created by BlackBoxing on 3/8/22.
  **/
 public class BLocationConfig implements Parcelable {
-
     public int pattern;
     public BCell cell;
     public List<BCell> allCell;
@@ -35,7 +34,6 @@ public class BLocationConfig implements Parcelable {
         this.neighboringCellInfo = in.createTypedArrayList(BCell.CREATOR);
         this.location = in.readParcelable(BLocation.class.getClassLoader());
     }
-
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {

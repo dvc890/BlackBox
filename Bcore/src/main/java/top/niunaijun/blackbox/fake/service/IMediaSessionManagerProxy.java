@@ -20,7 +20,6 @@ import top.niunaijun.blackbox.fake.hook.ProxyMethod;
  * 此处无Bug
  */
 public class IMediaSessionManagerProxy extends BinderInvocationStub {
-
     public IMediaSessionManagerProxy() {
         super(BRServiceManager.get().getService(Context.MEDIA_SESSION_SERVICE));
     }

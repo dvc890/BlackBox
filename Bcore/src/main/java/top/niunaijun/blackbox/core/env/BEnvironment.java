@@ -98,7 +98,6 @@ public class BEnvironment {
         return new File(getExternalUserDir(userId), String.format(Locale.CHINA, "Android/data/%s", packageName));
     }
 
-
     public static File getDataDir(String packageName, int userId) {
         return new File(sVirtualRoot, String.format(Locale.CHINA, "data/user/%d/%s", userId, packageName));
     }

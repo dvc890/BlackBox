@@ -6,7 +6,6 @@ import top.niunaijun.blackbox.utils.Reflector;
 
 
 public class SystemPropertiesCompat {
-
     public static String get(String key, String def) {
         try {
             return Reflector.on("android.os.SystemProperties")
@@ -43,5 +42,4 @@ public class SystemPropertiesCompat {
         }
         return def;
     }
-
 }

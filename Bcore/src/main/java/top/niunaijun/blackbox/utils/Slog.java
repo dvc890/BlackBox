@@ -47,7 +47,6 @@ public final class Slog {
                 msg + '\n' + Log.getStackTraceString(tr));
     }
 
-    
     public static int i(String tag, String msg) {
         return println(Log.INFO, tag, msg);
     }
@@ -57,12 +56,10 @@ public final class Slog {
                 msg + '\n' + Log.getStackTraceString(tr));
     }
 
-    
     public static int w(String tag, String msg) {
         return println(Log.WARN, tag, msg);
     }
 
-    
     public static int w(String tag, String msg, Throwable tr) {
         return println(Log.WARN, tag,
                 msg + '\n' + Log.getStackTraceString(tr));
@@ -71,13 +68,11 @@ public final class Slog {
     public static int w(String tag, Throwable tr) {
         return println(Log.WARN, tag, Log.getStackTraceString(tr));
     }
-
     
     public static int e(String tag, String msg) {
         return println(Log.ERROR, tag, msg);
     }
 
-    
     public static int e(String tag, String msg, Throwable tr) {
         return println(Log.ERROR, tag,
                 msg + '\n' + Log.getStackTraceString(tr));

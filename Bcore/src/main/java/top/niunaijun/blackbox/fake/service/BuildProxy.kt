@@ -26,5 +26,4 @@ class BuildProxy: ClassInvocationStub() {
         BRBuild.get()._set_TYPE("user")
         BRBuild.get()._set_USER("builder")
     }
-
 }

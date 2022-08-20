@@ -1,21 +1,12 @@
 package top.niunaijun.blackbox.fake.service;
 
-import static top.niunaijun.blackbox.app.BActivityThread.getUid;
-
-import android.annotation.TargetApi;
 import android.content.Context;
-import android.os.Build;
-import android.os.storage.StorageVolume;
 
 import java.lang.reflect.Method;
 
 import black.android.app.usage.BRIStorageStatsManagerStub;
 import black.android.os.BRServiceManager;
-import top.niunaijun.blackbox.BlackBoxCore;
-import top.niunaijun.blackbox.app.BActivityThread;
 import top.niunaijun.blackbox.fake.hook.BinderInvocationStub;
-import top.niunaijun.blackbox.fake.hook.MethodHook;
-import top.niunaijun.blackbox.fake.hook.ProxyMethod;
 import top.niunaijun.blackbox.utils.MethodParameterUtils;
 
 /**
@@ -23,7 +14,6 @@ import top.niunaijun.blackbox.utils.MethodParameterUtils;
  */
 //@TargetApi(Build.VERSION_CODES.O)
 public class IStorageStatsManagerProxy extends BinderInvocationStub {
-
     public IStorageStatsManagerProxy() {
         super(BRServiceManager.get().getService(Context.STORAGE_STATS_SERVICE));
     }
@@ -50,12 +40,12 @@ public class IStorageStatsManagerProxy extends BinderInvocationStub {
         return super.invoke(proxy, method, args);
     }
 
-//    @ProxyMethod("queryStatsForUid")
-//    public static class QueryStatsForUid extends MethodHook {
-//        @Override
-//        protected Object hook(Object who, Method method, Object[] args) throws Throwable {
-//            MethodParameterUtils.replaceLastUid(args);
-//            return method.invoke(who, args);
-//        }
-//    }
+    /*@ProxyMethod("queryStatsForUid")
+    public static class QueryStatsForUid extends MethodHook {
+        @Override
+        protected Object hook(Object who, Method method, Object[] args) throws Throwable {
+            MethodParameterUtils.replaceLastUid(args);
+            return method.invoke(who, args);
+        }
+    }*/
 }

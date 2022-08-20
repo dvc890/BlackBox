@@ -71,5 +71,4 @@ public class IPermissionManagerProxy extends BinderInvocationStub {
     public boolean isBadEnv() {
         return false;
     }
-
 }

@@ -35,8 +35,6 @@ public class BNotificationManagerService extends IBNotificationManagerService.St
     private final static BNotificationManagerService sService = new BNotificationManagerService();
     public static final String CHANNEL_BLACK = "@black-";
     public static final String GROUP_BLACK = "@black-group-";
-
-    private NotificationChannelManager mNotificationChannelManager;
     private final Map<String, NotificationRecord> mNotificationRecords = new HashMap<>();
 
     private final NotificationManager mRealNotificationManager =
@@ -48,9 +46,7 @@ public class BNotificationManagerService extends IBNotificationManagerService.St
 
     @Override
     public void systemReady() {
-        mNotificationChannelManager = NotificationChannelManager.get();
     }
-
 
     private NotificationRecord getNotificationRecord(String packageName, int userId) {
         String key = packageName + "-" + userId;
@@ -73,7 +69,7 @@ public class BNotificationManagerService extends IBNotificationManagerService.St
 
     @Override
     @TargetApi(Build.VERSION_CODES.O)
-    public NotificationChannel getNotificationChannel(String channelId, int userId) throws RemoteException {
+    public NotificationChannel getNotificationChannel(String channelId, int userId) {
         int callingPid = getCallingPid();
         ProcessRecord processByPid = BProcessManagerService.get().findProcessByPid(callingPid);
         if (processByPid == null)
@@ -85,7 +81,7 @@ public class BNotificationManagerService extends IBNotificationManagerService.St
     }
 
     @Override
-    public List<NotificationChannel> getNotificationChannels(String packageName, int userId) throws RemoteException {
+    public List<NotificationChannel> getNotificationChannels(String packageName, int userId) {
         NotificationRecord notificationRecord = getNotificationRecord(packageName, userId);
         synchronized (notificationRecord.mNotificationChannels) {
             return new ArrayList<>(notificationRecord.mNotificationChannels.values());
@@ -93,7 +89,7 @@ public class BNotificationManagerService extends IBNotificationManagerService.St
     }
 
     @Override
-    public List<NotificationChannelGroup> getNotificationChannelGroups(String packageName, int userId) throws RemoteException {
+    public List<NotificationChannelGroup> getNotificationChannelGroups(String packageName, int userId) {
         NotificationRecord notificationRecord = getNotificationRecord(packageName, userId);
         synchronized (notificationRecord.mNotificationChannelGroups) {
             return new ArrayList<>(notificationRecord.mNotificationChannelGroups.values());
@@ -196,7 +192,7 @@ public class BNotificationManagerService extends IBNotificationManagerService.St
     }
 
     @Override
-    public void cancelNotificationWithTag(int id, String tag, int userId) throws RemoteException {
+    public void cancelNotificationWithTag(int id, String tag, int userId) {
         ProcessRecord processByPid = BProcessManagerService.get().findProcessByPid(Binder.getCallingPid());
         if (processByPid == null)
             return;

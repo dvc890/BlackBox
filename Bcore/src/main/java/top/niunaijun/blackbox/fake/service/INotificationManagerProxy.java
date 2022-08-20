@@ -50,7 +50,7 @@ public class INotificationManagerProxy extends BinderInvocationStub {
 
     @Override
     public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
-//        Slog.d(TAG, "call: " + method.getName());
+        //Slog.d(TAG, "call: " + method.getName());
         MethodParameterUtils.replaceAllAppPkg(args);
         return super.invoke(proxy, method, args);
     }
@@ -62,17 +62,14 @@ public class INotificationManagerProxy extends BinderInvocationStub {
 
     @ProxyMethod("getNotificationChannel")
     public static class GetNotificationChannel extends MethodHook {
-
         @Override
         protected Object hook(Object who, Method method, Object[] args) throws Throwable {
-            NotificationChannel notificationChannel = BNotificationManager.get().getNotificationChannel((String) args[args.length - 1]);
-            return notificationChannel;
+            return BNotificationManager.get().getNotificationChannel((String) args[args.length - 1]);
         }
     }
 
     @ProxyMethod("getNotificationChannels")
     public static class GetNotificationChannels extends MethodHook {
-
         @Override
         protected Object hook(Object who, Method method, Object[] args) throws Throwable {
             List<NotificationChannel> notificationChannels = BNotificationManager.get().getNotificationChannels(BActivityThread.getAppPackageName());
@@ -82,7 +79,6 @@ public class INotificationManagerProxy extends BinderInvocationStub {
 
     @ProxyMethod("cancelNotificationWithTag")
     public static class CancelNotificationWithTag extends MethodHook {
-
         @Override
         protected Object hook(Object who, Method method, Object[] args) throws Throwable {
             String tag = (String) args[getTagIndex()];
@@ -106,7 +102,6 @@ public class INotificationManagerProxy extends BinderInvocationStub {
 
     @ProxyMethod("enqueueNotificationWithTag")
     public static class EnqueueNotificationWithTag extends MethodHook {
-
         @Override
         protected Object hook(Object who, Method method, Object[] args) throws Throwable {
             String tag = (String) args[getTagIndex()];
@@ -128,7 +123,6 @@ public class INotificationManagerProxy extends BinderInvocationStub {
     @ProxyMethod("createNotificationChannels")
     @RequiresApi(api = Build.VERSION_CODES.O)
     public static class CreateNotificationChannels extends MethodHook {
-
         @Override
         protected Object hook(Object who, Method method, Object[] args) throws Throwable {
             List<?> list = BRParceledListSlice.get(args[1]).getList();
@@ -143,7 +137,6 @@ public class INotificationManagerProxy extends BinderInvocationStub {
 
     @ProxyMethod("deleteNotificationChannel")
     public static class DeleteNotificationChannel extends MethodHook {
-
         @Override
         protected Object hook(Object who, Method method, Object[] args) throws Throwable {
             BNotificationManager.get().deleteNotificationChannel((String) args[1]);
@@ -154,7 +147,6 @@ public class INotificationManagerProxy extends BinderInvocationStub {
     @ProxyMethod("createNotificationChannelGroups")
     @RequiresApi(api = Build.VERSION_CODES.O)
     public static class CreateNotificationChannelGroups extends MethodHook {
-
         @Override
         protected Object hook(Object who, Method method, Object[] args) throws Throwable {
             List<?> list = BRParceledListSlice.get(args[1]).getList();
@@ -167,7 +159,6 @@ public class INotificationManagerProxy extends BinderInvocationStub {
 
     @ProxyMethod("deleteNotificationChannelGroup")
     public static class DeleteNotificationChannelGroup extends MethodHook {
-
         @Override
         protected Object hook(Object who, Method method, Object[] args) throws Throwable {
             BNotificationManager.get().deleteNotificationChannelGroup((String) args[1]);
@@ -177,7 +168,6 @@ public class INotificationManagerProxy extends BinderInvocationStub {
 
     @ProxyMethod("getNotificationChannelGroups")
     public static class GetNotificationChannelGroups extends MethodHook {
-
         @Override
         protected Object hook(Object who, Method method, Object[] args) throws Throwable {
             List<NotificationChannelGroup> notificationChannelGroups = BNotificationManager.get().getNotificationChannelGroups(BActivityThread.getAppPackageName());

@@ -23,12 +23,12 @@ public class ServiceRecord {
     private boolean rebind;
     private int mStartId;
 
-    public class BoundInfo {
+    public static class BoundInfo {
         private IBinder mIBinder;
         private final AtomicInteger mBindCount = new AtomicInteger(0);
 
-        public int incrementAndGetBindCount() {
-            return mBindCount.incrementAndGet();
+        public void incrementAndGetBindCount() {
+            mBindCount.incrementAndGet();
         }
 
         public int decrementAndGetBindCount() {
@@ -91,9 +91,9 @@ public class ServiceRecord {
         }
     }
 
-    public int incrementAndGetBindCount(Intent intent) {
+    public void incrementAndGetBindCount(Intent intent) {
         BoundInfo boundInfo = getOrCreateBoundInfo(intent);
-        return boundInfo.incrementAndGetBindCount();
+        boundInfo.incrementAndGetBindCount();
     }
 
     public boolean decreaseConnectionCount(Intent intent) {
@@ -102,7 +102,7 @@ public class ServiceRecord {
         if (boundInfo == null)
             return true;
         int i = boundInfo.decrementAndGetBindCount();
-        //            mBounds.remove(filterComparison);
+        //mBounds.remove(filterComparison);
         return i <= 0;
     }
 

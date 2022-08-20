@@ -5,7 +5,6 @@ import java.lang.reflect.Method;
 import top.niunaijun.blackbox.fake.hook.MethodHook;
 
 public class ValueMethodProxy extends MethodHook {
-
 	Object mValue;
 	String mName;
 

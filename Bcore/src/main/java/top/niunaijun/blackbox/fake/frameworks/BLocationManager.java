@@ -35,8 +35,8 @@ public class BLocationManager extends BlackManager<IBLocationManagerService> {
         return get().getPattern(BActivityThread.getUserId(), BActivityThread.getAppPackageName()) != CLOSE_MODE;
     }
 
-    public static void disableFakeLocation(int userId,String pkg){
-        get().setPattern(userId,pkg,CLOSE_MODE);
+    public static void disableFakeLocation(int userId,String pkg) {
+        get().setPattern(userId, pkg, CLOSE_MODE);
     }
 
     public void setPattern(int userId, String pkg, int pattern) {

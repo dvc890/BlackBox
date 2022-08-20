@@ -16,6 +16,7 @@ import android.util.Log;
 import java.lang.ref.WeakReference;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
+import java.util.Objects;
 
 import black.android.app.BRActivityManagerNative;
 import black.android.app.BRActivityManagerOreo;
@@ -109,17 +110,16 @@ public class IActivityManagerProxy extends ClassInvocationStub {
         protected Object hook(Object who, Method method, Object[] args) throws Exception {
             int authIndex = getAuthIndex();
             Object auth = args[authIndex];
-            Object content = null;
+            Object content;
             Log.d(TAG, "innovate getContentProvider: " + auth);
-//            try{
-//                BlackBoxCore.getBPackageManager().resolveContentProvider((String) auth, GET_META_DATA, BActivityThread.getUserId());
-//
-//            } catch (Exception e){
-//                Log.e(TAG, "BlackBoxCore.getBPackageManager().resolveContentProvider Failed");
-//                e.printStackTrace();
-//            }
+            /*try {
+                BlackBoxCore.getBPackageManager().resolveContentProvider((String) auth, GET_META_DATA, BActivityThread.getUserId());
 
-//            Log.d(TAG, "providerInfo.authority: " + providerInfo.authority);
+            } catch (Exception e){
+                Log.e(TAG, "BlackBoxCore.getBPackageManager().resolveContentProvider Failed");
+                e.printStackTrace();
+            }
+            Log.d(TAG, "providerInfo.authority: " + providerInfo.authority);*/
             if (auth instanceof String) {
                 if (ProxyManifest.isProxy((String) auth)) {
                     Log.d(TAG, "ProxyManifest.isProxy: " + auth);
@@ -137,25 +137,25 @@ public class IActivityManagerProxy extends ClassInvocationStub {
                 } else {
                     Log.d(TAG, "hook getContentProvider: " + auth);
                     ProviderInfo providerInfo = BlackBoxCore.getBPackageManager().resolveContentProvider((String) auth, GET_META_DATA, BActivityThread.getUserId());
-                    if (providerInfo == null) {
-//                        Log.d(TAG, "hook system: " + auth);
-//                        Object invoke = method.invoke(who, args);
-//                        if (invoke != null) {
-//                            Object provider = Reflector.with(invoke)
-//                                    .field("provider")
-//                                    .get();
-//                            if (provider != null && !(provider instanceof Proxy)) {
-//                                Reflector.with(invoke)
-//                                        .field("provider")
-//                                        .set(new SettingsProviderStub().wrapper((IInterface) provider, BlackBoxCore.getHostPkg()));
-//                            }
-//                        }
-//                        return null;
-                    }
+                    /*if (providerInfo == null) {
+                        Log.d(TAG, "hook system: " + auth);
+                        Object invoke = method.invoke(who, args);
+                        if (invoke != null) {
+                            Object provider = Reflector.with(invoke)
+                                    .field("provider")
+                                    .get();
+                            if (provider != null && !(provider instanceof Proxy)) {
+                                Reflector.with(invoke)
+                                        .field("provider")
+                                        .set(new SettingsProviderStub().wrapper((IInterface) provider, BlackBoxCore.getHostPkg()));
+                            }
+                        }
+                        return null;
+                    }*/
 
                     Log.d(TAG, "hook app: " + auth);
                     IBinder providerBinder = null;
-                    if (BActivityThread.getAppPid() != -1) {
+                    if (BActivityThread.getAppPid() != -1 && providerInfo != null) {
                         AppConfig appConfig = BlackBoxCore.getBActivityManager().initProcess(providerInfo.packageName, providerInfo.processName, BActivityThread.getUserId());
                         if (appConfig.bpid != BActivityThread.getAppPid()) {
                             providerBinder = BlackBoxCore.getBActivityManager().acquireContentProviderClient(providerInfo);
@@ -167,14 +167,13 @@ public class IActivityManagerProxy extends ClassInvocationStub {
                         return null;
 
                     content = method.invoke(who, args);
-                    Reflector.with(content)
+                    Reflector.with(Objects.requireNonNull(content))
                             .field("info")
                             .set(providerInfo);
                     Reflector.with(content)
                             .field("provider")
                             .set(new ContentProviderStub().wrapper(BRContentProviderNative.get().asInterface(providerBinder), BActivityThread.getAppPackageName()));
                 }
-
                 return content;
             }
             return method.invoke(who, args);
@@ -244,7 +243,6 @@ public class IActivityManagerProxy extends ClassInvocationStub {
 
     @ProxyMethod("bindService")
     public static class BindService extends MethodHook {
-
         @Override
         protected Object hook(Object who, Method method, Object[] args) throws Throwable {
             Intent intent = (Intent) args[2];
@@ -298,7 +296,6 @@ public class IActivityManagerProxy extends ClassInvocationStub {
 
     @ProxyMethod("unbindService")
     public static class UnbindService extends MethodHook {
-
         @Override
         protected Object hook(Object who, Method method, Object[] args) throws Throwable {
             IServiceConnection iServiceConnection = (IServiceConnection) args[0];
@@ -316,7 +313,6 @@ public class IActivityManagerProxy extends ClassInvocationStub {
 
     @ProxyMethod("getRunningAppProcesses")
     public static class GetRunningAppProcesses extends MethodHook {
-
         @Override
         protected Object hook(Object who, Method method, Object[] args) throws Throwable {
             RunningAppProcessInfo runningAppProcesses = BActivityManager.get().getRunningAppProcesses(BActivityThread.getAppPackageName(), BActivityThread.getUserId());
@@ -329,7 +325,6 @@ public class IActivityManagerProxy extends ClassInvocationStub {
 
     @ProxyMethod("getServices")
     public static class GetServices extends MethodHook {
-
         @Override
         protected Object hook(Object who, Method method, Object[] args) throws Throwable {
             RunningServiceInfo runningServices = BActivityManager.get().getRunningServices(BActivityThread.getAppPackageName(), BActivityThread.getUserId());
@@ -350,13 +345,11 @@ public class IActivityManagerProxy extends ClassInvocationStub {
 
             for (int i = 0; i < intents.length; i++) {
                 Intent intent = intents[i];
-                switch (type) {
-                    case ActivityManagerCompat.INTENT_SENDER_ACTIVITY:
-                        Intent shadow = new Intent();
-                        shadow.setComponent(new ComponentName(BlackBoxCore.getHostPkg(), ProxyManifest.getProxyPendingActivity(BActivityThread.getAppPid())));
-                        ProxyPendingRecord.saveStub(shadow, intent, BActivityThread.getUserId());
-                        intents[i] = shadow;
-                        break;
+                if (type == ActivityManagerCompat.INTENT_SENDER_ACTIVITY) {
+                    Intent shadow = new Intent();
+                    shadow.setComponent(new ComponentName(BlackBoxCore.getHostPkg(), ProxyManifest.getProxyPendingActivity(BActivityThread.getAppPid())));
+                    ProxyPendingRecord.saveStub(shadow, intent, BActivityThread.getUserId());
+                    intents[i] = shadow;
                 }
             }
             IInterface invoke = (IInterface) method.invoke(who, args);
@@ -450,7 +443,6 @@ public class IActivityManagerProxy extends ClassInvocationStub {
 
     @ProxyMethod("unregisterReceiver")
     public static class unregisterReceiver extends MethodHook {
-
         @Override
         protected Object hook(Object who, Method method, Object[] args) throws Throwable {
             return method.invoke(who, args);
@@ -459,7 +451,6 @@ public class IActivityManagerProxy extends ClassInvocationStub {
 
     @ProxyMethod("finishReceiver")
     public static class finishReceiver extends MethodHook {
-
         @Override
         protected Object hook(Object who, Method method, Object[] args) throws Throwable {
             return method.invoke(who, args);
@@ -468,7 +459,6 @@ public class IActivityManagerProxy extends ClassInvocationStub {
 
     @ProxyMethod("publishService")
     public static class PublishService extends MethodHook {
-
         @Override
         protected Object hook(Object who, Method method, Object[] args) throws Throwable {
             return method.invoke(who, args);
@@ -477,7 +467,6 @@ public class IActivityManagerProxy extends ClassInvocationStub {
 
     @ProxyMethod("peekService")
     public static class PeekService extends MethodHook {
-
         @Override
         protected Object hook(Object who, Method method, Object[] args) throws Throwable {
             MethodParameterUtils.replaceLastAppPkg(args);
@@ -491,7 +480,6 @@ public class IActivityManagerProxy extends ClassInvocationStub {
     // todo
     @ProxyMethod("sendIntentSender")
     public static class SendIntentSender extends MethodHook {
-
         @Override
         protected Object hook(Object who, Method method, Object[] args) throws Throwable {
             return 0;
@@ -505,7 +493,6 @@ public class IActivityManagerProxy extends ClassInvocationStub {
 
     @ProxyMethod("registerReceiver")
     public static class RegisterReceiver extends MethodHook {
-
         @Override
         protected Object hook(Object who, Method method, Object[] args) throws Throwable {
             MethodParameterUtils.replaceFirstAppPkg(args);
@@ -560,10 +547,10 @@ public class IActivityManagerProxy extends ClassInvocationStub {
     public static class setServiceForeground extends MethodHook {
         @Override
         protected Object hook(Object who, Method method, Object[] args) throws Throwable {
-//            if (args[0] instanceof ComponentName) {
-//                args[0] = new ComponentName(BlackBoxCore.getHostPkg(), ProxyManifest.getProxyService(BActivityThread.getAppPid()));
-//            }
-//            return method.invoke(who, args);
+            /*if (args[0] instanceof ComponentName) {
+                args[0] = new ComponentName(BlackBoxCore.getHostPkg(), ProxyManifest.getProxyService(BActivityThread.getAppPid()));
+            }
+            return method.invoke(who, args);*/
             return 0;
         }
     }
@@ -580,8 +567,7 @@ public class IActivityManagerProxy extends ClassInvocationStub {
     public static class getCurrentUser extends MethodHook {
         @Override
         protected Object hook(Object who, Method method, Object[] args) throws Throwable {
-            Object blackBox = BRUserInfo.get()._new(BActivityThread.getUserId(), "BlackBox", BRUserInfo.get().FLAG_PRIMARY());
-            return blackBox;
+            return BRUserInfo.get()._new(BActivityThread.getUserId(), "BlackBox", BRUserInfo.get().FLAG_PRIMARY());
         }
     }
 
@@ -634,7 +620,6 @@ public class IActivityManagerProxy extends ClassInvocationStub {
 
     @ProxyMethod("registerUidObserver")
     public static class registerUidObserver extends MethodHook {
-
         @Override
         protected Object hook(Object who, Method method, Object[] args) throws Throwable {
             return 0;
@@ -643,7 +628,6 @@ public class IActivityManagerProxy extends ClassInvocationStub {
 
     @ProxyMethod("unregisterUidObserver")
     public static class unregisterUidObserver extends MethodHook {
-
         @Override
         protected Object hook(Object who, Method method, Object[] args) throws Throwable {
             return 0;
@@ -652,7 +636,6 @@ public class IActivityManagerProxy extends ClassInvocationStub {
 
     @ProxyMethod("updateConfiguration")
     public static class updateConfiguration extends MethodHook {
-
         @Override
         protected Object hook(Object who, Method method, Object[] args) throws Throwable {
             return 0;

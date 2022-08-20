@@ -49,7 +49,7 @@ public class ProxyContentProvider extends ContentProvider {
     @Nullable
     @Override
     public Cursor query(@NonNull Uri uri, @Nullable String[] projection, @Nullable String selection, @Nullable String[] selectionArgs, @Nullable String sortOrder) {
-//        uri.toString();
+        //uri.toString();
         Log.d(TAG, uri.toString());
         return null;
     }

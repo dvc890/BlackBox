@@ -1,5 +1,7 @@
 package top.niunaijun.blackbox.core;
 
+import androidx.annotation.NonNull;
+
 import top.niunaijun.blackbox.BlackBoxCore;
 
 /**
@@ -23,7 +25,7 @@ public class CrashHandler implements Thread.UncaughtExceptionHandler {
     }
 
     @Override
-    public void uncaughtException(Thread t, Throwable e) {
+    public void uncaughtException(@NonNull Thread t, @NonNull Throwable e) {
         if (BlackBoxCore.get().getExceptionHandler() != null) {
             BlackBoxCore.get().getExceptionHandler().uncaughtException(t, e);
         }

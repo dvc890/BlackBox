@@ -46,7 +46,6 @@ public class BUserAccounts implements Parcelable {
         return accounts.remove(bAccount);
     }
 
-
     public Map<String, Integer> getVisibility(Account account) {
         BAccount bAccount = getAccount(account);
         if (bAccount == null)
@@ -92,7 +91,6 @@ public class BUserAccounts implements Parcelable {
         }
         return -1;
     }
-
 
     @Override
     public int describeContents() {

@@ -16,8 +16,6 @@ import top.niunaijun.blackbox.entity.ServiceRecord;
 import top.niunaijun.blackbox.entity.UnbindRecord;
 import top.niunaijun.blackbox.proxy.record.ProxyServiceRecord;
 
-import static android.app.Service.START_NOT_STICKY;
-
 
 /**
  * Created by Milk on 4/1/21.
@@ -29,15 +27,11 @@ import static android.app.Service.START_NOT_STICKY;
  */
 public class AppServiceDispatcher {
     public static final String TAG = "AppServiceDispatcher";
-
     private static final AppServiceDispatcher sServiceDispatcher = new AppServiceDispatcher();
-
     private final Map<Intent.FilterComparison, ServiceRecord> mService = new HashMap<>();
-
     public static AppServiceDispatcher get() {
         return sServiceDispatcher;
     }
-
     private final Handler mHandler = BlackBoxCore.get().getHandler();
 
     public IBinder onBind(Intent proxyIntent) {
@@ -48,7 +42,7 @@ public class AppServiceDispatcher {
         if (intent == null || serviceInfo == null)
             return null;
 
-//        Log.d(TAG, "onBind: " + component.toString());
+        //Log.d(TAG, "onBind: " + component.toString());
 
         Service service = getOrCreateService(serviceRecord);
         if (service == null)
@@ -75,27 +69,25 @@ public class AppServiceDispatcher {
         return null;
     }
 
-    public int onStartCommand(Intent proxyIntent, int flags, int startId) {
+    public void onStartCommand(Intent proxyIntent, int flags, int startId) {
         ProxyServiceRecord stubRecord = ProxyServiceRecord.create(proxyIntent);
         if (stubRecord.mServiceIntent == null || stubRecord.mServiceInfo == null) {
-            return START_NOT_STICKY;
+            return;
         }
 
-//        Log.d(TAG, "onStartCommand: " + component.toString());
+        //Log.d(TAG, "onStartCommand: " + component.toString());
         Service service = getOrCreateService(stubRecord);
         if (service == null)
-            return START_NOT_STICKY;
+            return;
         stubRecord.mServiceIntent.setExtrasClassLoader(service.getClassLoader());
         ServiceRecord record = findRecord(stubRecord.mServiceIntent);
         record.setStartId(stubRecord.mStartId);
         try {
             int i = service.onStartCommand(stubRecord.mServiceIntent, flags, stubRecord.mStartId);
             BlackBoxCore.getBActivityManager().onStartCommand(proxyIntent, stubRecord.mUserId);
-            return i;
         } catch (Throwable e) {
             e.printStackTrace();
         }
-        return START_NOT_STICKY;
     }
 
     public void onDestroy() {
@@ -109,7 +101,7 @@ public class AppServiceDispatcher {
             }
         }
         mService.clear();
-//        Log.d(TAG, "onDestroy: ");
+        //Log.d(TAG, "onDestroy: ");
     }
 
     public void onConfigurationChanged(Configuration newConfig) {
@@ -122,7 +114,7 @@ public class AppServiceDispatcher {
                 }
             }
         }
-//        Log.d(TAG, "onConfigurationChanged");
+        //Log.d(TAG, "onConfigurationChanged");
     }
 
     public void onLowMemory() {
@@ -135,7 +127,7 @@ public class AppServiceDispatcher {
                 }
             }
         }
-//        Log.d(TAG, "onLowMemory");
+        //Log.d(TAG, "onLowMemory");
     }
 
     public void onTrimMemory(int level) {
@@ -148,24 +140,24 @@ public class AppServiceDispatcher {
                 }
             }
         }
-        // Log.d(TAG, "onTrimMemory");
+        //Log.d(TAG, "onTrimMemory");
     }
 
-    public boolean onUnbind(Intent proxyIntent) {
+    public void onUnbind(Intent proxyIntent) {
         ProxyServiceRecord stubRecord = ProxyServiceRecord.create(proxyIntent);
         if (stubRecord.mServiceIntent == null || stubRecord.mServiceInfo == null) {
-            return false;
+            return;
         }
         Intent intent = stubRecord.mServiceIntent;
 
         try {
             UnbindRecord unbindRecord = BlackBoxCore.getBActivityManager().onServiceUnbind(proxyIntent, BActivityThread.getUserId());
             if (unbindRecord == null)
-                return false;
+                return;
 
             Service service = getOrCreateService(stubRecord);
             if (service == null)
-                return false;
+                return;
 
             stubRecord.mServiceIntent.setExtrasClassLoader(service.getClassLoader());
 
@@ -180,12 +172,11 @@ public class AppServiceDispatcher {
                     mService.remove(new Intent.FilterComparison(intent));
                 }
                 record.setRebind(true);
-//                Log.d(TAG, "onUnbind：" + stubRecord.mServiceIntent.getComponent().toString());
+                //Log.d(TAG, "onUnbind：" + stubRecord.mServiceIntent.getComponent().toString());
             }
         } catch (Throwable e) {
             e.printStackTrace();
         }
-        return false;
     }
 
     public IBinder peekService(Intent intent) {

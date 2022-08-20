@@ -20,7 +20,6 @@ import top.niunaijun.blackbox.fake.hook.ProxyMethod;
  * 此处无Bug
  */
 public class RestrictionsManagerStub extends BinderInvocationStub {
-
     public RestrictionsManagerStub() {
         super(BRServiceManager.get().getService(Context.RESTRICTIONS_SERVICE));
     }

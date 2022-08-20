@@ -18,7 +18,6 @@ import top.niunaijun.blackbox.utils.MethodParameterUtils;
  * 此处无Bug
  */
 public class ILauncherAppsProxy extends BinderInvocationStub {
-
     public ILauncherAppsProxy() {
         super(BRServiceManager.get().getService(Context.LAUNCHER_APPS_SERVICE));
     }
@@ -49,5 +48,4 @@ public class ILauncherAppsProxy extends BinderInvocationStub {
         // todo shouldHideFromSuggestions
         return super.invoke(proxy, method, args);
     }
-
 }

@@ -42,7 +42,6 @@ public class BActivityManagerService extends IBActivityManagerService.Stub imple
     public static final String TAG = "BActivityManagerService";
     private static final BActivityManagerService sService = new BActivityManagerService();
     private final Map<Integer, UserSpace> mUserSpace = new HashMap<>();
-    private final BPackageManagerService mPms = BPackageManagerService.get();
     private final BroadcastManager mBroadcastManager;
 
     public static BActivityManagerService get() {
@@ -50,6 +49,7 @@ public class BActivityManagerService extends IBActivityManagerService.Stub imple
     }
 
     public BActivityManagerService() {
+        BPackageManagerService mPms = BPackageManagerService.get();
         mBroadcastManager = BroadcastManager.startSystem(this, mPms);
     }
 
@@ -63,7 +63,7 @@ public class BActivityManagerService extends IBActivityManagerService.Stub imple
     }
 
     @Override
-    public IBinder acquireContentProviderClient(ProviderInfo providerInfo) throws RemoteException {
+    public IBinder acquireContentProviderClient(ProviderInfo providerInfo) {
         int callingPid = Binder.getCallingPid();
         ProcessRecord processRecord = BProcessManagerService.get().startProcessLocked(providerInfo.packageName,
                 providerInfo.processName,
@@ -112,7 +112,7 @@ public class BActivityManagerService extends IBActivityManagerService.Stub imple
     }
 
     @Override
-    public void onActivityCreated(int taskId, IBinder token, String activityToken) throws RemoteException {
+    public void onActivityCreated(int taskId, IBinder token, String activityToken) {
         int callingPid = Binder.getCallingPid();
         ProcessRecord process = BProcessManagerService.get().findProcessByPid(callingPid);
         if (process == null) {
@@ -154,7 +154,7 @@ public class BActivityManagerService extends IBActivityManagerService.Stub imple
     }
 
     @Override
-    public void onFinishActivity(IBinder token) throws RemoteException {
+    public void onFinishActivity(IBinder token) {
         int callingPid = Binder.getCallingPid();
         ProcessRecord process = BProcessManagerService.get().findProcessByPid(callingPid);
         if (process == null) {
@@ -167,7 +167,7 @@ public class BActivityManagerService extends IBActivityManagerService.Stub imple
     }
 
     @Override
-    public RunningAppProcessInfo getRunningAppProcesses(String callerPackage, int userId) throws RemoteException {
+    public RunningAppProcessInfo getRunningAppProcesses(String callerPackage, int userId) {
         ActivityManager manager = (ActivityManager)
                 BlackBoxCore.getContext().getSystemService(Context.ACTIVITY_SERVICE);
         List<ActivityManager.RunningAppProcessInfo> runningAppProcesses = manager.getRunningAppProcesses();
@@ -189,7 +189,7 @@ public class BActivityManagerService extends IBActivityManagerService.Stub imple
     }
 
     @Override
-    public RunningServiceInfo getRunningServices(String callerPackage, int userId) throws RemoteException {
+    public RunningServiceInfo getRunningServices(String callerPackage, int userId) {
         UserSpace userSpace = getOrCreateSpaceLocked(userId);
         return userSpace.mActiveServices.getRunningServiceInfo(callerPackage, userId);
     }
@@ -217,12 +217,12 @@ public class BActivityManagerService extends IBActivityManagerService.Stub imple
     }
 
     @Override
-    public void finishBroadcast(PendingResultData data) throws RemoteException {
+    public void finishBroadcast(PendingResultData data) {
         mBroadcastManager.finishBroadcast(data);
     }
 
     @Override
-    public String getCallingPackage(IBinder token, int userId) throws RemoteException {
+    public String getCallingPackage(IBinder token, int userId) {
         UserSpace userSpace = getOrCreateSpaceLocked(userId);
         synchronized (userSpace.mStack) {
             return userSpace.mStack.getCallingPackage(token, userId);
@@ -230,7 +230,7 @@ public class BActivityManagerService extends IBActivityManagerService.Stub imple
     }
 
     @Override
-    public ComponentName getCallingActivity(IBinder token, int userId) throws RemoteException {
+    public ComponentName getCallingActivity(IBinder token, int userId) {
         UserSpace userSpace = getOrCreateSpaceLocked(userId);
         synchronized (userSpace.mStack) {
             return userSpace.mStack.getCallingActivity(token, userId);
@@ -249,7 +249,7 @@ public class BActivityManagerService extends IBActivityManagerService.Stub imple
     }
 
     @Override
-    public String getPackageForIntentSender(IBinder target, int userId) throws RemoteException {
+    public String getPackageForIntentSender(IBinder target, int userId) {
         UserSpace userSpace = getOrCreateSpaceLocked(userId);
         synchronized (userSpace.mIntentSenderRecords) {
             PendingIntentRecord record = userSpace.mIntentSenderRecords.get(target);
@@ -261,7 +261,7 @@ public class BActivityManagerService extends IBActivityManagerService.Stub imple
     }
 
     @Override
-    public int getUidForIntentSender(IBinder target, int userId) throws RemoteException {
+    public int getUidForIntentSender(IBinder target, int userId) {
         UserSpace userSpace = getOrCreateSpaceLocked(userId);
         synchronized (userSpace.mIntentSenderRecords) {
             PendingIntentRecord record = userSpace.mIntentSenderRecords.get(target);
@@ -273,7 +273,7 @@ public class BActivityManagerService extends IBActivityManagerService.Stub imple
     }
 
     @Override
-    public void onStartCommand(Intent intent, int userId) throws RemoteException {
+    public void onStartCommand(Intent intent, int userId) {
         UserSpace userSpace = getOrCreateSpaceLocked(userId);
         synchronized (userSpace.mActiveServices) {
             userSpace.mActiveServices.onStartCommand(intent, userId);
@@ -289,7 +289,7 @@ public class BActivityManagerService extends IBActivityManagerService.Stub imple
     }
 
     @Override
-    public void onServiceDestroy(Intent proxyIntent, int userId) throws RemoteException {
+    public void onServiceDestroy(Intent proxyIntent, int userId) {
         UserSpace userSpace = getOrCreateSpaceLocked(userId);
         synchronized (userSpace.mActiveServices) {
             userSpace.mActiveServices.onServiceDestroy(proxyIntent, userId);
@@ -305,7 +305,7 @@ public class BActivityManagerService extends IBActivityManagerService.Stub imple
     }
 
     @Override
-    public Intent bindService(Intent service, IBinder binder, String resolvedType, int userId) throws RemoteException {
+    public Intent bindService(Intent service, IBinder binder, String resolvedType, int userId) {
         UserSpace userSpace = getOrCreateSpaceLocked(userId);
         synchronized (userSpace.mActiveServices) {
             return userSpace.mActiveServices.bindService(service, binder, resolvedType, userId);
@@ -313,7 +313,7 @@ public class BActivityManagerService extends IBActivityManagerService.Stub imple
     }
 
     @Override
-    public void unbindService(IBinder binder, int userId) throws RemoteException {
+    public void unbindService(IBinder binder, int userId) {
         UserSpace userSpace = getOrCreateSpaceLocked(userId);
         synchronized (userSpace.mActiveServices) {
             userSpace.mActiveServices.unbindService(binder, userId);
@@ -321,7 +321,7 @@ public class BActivityManagerService extends IBActivityManagerService.Stub imple
     }
 
     @Override
-    public void stopServiceToken(ComponentName className, IBinder token, int userId) throws RemoteException {
+    public void stopServiceToken(ComponentName className, IBinder token, int userId) {
         UserSpace userSpace = getOrCreateSpaceLocked(userId);
         synchronized (userSpace.mActiveServices) {
             userSpace.mActiveServices.stopServiceToken(className, token, userId);
@@ -329,7 +329,7 @@ public class BActivityManagerService extends IBActivityManagerService.Stub imple
     }
 
     @Override
-    public AppConfig initProcess(String packageName, String processName, int userId) throws RemoteException {
+    public AppConfig initProcess(String packageName, String processName, int userId) {
         ProcessRecord processRecord = BProcessManagerService.get().startProcessLocked(packageName, processName, userId, -1, Binder.getCallingPid());
         if (processRecord == null)
             return null;
@@ -337,7 +337,7 @@ public class BActivityManagerService extends IBActivityManagerService.Stub imple
     }
 
     @Override
-    public void restartProcess(String packageName, String processName, int userId) throws RemoteException {
+    public void restartProcess(String packageName, String processName, int userId) {
         BProcessManagerService.get().restartAppProcess(packageName, processName, userId);
     }
 
@@ -350,7 +350,7 @@ public class BActivityManagerService extends IBActivityManagerService.Stub imple
     }
 
     @Override
-    public int startActivityAms(int userId, Intent intent, String resolvedType, IBinder resultTo, String resultWho, int requestCode, int flags, Bundle options) throws RemoteException {
+    public int startActivityAms(int userId, Intent intent, String resolvedType, IBinder resultTo, String resultWho, int requestCode, int flags, Bundle options) {
         UserSpace space = getOrCreateSpaceLocked(userId);
         synchronized (space.mStack) {
             return space.mStack.startActivityLocked(userId, intent, resolvedType, resultTo, resultWho, requestCode, flags, options);
@@ -358,7 +358,7 @@ public class BActivityManagerService extends IBActivityManagerService.Stub imple
     }
 
     @Override
-    public int startActivities(int userId, Intent[] intent, String[] resolvedType, IBinder resultTo, Bundle options) throws RemoteException {
+    public int startActivities(int userId, Intent[] intent, String[] resolvedType, IBinder resultTo, Bundle options) {
         UserSpace space = getOrCreateSpaceLocked(userId);
         synchronized (space.mStack) {
             return space.mStack.startActivitiesLocked(userId, intent, resolvedType, resultTo, options);

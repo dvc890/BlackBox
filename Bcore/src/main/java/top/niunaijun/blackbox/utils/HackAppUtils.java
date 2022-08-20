@@ -47,14 +47,14 @@ public class HackAppUtils {
     }
 
     public static void hackApp(String packageName, ClassLoader classLoader){
-//        if ("jp.naver.line.android".equals(packageName)) {
-//            injectLine(classLoader);
-//        }
+        /*if ("jp.naver.line.android".equals(packageName)) {
+            injectLine(classLoader);
+        }*/
     }
 
     public static void hackActivity(String packageName, ClassLoader classLoader){
-//        if ("com.tencent.mobileqq".equals(packageName)) {
-//            enableQQLogOutput(classLoader);
-//        }
+        /*if ("com.tencent.mobileqq".equals(packageName)) {
+            enableQQLogOutput(classLoader);
+        }*/
     }
 }

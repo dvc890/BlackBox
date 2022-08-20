@@ -12,16 +12,12 @@ public class ShellUtils {
     public static final String COMMAND_EXIT = "exit\n";
     public static final String COMMAND_LINE_END = "\n";
 
-
     private ShellUtils() {
         throw new AssertionError();
     }
 
-
     /**
      * check whether has root permission
-     *
-     * @return
      */
     public static boolean checkRootPermission() {
         return execCommand("echo root", true, false).result == 0;
@@ -33,7 +29,6 @@ public class ShellUtils {
      *
      * @param command command
      * @param isRoot  whether need to run with root
-     * @return
      * @see ShellUtils#execCommand(String[], boolean, boolean)
      */
     public static CommandResult execCommand(String command, boolean isRoot) {
@@ -46,7 +41,6 @@ public class ShellUtils {
      *
      * @param commands command list
      * @param isRoot   whether need to run with root
-     * @return
      * @see ShellUtils#execCommand(String[], boolean, boolean)
      */
     public static CommandResult execCommand(List<String> commands, boolean isRoot) {
@@ -58,7 +52,6 @@ public class ShellUtils {
      *
      * @param commands command array
      * @param isRoot   whether need to run with root
-     * @return
      * @see ShellUtils#execCommand(String[], boolean, boolean)
      */
     public static CommandResult execCommand(String[] commands, boolean isRoot) {
@@ -72,7 +65,6 @@ public class ShellUtils {
      * @param command         command
      * @param isRoot          whether need to run with root
      * @param isNeedResultMsg whether need result msg
-     * @return
      * @see ShellUtils#execCommand(String[], boolean, boolean)
      */
     public static CommandResult execCommand(String command, boolean isRoot, boolean isNeedResultMsg) {
@@ -86,7 +78,6 @@ public class ShellUtils {
      * @param commands        command list
      * @param isRoot          whether need to run with root
      * @param isNeedResultMsg whether need result msg
-     * @return
      * @see ShellUtils#execCommand(String[], boolean, boolean)
      */
     public static CommandResult execCommand(List<String> commands, boolean isRoot, boolean isNeedResultMsg) {
@@ -132,11 +123,9 @@ public class ShellUtils {
                 successResult = new BufferedReader(new InputStreamReader(process.getInputStream()));
                 String s;
                 while ((s = successResult.readLine()) != null) {
-                    successMsg.append(s + "\n");
+                    successMsg.append(s).append("\n");
                 }
             }
-        } catch (IOException e) {
-            e.printStackTrace();
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
@@ -169,8 +158,6 @@ public class ShellUtils {
      * @author <a href="http://www.trinea.cn" target="_blank">Trinea</a> 2013-5-16
      */
     public static class CommandResult {
-
-
         /**
          * result of command
          **/
@@ -180,12 +167,9 @@ public class ShellUtils {
          **/
         public String successMsg;
 
-
-
         public CommandResult(int result) {
             this.result = result;
         }
-
 
         public CommandResult(int result, String successMsg) {
             this.result = result;

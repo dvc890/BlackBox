@@ -3,6 +3,7 @@ package top.niunaijun.blackbox.fake.service;
 import android.os.IInterface;
 
 import java.lang.reflect.Method;
+import java.util.Objects;
 
 import black.android.os.BRServiceManager;
 import black.android.view.BRIWindowManagerStub;
@@ -47,7 +48,7 @@ public class IWindowManagerProxy extends BinderInvocationStub {
         @Override
         protected Object hook(Object who, Method method, Object[] args) throws Throwable {
             IInterface session = (IInterface) method.invoke(who, args);
-            IWindowSessionProxy IWindowSessionProxy = new IWindowSessionProxy(session);
+            IWindowSessionProxy IWindowSessionProxy = new IWindowSessionProxy(Objects.requireNonNull(session));
             IWindowSessionProxy.injectHook();
             return IWindowSessionProxy.getProxyInvocation();
         }

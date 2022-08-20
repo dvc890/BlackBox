@@ -60,11 +60,11 @@ public class AppJobServiceDispatcher {
     }
 
     public void onDestroy() {
-//        for (JobRecord jobRecord : mJobRecords.values()) {
-//            if (jobRecord.mJobService != null) {
-//                jobRecord.mJobService.onDestroy();
-//            }
-//        }
+        /*for (JobRecord jobRecord : mJobRecords.values()) {
+            if (jobRecord.mJobService != null) {
+                jobRecord.mJobService.onDestroy();
+            }
+        }*/
     }
 
     public void onLowMemory() {
