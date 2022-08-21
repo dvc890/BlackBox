@@ -6,6 +6,7 @@ import android.util.Log;
 import androidx.core.util.ObjectsCompat;
 
 import java.lang.reflect.Method;
+import java.util.Objects;
 
 import black.libcore.io.BRLibcore;
 import top.niunaijun.blackbox.BlackBoxCore;
@@ -26,7 +27,7 @@ import top.niunaijun.blackbox.utils.Reflector;
  */
 public class OsStub extends ClassInvocationStub {
     public static final String TAG = "OsStub";
-    private Object mBase;
+    private final Object mBase;
 
     public OsStub() {
         mBase = BRLibcore.get().os();
@@ -88,9 +89,9 @@ public class OsStub extends ClassInvocationStub {
             try {
                 invoke = method.invoke(who, args);
             } catch (Throwable e) {
-                throw e.getCause();
+                throw Objects.requireNonNull(e.getCause());
             }
-            Reflector.with(invoke).field("st_uid").set(getFakeUid(-1));
+            Reflector.with(Objects.requireNonNull(invoke)).field("st_uid").set(getFakeUid(-1));
             return invoke;
         }
     }
@@ -98,7 +99,7 @@ public class OsStub extends ClassInvocationStub {
     private static int getFakeUid(int callUid) {
         if (callUid > 0 && callUid <= Process.FIRST_APPLICATION_UID)
             return callUid;
-//            Log.d(TAG, "getuid: " + BActivityThread.getAppPackageName() + ", " + BActivityThread.getAppUid());
+            //Log.d(TAG, "getuid: " + BActivityThread.getAppPackageName() + ", " + BActivityThread.getAppUid());
         if (BActivityThread.isThreadInit() && BActivityThread.currentActivityThread().isInit()) {
             return BActivityThread.getBAppId();
         } else {

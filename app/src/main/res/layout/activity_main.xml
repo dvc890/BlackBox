@@ -5,14 +5,12 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".view.main.MainActivity">
-
     <include
             android:id="@+id/toolbar_layout"
             layout="@layout/view_toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_constraintTop_toTopOf="parent" />
-
 
     <com.github.nukc.stateview.StateView
             android:id="@+id/stateView"
@@ -56,5 +54,4 @@
             android:src="@drawable/ic_add"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintRight_toRightOf="parent" />
-
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -29,7 +29,7 @@ import top.niunaijun.blackbox.utils.FileUtils;
  * 此处无Bug
  */
 public class BUserManagerService extends IBUserManagerService.Stub implements ISystemService {
-    private static BUserManagerService sService = new BUserManagerService();
+    private static final BUserManagerService sService = new BUserManagerService();
     public final HashMap<Integer, BUserInfo> mUsers = new HashMap<>();
     public final Object mUserLock = new Object();
 

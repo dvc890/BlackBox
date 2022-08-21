@@ -1,6 +1,5 @@
 package black.android.content;
 
-
 import top.niunaijun.blackreflection.annotation.BClassName;
 import top.niunaijun.blackreflection.annotation.BField;
 

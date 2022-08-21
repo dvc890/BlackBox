@@ -25,7 +25,6 @@ struct {
     int api_level;
 } VMEnv;
 
-
 JNIEnv *getEnv() {
     JNIEnv *env;
     VMEnv.vm->GetEnv(reinterpret_cast<void **>(&env), JNI_VERSION_1_6);
@@ -34,8 +33,8 @@ JNIEnv *getEnv() {
 
 JNIEnv *ensureEnvCreated() {
     JNIEnv *env = getEnv();
-    if (env == NULL) {
-        VMEnv.vm->AttachCurrentThread(&env, NULL);
+    if (env == nullptr) {
+        VMEnv.vm->AttachCurrentThread(&env, nullptr);
     }
     return env;
 }

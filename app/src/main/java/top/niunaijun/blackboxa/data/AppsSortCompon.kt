@@ -17,6 +17,5 @@ class AppsSortComparator(private val sortedList: List<String>) : Comparator<Appl
         val first = sortedList.indexOf(o1.packageName)
         val second = sortedList.indexOf(o2.packageName)
         return first - second
-
     }
 }

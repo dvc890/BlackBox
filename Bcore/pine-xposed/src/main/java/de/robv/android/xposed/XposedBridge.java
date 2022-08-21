@@ -128,7 +128,7 @@ public final class XposedBridge {
 		/*else if (hookMethod.getDeclaringClass().isInterface()) {
 			throw new IllegalArgumentException("Cannot hook interfaces: " + hookMethod.toString());
 		}*/ else if (Modifier.isAbstract(hookMethod.getModifiers())) {
-			throw new IllegalArgumentException("Cannot hook abstract methods: " + hookMethod.toString());
+			throw new IllegalArgumentException("Cannot hook abstract methods: " + hookMethod);
 		}
 
 		boolean newMethod = false;

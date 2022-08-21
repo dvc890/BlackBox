@@ -14,7 +14,6 @@ import java.util.jar.Attributes;
  * 此处无Bug
  */
 public class ManifestDigest implements Parcelable {
-
     ManifestDigest(final byte[] digest) {
         throw new RuntimeException("Stub!");
     }
@@ -61,5 +60,4 @@ public class ManifestDigest implements Parcelable {
             return new ManifestDigest[size];
         }
     };
-
 }

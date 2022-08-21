@@ -21,6 +21,8 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.os.Process;
 
+import androidx.annotation.NonNull;
+
 /**
  * Representation of a user on the device.
  */
@@ -58,7 +60,6 @@ public final class BUserHandle implements Parcelable {
      * to the caller's user instead of failing with a security exception
      */
     public static final int USER_CURRENT_OR_SELF = -3;
-
 
     public static final int USER_XPOSED = -4;
 
@@ -289,14 +290,14 @@ public final class BUserHandle implements Parcelable {
      * Returns the app id for a given shared app gid. Returns -1 if the ID is invalid.
      * @hide
      */
-//    public static int getAppIdFromSharedAppGid(int gid) {
-//        final int appId = getAppId(gid) + Process.FIRST_APPLICATION_UID
-//                - Process.FIRST_SHARED_APPLICATION_GID;
-//        if (appId < 0 || appId >= Process.FIRST_SHARED_APPLICATION_GID) {
-//            return -1;
-//        }
-//        return appId;
-//    }
+    /*public static int getAppIdFromSharedAppGid(int gid) {
+        final int appId = getAppId(gid) + Process.FIRST_APPLICATION_UID
+                - Process.FIRST_SHARED_APPLICATION_GID;
+        if (appId < 0 || appId >= Process.FIRST_SHARED_APPLICATION_GID) {
+            return -1;
+        }
+        return appId;
+    }*/
 
     /**
      * @hide
@@ -381,6 +382,7 @@ public final class BUserHandle implements Parcelable {
         return mHandle;
     }
 
+    @NonNull
     @Override
     public String toString() {
         return "UserHandle{" + mHandle + "}";
@@ -393,7 +395,7 @@ public final class BUserHandle implements Parcelable {
                 BUserHandle other = (BUserHandle) obj;
                 return mHandle == other.mHandle;
             }
-        } catch (ClassCastException e) {
+        } catch (ClassCastException ignored) {
         }
         return false;
     }

@@ -11,7 +11,6 @@ import top.niunaijun.blackreflection.annotation.BStaticMethod;
  */
 @BClassName("android.hardware.location.IContextHubService")
 public interface IContextHubService {
-
     @BClassName("android.hardware.location.IContextHubService$Stub")
     interface Stub {
         @BStaticMethod

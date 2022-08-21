@@ -4,7 +4,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="8dp">
-
     <ImageView
             android:id="@+id/icon"
             android:layout_width="48dp"
@@ -41,8 +40,6 @@
                 android:layout_marginTop="2dp"
                 android:text="@string/app_name"
                 android:textColor="@color/secondary_text" />
-
-
     </LinearLayout>
 
     <CheckBox
@@ -52,5 +49,4 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/text_layout"
             app:layout_constraintTop_toTopOf="parent" />
-
 </androidx.constraintlayout.widget.ConstraintLayout>

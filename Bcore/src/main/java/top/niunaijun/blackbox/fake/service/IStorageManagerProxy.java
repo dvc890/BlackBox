@@ -24,7 +24,6 @@ import top.niunaijun.blackbox.utils.compat.BuildCompat;
  * 此处无Bug
  */
 public class IStorageManagerProxy extends BinderInvocationStub {
-
     public IStorageManagerProxy() {
         super(BRServiceManager.get().getService("mount"));
     }

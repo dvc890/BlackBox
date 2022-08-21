@@ -83,5 +83,4 @@ public abstract class XC_MethodReplacement extends XC_MethodHook {
 			}
 		};
 	}
-
 }

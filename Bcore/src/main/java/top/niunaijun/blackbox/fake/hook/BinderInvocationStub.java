@@ -22,7 +22,7 @@ import black.android.os.BRServiceManager;
  * 此处无Bug
  */
 public abstract class BinderInvocationStub extends ClassInvocationStub implements IBinder {
-    private IBinder mBaseBinder;
+    private final IBinder mBaseBinder;
 
     public BinderInvocationStub(IBinder baseBinder) {
         mBaseBinder = baseBinder;

@@ -16,7 +16,6 @@ import android.os.Parcelable;
  * 此处无Bug
  */
 public class JobRecord implements Parcelable {
-
     public JobInfo mJobInfo;
     public ServiceInfo mServiceInfo;
 

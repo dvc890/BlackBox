@@ -7,7 +7,6 @@ import android.app.NotificationChannel;
 import android.app.NotificationChannelGroup;
 
 interface IBNotificationManagerService {
-
     NotificationChannel getNotificationChannel(String channelId, int userId);
 
     List<NotificationChannel> getNotificationChannels(String packageName, int userId);

@@ -1193,12 +1193,9 @@ public class ArrayUtils {
      *  {@code null} as an empty array
      */
     public static boolean isSameLength(Object[] array1, Object[] array2) {
-        if ((array1 == null && array2 != null && array2.length > 0) ||
-            (array2 == null && array1 != null && array1.length > 0) ||
-            (array1 != null && array2 != null && array1.length != array2.length)) {
-                return false;
-        }
-        return true;
+        return (array1 != null || array2 == null || array2.length <= 0) &&
+                (array2 != null || array1 == null || array1.length <= 0) &&
+                (array1 == null || array2 == null || array1.length == array2.length);
     }
 
     /**
@@ -1211,12 +1208,9 @@ public class ArrayUtils {
      *  {@code null} as an empty array
      */
     public static boolean isSameLength(long[] array1, long[] array2) {
-        if ((array1 == null && array2 != null && array2.length > 0) ||
-            (array2 == null && array1 != null && array1.length > 0) ||
-            (array1 != null && array2 != null && array1.length != array2.length)) {
-                return false;
-        }
-        return true;
+        return (array1 != null || array2 == null || array2.length <= 0) &&
+                (array2 != null || array1 == null || array1.length <= 0) &&
+                (array1 == null || array2 == null || array1.length == array2.length);
     }
 
     /**
@@ -1229,12 +1223,9 @@ public class ArrayUtils {
      *  {@code null} as an empty array
      */
     public static boolean isSameLength(int[] array1, int[] array2) {
-        if ((array1 == null && array2 != null && array2.length > 0) ||
-            (array2 == null && array1 != null && array1.length > 0) ||
-            (array1 != null && array2 != null && array1.length != array2.length)) {
-                return false;
-        }
-        return true;
+        return (array1 != null || array2 == null || array2.length <= 0) &&
+                (array2 != null || array1 == null || array1.length <= 0) &&
+                (array1 == null || array2 == null || array1.length == array2.length);
     }
 
     /**
@@ -1247,12 +1238,9 @@ public class ArrayUtils {
      *  {@code null} as an empty array
      */
     public static boolean isSameLength(short[] array1, short[] array2) {
-        if ((array1 == null && array2 != null && array2.length > 0) ||
-            (array2 == null && array1 != null && array1.length > 0) ||
-            (array1 != null && array2 != null && array1.length != array2.length)) {
-                return false;
-        }
-        return true;
+        return (array1 != null || array2 == null || array2.length <= 0) &&
+                (array2 != null || array1 == null || array1.length <= 0) &&
+                (array1 == null || array2 == null || array1.length == array2.length);
     }
 
     /**
@@ -1265,12 +1253,9 @@ public class ArrayUtils {
      *  {@code null} as an empty array
      */
     public static boolean isSameLength(char[] array1, char[] array2) {
-        if ((array1 == null && array2 != null && array2.length > 0) ||
-            (array2 == null && array1 != null && array1.length > 0) ||
-            (array1 != null && array2 != null && array1.length != array2.length)) {
-                return false;
-        }
-        return true;
+        return (array1 != null || array2 == null || array2.length <= 0) &&
+                (array2 != null || array1 == null || array1.length <= 0) &&
+                (array1 == null || array2 == null || array1.length == array2.length);
     }
 
     /**
@@ -1283,12 +1268,9 @@ public class ArrayUtils {
      *  {@code null} as an empty array
      */
     public static boolean isSameLength(byte[] array1, byte[] array2) {
-        if ((array1 == null && array2 != null && array2.length > 0) ||
-            (array2 == null && array1 != null && array1.length > 0) ||
-            (array1 != null && array2 != null && array1.length != array2.length)) {
-                return false;
-        }
-        return true;
+        return (array1 != null || array2 == null || array2.length <= 0) &&
+                (array2 != null || array1 == null || array1.length <= 0) &&
+                (array1 == null || array2 == null || array1.length == array2.length);
     }
 
     /**
@@ -1301,12 +1283,9 @@ public class ArrayUtils {
      *  {@code null} as an empty array
      */
     public static boolean isSameLength(double[] array1, double[] array2) {
-        if ((array1 == null && array2 != null && array2.length > 0) ||
-            (array2 == null && array1 != null && array1.length > 0) ||
-            (array1 != null && array2 != null && array1.length != array2.length)) {
-                return false;
-        }
-        return true;
+        return (array1 != null || array2 == null || array2.length <= 0) &&
+                (array2 != null || array1 == null || array1.length <= 0) &&
+                (array1 == null || array2 == null || array1.length == array2.length);
     }
 
     /**
@@ -1319,12 +1298,9 @@ public class ArrayUtils {
      *  {@code null} as an empty array
      */
     public static boolean isSameLength(float[] array1, float[] array2) {
-        if ((array1 == null && array2 != null && array2.length > 0) ||
-            (array2 == null && array1 != null && array1.length > 0) ||
-            (array1 != null && array2 != null && array1.length != array2.length)) {
-                return false;
-        }
-        return true;
+        return (array1 != null || array2 == null || array2.length <= 0) &&
+                (array2 != null || array1 == null || array1.length <= 0) &&
+                (array1 == null || array2 == null || array1.length == array2.length);
     }
 
     /**
@@ -1337,12 +1313,9 @@ public class ArrayUtils {
      *  {@code null} as an empty array
      */
     public static boolean isSameLength(boolean[] array1, boolean[] array2) {
-        if ((array1 == null && array2 != null && array2.length > 0) ||
-            (array2 == null && array1 != null && array1.length > 0) ||
-            (array1 != null && array2 != null && array1.length != array2.length)) {
-                return false;
-        }
-        return true;
+        return (array1 != null || array2 == null || array2.length <= 0) &&
+                (array2 != null || array1 == null || array1.length <= 0) &&
+                (array1 == null || array2 == null || array1.length == array2.length);
     }
 
     //-----------------------------------------------------------------------

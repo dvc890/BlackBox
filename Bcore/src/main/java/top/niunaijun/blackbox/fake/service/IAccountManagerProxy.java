@@ -53,13 +53,12 @@ public class IAccountManagerProxy extends BinderInvocationStub {
 
     @Override
     public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
-//        Slog.d(TAG, "call " + method.getName());
+        //Slog.d(TAG, "call " + method.getName());
         return super.invoke(proxy, method, args);
     }
 
     @ProxyMethod("getPassword")
     public static class getPassword extends MethodHook {
-
         @Override
         protected Object hook(Object who, Method method, Object[] args) throws Throwable {
             return BAccountManager.get().getPassword((Account) args[0]);
@@ -68,7 +67,6 @@ public class IAccountManagerProxy extends BinderInvocationStub {
 
     @ProxyMethod("getUserData")
     public static class getUserData extends MethodHook {
-
         @Override
         protected Object hook(Object who, Method method, Object[] args) throws Throwable {
             return BAccountManager.get().getUserData((Account) args[0], (String) args[1]);
@@ -77,7 +75,6 @@ public class IAccountManagerProxy extends BinderInvocationStub {
 
     @ProxyMethod("getAuthenticatorTypes")
     public static class getAuthenticatorTypes extends MethodHook {
-
         @Override
         protected Object hook(Object who, Method method, Object[] args) throws Throwable {
             return BAccountManager.get().getAuthenticatorTypes();
@@ -86,7 +83,6 @@ public class IAccountManagerProxy extends BinderInvocationStub {
 
     @ProxyMethod("getAccountsForPackage")
     public static class getAccountsForPackage extends MethodHook {
-
         @Override
         protected Object hook(Object who, Method method, Object[] args) throws Throwable {
             return BAccountManager.get().getAccountsForPackage((String) args[0], (int) args[1]);
@@ -95,7 +91,6 @@ public class IAccountManagerProxy extends BinderInvocationStub {
 
     @ProxyMethod("getAccountsByTypeForPackage")
     public static class getAccountsByTypeForPackage extends MethodHook {
-
         @Override
         protected Object hook(Object who, Method method, Object[] args) throws Throwable {
             return BAccountManager.get().getAccountsByTypeForPackage((String) args[0], (String) args[1]);
@@ -104,7 +99,6 @@ public class IAccountManagerProxy extends BinderInvocationStub {
 
     @ProxyMethod("getAccountByTypeAndFeatures")
     public static class getAccountByTypeAndFeatures extends MethodHook {
-
         @Override
         protected Object hook(Object who, Method method, Object[] args) throws Throwable {
             BAccountManager.get().getAccountByTypeAndFeatures((IAccountManagerResponse) args[0], (String) args[1], (String[]) args[2]);
@@ -114,7 +108,6 @@ public class IAccountManagerProxy extends BinderInvocationStub {
 
     @ProxyMethod("getAccountsByFeatures")
     public static class getAccountsByFeatures extends MethodHook {
-
         @Override
         protected Object hook(Object who, Method method, Object[] args) throws Throwable {
             BAccountManager.get().getAccountsByFeatures((IAccountManagerResponse) args[0], (String) args[1], (String[]) args[2]);
@@ -124,7 +117,6 @@ public class IAccountManagerProxy extends BinderInvocationStub {
 
     @ProxyMethod("getAccountsAsUser")
     public static class getAccountsAsUser extends MethodHook {
-
         @Override
         protected Object hook(Object who, Method method, Object[] args) throws Throwable {
             return BAccountManager.get().getAccountsAsUser((String) args[0]);
@@ -133,7 +125,6 @@ public class IAccountManagerProxy extends BinderInvocationStub {
 
     @ProxyMethod("addAccountExplicitly")
     public static class addAccountExplicitly extends MethodHook {
-
         @Override
         protected Object hook(Object who, Method method, Object[] args) throws Throwable {
             return BAccountManager.get().addAccountExplicitly((Account) args[0], (String) args[1], (Bundle) args[2]);
@@ -142,7 +133,6 @@ public class IAccountManagerProxy extends BinderInvocationStub {
 
     @ProxyMethod("removeAccountAsUser")
     public static class removeAccountAsUser extends MethodHook {
-
         @Override
         protected Object hook(Object who, Method method, Object[] args) throws Throwable {
             BAccountManager.get().removeAccountAsUser((IAccountManagerResponse) args[0], (Account) args[1], (boolean) args[2]);
@@ -152,7 +142,6 @@ public class IAccountManagerProxy extends BinderInvocationStub {
 
     @ProxyMethod("removeAccountExplicitly")
     public static class removeAccountExplicitly extends MethodHook {
-
         @Override
         protected Object hook(Object who, Method method, Object[] args) throws Throwable {
             return BAccountManager.get().removeAccountExplicitly((Account) args[0]);
@@ -161,7 +150,6 @@ public class IAccountManagerProxy extends BinderInvocationStub {
 
     @ProxyMethod("copyAccountToUser")
     public static class copyAccountToUser extends MethodHook {
-
         @Override
         protected Object hook(Object who, Method method, Object[] args) throws Throwable {
             BAccountManager.get().copyAccountToUser((IAccountManagerResponse) args[0], (Account) args[1], (int) args[2], (int) args[3]);
@@ -171,7 +159,6 @@ public class IAccountManagerProxy extends BinderInvocationStub {
 
     @ProxyMethod("invalidateAuthToken")
     public static class invalidateAuthToken extends MethodHook {
-
         @Override
         protected Object hook(Object who, Method method, Object[] args) throws Throwable {
             BAccountManager.get().invalidateAuthToken((String) args[0], (String) args[1]);
@@ -181,7 +168,6 @@ public class IAccountManagerProxy extends BinderInvocationStub {
 
     @ProxyMethod("peekAuthToken")
     public static class peekAuthToken extends MethodHook {
-
         @Override
         protected Object hook(Object who, Method method, Object[] args) throws Throwable {
             return BAccountManager.get().peekAuthToken((Account) args[0], (String) args[1]);
@@ -190,7 +176,6 @@ public class IAccountManagerProxy extends BinderInvocationStub {
 
     @ProxyMethod("setAuthToken")
     public static class setAuthToken extends MethodHook {
-
         @Override
         protected Object hook(Object who, Method method, Object[] args) throws Throwable {
             BAccountManager.get().setAuthToken((Account) args[0], (String) args[1], (String) args[2]);
@@ -200,7 +185,6 @@ public class IAccountManagerProxy extends BinderInvocationStub {
 
     @ProxyMethod("setPassword")
     public static class setPassword extends MethodHook {
-
         @Override
         protected Object hook(Object who, Method method, Object[] args) throws Throwable {
             BAccountManager.get().setPassword((Account) args[0], (String) args[1]);
@@ -210,7 +194,6 @@ public class IAccountManagerProxy extends BinderInvocationStub {
 
     @ProxyMethod("clearPassword")
     public static class clearPassword extends MethodHook {
-
         @Override
         protected Object hook(Object who, Method method, Object[] args) throws Throwable {
             BAccountManager.get().clearPassword((Account) args[0]);
@@ -220,7 +203,6 @@ public class IAccountManagerProxy extends BinderInvocationStub {
 
     @ProxyMethod("setUserData")
     public static class setUserData extends MethodHook {
-
         @Override
         protected Object hook(Object who, Method method, Object[] args) throws Throwable {
             BAccountManager.get().setUserData((Account) args[0], (String) args[1], (String) args[2]);
@@ -230,7 +212,6 @@ public class IAccountManagerProxy extends BinderInvocationStub {
 
     @ProxyMethod("updateAppPermission")
     public static class updateAppPermission extends MethodHook {
-
         @Override
         protected Object hook(Object who, Method method, Object[] args) throws Throwable {
             BAccountManager.get().updateAppPermission((Account) args[0], (String) args[1], (int) args[2], (boolean) args[3]);
@@ -240,7 +221,6 @@ public class IAccountManagerProxy extends BinderInvocationStub {
 
     @ProxyMethod("getAuthToken")
     public static class getAuthToken extends MethodHook {
-
         @Override
         protected Object hook(Object who, Method method, Object[] args) throws Throwable {
             BAccountManager.get().getAuthToken((IAccountManagerResponse) args[0],
@@ -255,7 +235,6 @@ public class IAccountManagerProxy extends BinderInvocationStub {
 
     @ProxyMethod("addAccount")
     public static class addAccount extends MethodHook {
-
         @Override
         protected Object hook(Object who, Method method, Object[] args) throws Throwable {
             BAccountManager.get().addAccount((IAccountManagerResponse) args[0],
@@ -270,7 +249,6 @@ public class IAccountManagerProxy extends BinderInvocationStub {
 
     @ProxyMethod("addAccountAsUser")
     public static class addAccountAsUser extends MethodHook {
-
         @Override
         protected Object hook(Object who, Method method, Object[] args) throws Throwable {
             BAccountManager.get().addAccountAsUser((IAccountManagerResponse) args[0],
@@ -285,7 +263,6 @@ public class IAccountManagerProxy extends BinderInvocationStub {
 
     @ProxyMethod("updateCredentials")
     public static class updateCredentials extends MethodHook {
-
         @Override
         protected Object hook(Object who, Method method, Object[] args) throws Throwable {
             BAccountManager.get().updateCredentials((IAccountManagerResponse) args[0],
@@ -299,7 +276,6 @@ public class IAccountManagerProxy extends BinderInvocationStub {
 
     @ProxyMethod("editProperties")
     public static class editProperties extends MethodHook {
-
         @Override
         protected Object hook(Object who, Method method, Object[] args) throws Throwable {
             BAccountManager.get().editProperties((IAccountManagerResponse) args[0],
@@ -311,7 +287,6 @@ public class IAccountManagerProxy extends BinderInvocationStub {
 
     @ProxyMethod("confirmCredentialsAsUser")
     public static class confirmCredentialsAsUser extends MethodHook {
-
         @Override
         protected Object hook(Object who, Method method, Object[] args) throws Throwable {
             BAccountManager.get().confirmCredentialsAsUser((IAccountManagerResponse) args[0],
@@ -324,7 +299,6 @@ public class IAccountManagerProxy extends BinderInvocationStub {
 
     @ProxyMethod("accountAuthenticated")
     public static class accountAuthenticated extends MethodHook {
-
         @Override
         protected Object hook(Object who, Method method, Object[] args) throws Throwable {
             BAccountManager.get().accountAuthenticated((Account) args[0]);
@@ -334,7 +308,6 @@ public class IAccountManagerProxy extends BinderInvocationStub {
 
     @ProxyMethod("getAuthTokenLabel")
     public static class getAuthTokenLabel extends MethodHook {
-
         @Override
         protected Object hook(Object who, Method method, Object[] args) throws Throwable {
             BAccountManager.get().getAuthTokenLabel((IAccountManagerResponse) args[0],
@@ -346,7 +319,6 @@ public class IAccountManagerProxy extends BinderInvocationStub {
 
     @ProxyMethod("getPackagesAndVisibilityForAccount")
     public static class getPackagesAndVisibilityForAccount extends MethodHook {
-
         @Override
         protected Object hook(Object who, Method method, Object[] args) throws Throwable {
             return BAccountManager.get().getPackagesAndVisibilityForAccount((Account) args[0]);
@@ -355,7 +327,6 @@ public class IAccountManagerProxy extends BinderInvocationStub {
 
     @ProxyMethod("addAccountExplicitlyWithVisibility")
     public static class addAccountExplicitlyWithVisibility extends MethodHook {
-
         @Override
         protected Object hook(Object who, Method method, Object[] args) throws Throwable {
             return BAccountManager.get().addAccountExplicitlyWithVisibility((Account) args[0],
@@ -368,7 +339,6 @@ public class IAccountManagerProxy extends BinderInvocationStub {
 
     @ProxyMethod("setAccountVisibility")
     public static class setAccountVisibility extends MethodHook {
-
         @Override
         protected Object hook(Object who, Method method, Object[] args) throws Throwable {
             return BAccountManager.get().setAccountVisibility((Account) args[0],
@@ -380,7 +350,6 @@ public class IAccountManagerProxy extends BinderInvocationStub {
 
     @ProxyMethod("getAccountVisibility")
     public static class getAccountVisibility extends MethodHook {
-
         @Override
         protected Object hook(Object who, Method method, Object[] args) throws Throwable {
             return BAccountManager.get().getAccountVisibility((Account) args[0],
@@ -391,7 +360,6 @@ public class IAccountManagerProxy extends BinderInvocationStub {
 
     @ProxyMethod("getAccountsAndVisibilityForPackage")
     public static class getAccountsAndVisibilityForPackage extends MethodHook {
-
         @Override
         protected Object hook(Object who, Method method, Object[] args) throws Throwable {
             return BAccountManager.get().getAccountsAndVisibilityForPackage((String) args[0],
@@ -402,7 +370,6 @@ public class IAccountManagerProxy extends BinderInvocationStub {
 
     @ProxyMethod("registerAccountListener")
     public static class registerAccountListener extends MethodHook {
-
         @Override
         protected Object hook(Object who, Method method, Object[] args) throws Throwable {
             BAccountManager.get().registerAccountListener((String[]) args[0],
@@ -414,7 +381,6 @@ public class IAccountManagerProxy extends BinderInvocationStub {
 
     @ProxyMethod("unregisterAccountListener")
     public static class unregisterAccountListener extends MethodHook {
-
         @Override
         protected Object hook(Object who, Method method, Object[] args) throws Throwable {
             BAccountManager.get().unregisterAccountListener((String[]) args[0],

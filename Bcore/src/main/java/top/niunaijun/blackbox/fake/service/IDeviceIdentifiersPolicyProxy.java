@@ -1,6 +1,5 @@
 package top.niunaijun.blackbox.fake.service;
 
-
 import java.lang.reflect.Method;
 
 import black.android.os.BRIDeviceIdentifiersPolicyServiceStub;
@@ -20,7 +19,6 @@ import top.niunaijun.blackbox.utils.Md5Utils;
  * 此处无Bug
  */
 public class IDeviceIdentifiersPolicyProxy extends BinderInvocationStub {
-
     public IDeviceIdentifiersPolicyProxy() {
         super(BRServiceManager.get().getService("device_identifiers"));
     }
@@ -44,8 +42,8 @@ public class IDeviceIdentifiersPolicyProxy extends BinderInvocationStub {
     public static class x extends MethodHook {
         @Override
         protected Object hook(Object who, Method method, Object[] args) throws Throwable {
-//                args[0] = BlackBoxCore.getHostPkg();
-//                return method.invoke(who, args);
+            /*args[0] = BlackBoxCore.getHostPkg();
+            return method.invoke(who, args);*/
             return Md5Utils.md5(BlackBoxCore.getHostPkg());
         }
     }

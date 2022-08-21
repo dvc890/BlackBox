@@ -28,7 +28,6 @@ import top.niunaijun.blackbox.utils.DrawableUtils;
  * 此处无Bug
  */
 public class ActivityCompat {
-
     public static void fix(Activity activity) {
         // mContentResolver
         BRActivity.get(activity).mActivityInfo();

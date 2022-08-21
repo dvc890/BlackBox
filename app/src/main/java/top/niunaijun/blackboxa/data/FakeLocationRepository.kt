@@ -19,7 +19,7 @@ import top.niunaijun.blackboxa.bean.FakeLocationBean
  * @CreateDate: 2022/3/12 21:14
  */
 class FakeLocationRepository {
-    val TAG: String = "FakeLocationRepository"
+    private val TAG: String = "FakeLocationRepository"
 
     fun setPattern(userId: Int, pkg: String, pattern: Int) {
         BLocationManager.get().setPattern(userId, pkg, pattern)
@@ -44,15 +44,15 @@ class FakeLocationRepository {
         val installedList = mutableListOf<FakeLocationBean>()
         val installedApplications: List<ApplicationInfo> =
             BlackBoxCore.get().getInstalledApplications(0, userID)
-        // List<ApplicationInfo> -> List<FakeLocationBean>
+        //List<ApplicationInfo> -> List<FakeLocationBean>
         for (installedApplication in installedApplications) {
-//            val file = File(installedApplication.sourceDir)
-//
-//            if ((installedApplication.flags and ApplicationInfo.FLAG_SYSTEM) != 0) continue
-//
-//            if (!AbiUtils.isSupport(file)) continue
-//
-//            val isXpModule = BlackBoxCore.get().isXposedModule(file)
+            /*val file = File(installedApplication.sourceDir)
+
+            if ((installedApplication.flags and ApplicationInfo.FLAG_SYSTEM) != 0) continue
+
+            if (!AbiUtils.isSupport(file)) continue
+
+            val isXpModule = BlackBoxCore.get().isXposedModule(file)*/
 
             val info = FakeLocationBean(
                 userID,

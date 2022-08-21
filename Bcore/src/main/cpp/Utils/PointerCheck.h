@@ -5,11 +5,9 @@
 #ifndef BLACKBOX_POINTERCHECK_H
 #define BLACKBOX_POINTERCHECK_H
 
-
 class PointerCheck {
 public:
     static bool check(void *addr);
 };
-
 
 #endif //BLACKBOX_POINTERCHECK_H

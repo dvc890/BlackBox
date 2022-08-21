@@ -90,15 +90,11 @@ import top.niunaijun.blackbox.utils.compat.PackageParserCompat;
             // Assign new user ID
             p.appId = acquireAndRegisterNewAppIdLPw(p);
         }
-        if (p.appId < 0) {
-            createdNew = false;
-//            PackageManagerService.reportSettingsProblem(Log.WARN,
-//                    "Package " + p.name + " could not be assigned a valid UID");
-//            throw new PackageManagerException(INSTALL_FAILED_INSUFFICIENT_STORAGE,
-//                    "Package " + p.name + " could not be assigned a valid UID");
-        } else {
-            createdNew = true;
-        }
+        //            PackageManagerService.reportSettingsProblem(Log.WARN,
+        //                    "Package " + p.name + " could not be assigned a valid UID");
+        //            throw new PackageManagerException(INSTALL_FAILED_INSUFFICIENT_STORAGE,
+        //                    "Package " + p.name + " could not be assigned a valid UID");
+        createdNew = p.appId >= 0;
         saveUidLP();
         SharedUserSetting.saveSharedUsers();
         return createdNew;

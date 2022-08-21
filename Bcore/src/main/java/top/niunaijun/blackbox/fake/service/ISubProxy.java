@@ -1,6 +1,5 @@
 package top.niunaijun.blackbox.fake.service;
 
-
 import black.android.os.BRServiceManager;
 import black.com.android.internal.telephony.BRISubStub;
 import top.niunaijun.blackbox.fake.hook.BinderInvocationStub;
@@ -41,7 +40,6 @@ public class ISubProxy extends BinderInvocationStub {
     @Override
     protected void onBindMethod() {
         super.onBindMethod();
-
         addMethodHook(new ValueMethodProxy("getAllSubInfoList", null));
         addMethodHook(new ValueMethodProxy("getAllSubInfoCount", -1));
         addMethodHook(new ValueMethodProxy("getActiveSubscriptionInfo", null));
@@ -55,7 +53,7 @@ public class ISubProxy extends BinderInvocationStub {
         addMethodHook(new ValueMethodProxy("addSubInfoRecord", -1));
         addMethodHook(new ValueMethodProxy("addSubInfo", -1));
         addMethodHook(new ValueMethodProxy("removeSubInfo", -1));
-//        addMethodHook(new ValueMethodProxy("getAllSubInfoCount", -1));
-//        addMethodHook(new ValueMethodProxy("getAllSubInfoCount", -1));
+        /*addMethodHook(new ValueMethodProxy("getAllSubInfoCount", -1));
+        addMethodHook(new ValueMethodProxy("getAllSubInfoCount", -1));*/
     }
 }

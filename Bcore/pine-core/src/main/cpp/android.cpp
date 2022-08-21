@@ -17,18 +17,14 @@ using namespace pine;
 
 int Android::version = -1;
 JavaVM* Android::jvm = nullptr;
-
 void (*Android::suspend_vm)() = nullptr;
 void (*Android::resume_vm)() = nullptr;
-
 void (*Android::suspend_all)(void*, const char*, bool) = nullptr;
 void (*Android::resume_all)(void*) = nullptr;
 void (*Android::start_gc_critical_section)(void*, void*, art::GcCause, art::CollectorType);
 void (*Android::end_gc_critical_section)(void*) = nullptr;
-
 void* Android::class_linker_ = nullptr;
 void (*Android::make_visibly_initialized_)(void*, void*, bool) = nullptr;
-
 void* Android::jit_code_cache_ = nullptr;
 void (*Android::move_obsolete_method_)(void*, void*, void*) = nullptr;
 

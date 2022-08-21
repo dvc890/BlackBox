@@ -6,7 +6,6 @@ import java.util.List;
 import black.android.content.pm.BRParceledListSlice;
 
 public class ParceledListSliceCompat {
-
 	public static boolean isReturnParceledListSlice(Method method) {
 		return method != null && method.getReturnType() == BRParceledListSlice.getRealClass();
 	}

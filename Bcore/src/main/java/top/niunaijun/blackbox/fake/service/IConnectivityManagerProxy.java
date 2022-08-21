@@ -16,7 +16,6 @@ import top.niunaijun.blackbox.fake.service.base.ValueMethodProxy;
  * しーＪ
  * 此处无Bug
  */
-
 public class IConnectivityManagerProxy extends BinderInvocationStub {
     public static final String TAG = "IConnectivityManagerProxy";
 

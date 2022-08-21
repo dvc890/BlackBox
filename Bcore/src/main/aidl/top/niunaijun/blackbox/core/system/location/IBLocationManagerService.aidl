@@ -6,7 +6,6 @@ import top.niunaijun.blackbox.entity.location.BCell;
 
 import java.util.List;
 
-
 interface IBLocationManagerService {
     int getPattern(int userId, String pkg);
 

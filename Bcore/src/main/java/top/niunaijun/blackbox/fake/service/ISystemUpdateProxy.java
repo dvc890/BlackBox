@@ -1,6 +1,5 @@
 package top.niunaijun.blackbox.fake.service;
 
-
 import black.android.os.BRServiceManager;
 import black.android.view.BRIAutoFillManagerStub;
 import top.niunaijun.blackbox.fake.hook.BinderInvocationStub;

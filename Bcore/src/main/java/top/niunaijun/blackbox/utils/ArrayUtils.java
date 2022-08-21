@@ -4,7 +4,6 @@ import java.util.Arrays;
 import java.util.Objects;
 
 public class ArrayUtils {
-
 	public static<T> T[] trimToSize(T[] array, int size) {
 		if (array == null || size == 0) {
 			return null;
@@ -82,7 +81,6 @@ public class ArrayUtils {
 		return -1;
 	}
 
-
 	public static int indexOfObject(Object[] array, Class<?> type, int sequence) {
 		if (array == null) {
 			return -1;
@@ -95,7 +93,6 @@ public class ArrayUtils {
 		}
 		return -1;
 	}
-
 
 	public static int indexOf(Object[] array, Class<?> type, int sequence) {
 		if (!isEmpty(array)) {
@@ -136,7 +133,6 @@ public class ArrayUtils {
 		}
 		return null;
 	}
-
 
 	public static void checkOffsetAndCount(int arrayLength, int offset, int count) throws ArrayIndexOutOfBoundsException {
 		if ((offset | count) < 0 || offset > arrayLength || arrayLength - offset < count) {

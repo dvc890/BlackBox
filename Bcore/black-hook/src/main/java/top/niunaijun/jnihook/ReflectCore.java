@@ -14,7 +14,6 @@ import top.niunaijun.jnihook.jni.JniHook;
  * 此处无Bug
  */
 public class ReflectCore {
-
     public static void set(Class<?> clazz) {
         try {
             Field accessFlags = Class.class.getDeclaredField("accessFlags");

@@ -11,7 +11,6 @@ import android.util.ArraySet;
  * 此处无Bug
  */
 public class PackageUserState {
-
     public boolean stopped;
     public boolean notLaunched;
     public boolean installed;
@@ -34,5 +33,4 @@ public class PackageUserState {
     public PackageUserState(final PackageUserState o) {
         throw new RuntimeException("Stub!");
     }
-
 }

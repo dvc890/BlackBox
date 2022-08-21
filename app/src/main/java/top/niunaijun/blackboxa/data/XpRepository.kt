@@ -45,9 +45,9 @@ class XpRepository {
             blackBoxCore.installXPModule(source)
         }
 
-        if(installResult.success){
+        if (installResult.success) {
             resultLiveData.postValue(getString(R.string.install_success))
-        }else{
+        } else {
             resultLiveData.postValue(getString(R.string.install_fail, installResult.msg))
         }
     }

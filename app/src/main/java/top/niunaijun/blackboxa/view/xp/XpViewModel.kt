@@ -11,10 +11,8 @@ import top.niunaijun.blackboxa.view.base.BaseViewModel
  * @Author: wukaicheng
  * @CreateDate: 2021/5/2 20:55
  */
-class XpViewModel(private val repo:XpRepository):BaseViewModel() {
-
+class XpViewModel(private val repo: XpRepository) : BaseViewModel() {
     val appsLiveData = MutableLiveData<List<XpModuleInfo>>()
-
     val resultLiveData = MutableLiveData<String>()
 
     fun getInstalledModule() {
@@ -25,14 +23,13 @@ class XpViewModel(private val repo:XpRepository):BaseViewModel() {
 
     fun installModule(source:String) {
         launchOnUI {
-            repo.installModule(source,resultLiveData)
+            repo.installModule(source, resultLiveData)
         }
     }
 
-
     fun unInstallModule(packageName: String){
         launchOnUI {
-            repo.unInstallModule(packageName,resultLiveData)
+            repo.unInstallModule(packageName, resultLiveData)
         }
     }
 }

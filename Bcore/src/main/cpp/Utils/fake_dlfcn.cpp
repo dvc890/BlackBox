@@ -13,15 +13,15 @@
 #define Elf_Shdr Elf32_Shdr
 #define Elf_Sym  Elf32_Sym
 #elif defined(__i386__)
-    #define Elf_Ehdr Elf32_Ehdr
-    #define Elf_Shdr Elf32_Shdr
-    #define Elf_Sym  Elf32_Sym
+#define Elf_Ehdr Elf32_Ehdr
+#define Elf_Shdr Elf32_Shdr
+#define Elf_Sym  Elf32_Sym
 #elif defined(__aarch64__)
-    #define Elf_Ehdr Elf64_Ehdr
-    #define Elf_Shdr Elf64_Shdr
-    #define Elf_Sym  Elf64_Sym
+#define Elf_Ehdr Elf64_Ehdr
+#define Elf_Shdr Elf64_Shdr
+#define Elf_Sym  Elf64_Sym
 #else
-    #error "Arch unknown, please port me"
+#error "Arch unknown, please port me"
 #endif
 
 struct ctx {
@@ -50,7 +50,6 @@ void *fake_dlopen(const char *libpath, int flags) {
     int k, fd = -1, found = 0;
     intptr_t shoff;
     Elf_Ehdr *elf = (Elf_Ehdr *) MAP_FAILED;
-
 
     maps = fopen("/proc/self/maps", "r");
     if (!maps) goto err_exit;
@@ -86,10 +85,8 @@ void *fake_dlopen(const char *libpath, int flags) {
     shoff = (intptr_t) elf + elf->e_shoff;
 
     for (k = 0; k < elf->e_shnum; k++, shoff += elf->e_shentsize) {
-
         Elf_Shdr *sh = (Elf_Shdr *) shoff;
         switch (sh->sh_type) {
-
             case SHT_DYNSYM:
                 /* .dynsym */
                 ctx->dynsym = malloc(sh->sh_size);
@@ -121,7 +118,6 @@ void *fake_dlopen(const char *libpath, int flags) {
 
 #undef fatal
 
-
     return ctx;
 
     err_exit:
@@ -145,5 +141,4 @@ void *fake_dlsym(void *handle, const char *name) {
             return ret;
         }
     return 0;
-
 }

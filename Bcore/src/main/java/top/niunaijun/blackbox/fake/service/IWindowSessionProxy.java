@@ -10,7 +10,6 @@ import top.niunaijun.blackbox.fake.hook.BinderInvocationStub;
 import top.niunaijun.blackbox.fake.hook.MethodHook;
 import top.niunaijun.blackbox.fake.hook.ProxyMethod;
 
-
 /**
  * Created by Milk on 4/6/21.
  * * ∧＿∧
@@ -22,7 +21,7 @@ import top.niunaijun.blackbox.fake.hook.ProxyMethod;
 public class IWindowSessionProxy extends BinderInvocationStub {
     public static final String TAG = "WindowSessionStub";
 
-    private IInterface mSession;
+    private final IInterface mSession;
 
     public IWindowSessionProxy(IInterface session) {
         super(session.asBinder());

@@ -18,7 +18,6 @@ import top.niunaijun.blackbox.utils.MethodParameterUtils;
  * 此处无Bug
  */
 public class IGraphicsStatsProxy extends BinderInvocationStub {
-
     public IGraphicsStatsProxy() {
         super(BRServiceManager.get().getService("graphicsstats"));
     }

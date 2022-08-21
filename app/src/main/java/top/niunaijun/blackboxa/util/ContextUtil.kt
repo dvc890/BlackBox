@@ -12,7 +12,6 @@ import android.provider.Settings
  * @CreateDate: 2022/4/17 16:32
  */
 object ContextUtil {
-
     fun Context.openAppSystemSettings() {
         startActivity(Intent().apply {
             action = Settings.ACTION_APPLICATION_DETAILS_SETTINGS

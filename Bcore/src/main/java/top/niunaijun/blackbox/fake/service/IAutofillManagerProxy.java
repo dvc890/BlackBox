@@ -45,7 +45,6 @@ public class IAutofillManagerProxy extends BinderInvocationStub {
 
     @ProxyMethod("startSession")
     public static class StartSession extends MethodHook {
-
         @Override
         protected Object hook(Object who, Method method, Object[] args) throws Throwable {
             if (args != null) {

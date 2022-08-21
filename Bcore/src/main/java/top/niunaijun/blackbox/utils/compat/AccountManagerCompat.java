@@ -3,7 +3,6 @@ package top.niunaijun.blackbox.utils.compat;
 import android.accounts.AccountManager;
 
 public class AccountManagerCompat {
-
     /**
      * Boolean, if set and 'customTokens' the authenticator is responsible for
      * notifications.
@@ -38,6 +37,4 @@ public class AccountManagerCompat {
      * on adding account, confirming credentials, or updating credentials.
      */
     public static final String KEY_LAST_AUTHENTICATED_TIME = "lastAuthenticatedTime";
-
-
 }

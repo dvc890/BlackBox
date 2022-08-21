@@ -484,12 +484,9 @@ public class ReflectionToStringBuilder extends ToStringBuilder {
             // Reject static fields.
             return false;
         }
-        if (this.excludeFieldNames != null
-            && Arrays.binarySearch(this.excludeFieldNames, field.getName()) >= 0) {
-            // Reject fields from the getExcludeFieldNames list.
-            return false;
-        }
-        return true;
+        // Reject fields from the getExcludeFieldNames list.
+        return this.excludeFieldNames == null
+                || Arrays.binarySearch(this.excludeFieldNames, field.getName()) < 0;
     }
 
     /**

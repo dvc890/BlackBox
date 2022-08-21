@@ -125,9 +125,9 @@ public class IPackageManagerProxy extends BinderInvocationStub {
         protected Object hook(Object who, Method method, Object[] args) throws Throwable {
             String packageName = (String) args[0];
             int flag = (int) args[1];
-//            if (ClientSystemEnv.isFakePackage(packageName)) {
-//                packageName = BlackBoxCore.getHostPkg();
-//            }
+            /*if (ClientSystemEnv.isFakePackage(packageName)) {
+                packageName = BlackBoxCore.getHostPkg();
+            }*/
             PackageInfo packageInfo = BlackBoxCore.getBPackageManager().getPackageInfo(packageName, flag, BActivityThread.getUserId());
             if (packageInfo != null) {
                 return packageInfo;
@@ -198,7 +198,6 @@ public class IPackageManagerProxy extends BinderInvocationStub {
 
     @ProxyMethod("getServiceInfo")
     public static class GetServiceInfo extends MethodHook {
-
         @Override
         protected Object hook(Object who, Method method, Object[] args) throws Throwable {
             ComponentName componentName = (ComponentName) args[0];
@@ -213,9 +212,8 @@ public class IPackageManagerProxy extends BinderInvocationStub {
         }
     }
 
-        @ProxyMethod("getInstalledApplications")
+    @ProxyMethod("getInstalledApplications")
     public static class GetInstalledApplications extends MethodHook {
-
         @Override
         protected Object hook(Object who, Method method, Object[] args) throws Throwable {
             int flags = (int) args[0];
@@ -239,7 +237,6 @@ public class IPackageManagerProxy extends BinderInvocationStub {
 
     @ProxyMethod("getInstalledPackages")
     public static class GetInstalledPackages extends MethodHook {
-
         @Override
         protected Object hook(Object who, Method method, Object[] args) throws Throwable {
             int flags = (int) args[0];
@@ -254,9 +251,9 @@ public class IPackageManagerProxy extends BinderInvocationStub {
         protected Object hook(Object who, Method method, Object[] args) throws Throwable {
             String packageName = (String) args[0];
             int flags = (int) args[1];
-//            if (ClientSystemEnv.isFakePackage(packageName)) {
-//                packageName = BlackBoxCore.getHostPkg();
-//            }
+            /*if (ClientSystemEnv.isFakePackage(packageName)) {
+                packageName = BlackBoxCore.getHostPkg();
+            }*/
             ApplicationInfo applicationInfo = BlackBoxCore.getBPackageManager().getApplicationInfo(packageName, flags, BActivityThread.getUserId());
             if (applicationInfo != null) {
                 return applicationInfo;

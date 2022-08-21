@@ -2,12 +2,12 @@ package top.niunaijun.blackbox.utils;
 
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.Objects;
 
 import top.niunaijun.blackbox.BlackBoxCore;
 import top.niunaijun.blackbox.app.BActivityThread;
 
 public class MethodParameterUtils {
-
     public static <T> T getFirstParam(Object[] args, Class<T> tClass) {
         if (args == null) {
             return null;
@@ -85,16 +85,14 @@ public class MethodParameterUtils {
         }
     }
 
-    public static String replaceLastAppPkg(Object[] args) {
+    public static void replaceLastAppPkg(Object[] args) {
         int index = ArrayUtils.indexOfLast(args, String.class);
         if (index != -1) {
             String pkg = (String) args[index];
             if (BlackBoxCore.get().isInstalled(pkg, BActivityThread.getUserId())) {
                 args[index] = BlackBoxCore.getHostPkg();
             }
-            return pkg;
         }
-        return null;
     }
 
     public static String replaceSequenceAppPkg(Object[] args, int sequence) {
@@ -151,9 +149,7 @@ public class MethodParameterUtils {
             interfaceCollection.addAll(Arrays.asList(classes));
         }
         if (clazz.getSuperclass() != Object.class) {
-            getAllInterfaces(clazz.getSuperclass(), interfaceCollection);
+            getAllInterfaces(Objects.requireNonNull(clazz.getSuperclass()), interfaceCollection);
         }
     }
-
-
 }

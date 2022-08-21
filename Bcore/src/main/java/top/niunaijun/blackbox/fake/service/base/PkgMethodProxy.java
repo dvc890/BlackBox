@@ -6,7 +6,6 @@ import top.niunaijun.blackbox.fake.hook.MethodHook;
 import top.niunaijun.blackbox.utils.MethodParameterUtils;
 
 public class PkgMethodProxy extends MethodHook {
-
 	String mName;
 
 	public PkgMethodProxy(String name) {

@@ -32,10 +32,6 @@ public class NativeCore {
     static {
         new File("");
         System.loadLibrary("blackbox");
-        ShadowHook.init(new ShadowHook.ConfigBuilder()
-                .setMode(ShadowHook.Mode.SHARED)
-                .setDebuggable(true)
-                .build());
     }
     public static native void init(int apiLevel);
 
@@ -54,9 +50,9 @@ public class NativeCore {
         for (Long cookie : cookies) {
             if (cookie == 0)
                 continue;
-//            File file = new File(BlackBoxCore.get().getDexDumpDir(), packageName);
-//            FileUtils.mkdirs(file);
-//            dumpDex(cookie, file.getAbsolutePath());
+            /*File file = new File(BlackBoxCore.get().getDexDumpDir(), packageName);
+            FileUtils.mkdirs(file);
+            dumpDex(cookie, file.getAbsolutePath());*/
         }
     }
 

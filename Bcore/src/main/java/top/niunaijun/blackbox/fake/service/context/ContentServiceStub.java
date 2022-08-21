@@ -17,7 +17,6 @@ import top.niunaijun.blackbox.fake.hook.ProxyMethod;
  * 此处无Bug
  */
 public class ContentServiceStub extends BinderInvocationStub {
-
     public ContentServiceStub() {
         super(BRServiceManager.get().getService("content"));
     }

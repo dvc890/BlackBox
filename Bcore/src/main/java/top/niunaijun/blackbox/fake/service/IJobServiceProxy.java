@@ -71,7 +71,6 @@ public class IJobServiceProxy extends BinderInvocationStub {
         }
     }
 
-
     @ProxyMethod("enqueue")
     public static class Enqueue extends MethodHook {
         @Override

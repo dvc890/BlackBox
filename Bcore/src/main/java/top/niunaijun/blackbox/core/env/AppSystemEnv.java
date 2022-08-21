@@ -61,7 +61,7 @@ public class AppSystemEnv {
         // sPreInstallPackages.add("com.huawei.hwid");
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N && Build.VERSION.SDK_INT < 29){
             //解决Android 9三星浏览器闪退问题
-        }else{
+        } else {
 
         }
     }
@@ -77,10 +77,7 @@ public class AppSystemEnv {
     public static boolean isBlackPackage(String packageName) {
         if (BlackBoxCore.get().isHideRoot() && sSuPackages.contains(packageName)) {
             return true;
-        } else if (BlackBoxCore.get().isHideXposed() && sXposedPackages.contains(packageName)) {
-            return true;
-        }
-        return false;
+        } else return BlackBoxCore.get().isHideXposed() && sXposedPackages.contains(packageName);
     }
 
     public static List<String> getPreInstallPackages() {

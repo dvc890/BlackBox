@@ -9,20 +9,17 @@ public class StrictModeCompat {
     public static int PENALTY_DEATH_ON_FILE_URI_EXPOSURE = BRStrictMode.get().PENALTY_DEATH_ON_FILE_URI_EXPOSURE() == null ?
             (0x04 << 24) : BRStrictMode.get().PENALTY_DEATH_ON_FILE_URI_EXPOSURE();
 
-    public static boolean disableDeathOnFileUriExposure(){
+    public static void disableDeathOnFileUriExposure(){
         try {
             BRStrictMode.get().disableDeathOnFileUriExposure();
-            return true;
         } catch (Throwable e) {
             try {
                 int sVmPolicyMask = BRStrictMode.get().sVmPolicyMask();
                 sVmPolicyMask &= ~(DETECT_VM_FILE_URI_EXPOSURE | PENALTY_DEATH_ON_FILE_URI_EXPOSURE);
                 BRStrictMode.get()._set_sVmPolicyMask(sVmPolicyMask);
-                return true;
             } catch (Throwable e2) {
                 e2.printStackTrace();
             }
         }
-        return false;
     }
 }

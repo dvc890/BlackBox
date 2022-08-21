@@ -26,12 +26,8 @@ import top.niunaijun.blackboxa.view.list.ListActivity
  * @CreateDate: 2021/5/2 20:25
  */
 class XpActivity : LoadingActivity() {
-
     private val viewBinding: ActivityXpBinding by inflate()
-
-
     private lateinit var viewModel: XpViewModel
-
     private lateinit var mAdapter: RVAdapter<XpModuleInfo>
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -45,9 +41,7 @@ class XpActivity : LoadingActivity() {
         initFab()
     }
 
-
     private fun observeLiveData() {
-
         viewBinding.stateView.showLoading()
         viewModel.getInstalledModule()
         viewModel.appsLiveData.observe(this) {
@@ -68,21 +62,20 @@ class XpActivity : LoadingActivity() {
         }
     }
 
-        private fun initRecyclerView() {
+    private fun initRecyclerView() {
+        mAdapter = RVAdapter<XpModuleInfo>(this, XpAdapter()).bind(viewBinding.recyclerView)
+            .setItemClickListener { view, item, position ->
+                item.enable = !item.enable
+                BlackBoxCore.get().setModuleEnable(item.packageName, item.enable)
+                mAdapter.replaceAt(position, item)
+                toast(R.string.restart_module)
+            }.setItemLongClickListener { _, item, _ ->
+                unInstallModule(item.packageName)
+            }
 
-            mAdapter = RVAdapter<XpModuleInfo>(this, XpAdapter()).bind(viewBinding.recyclerView)
-                .setItemClickListener { view, item, position ->
-                    item.enable = !item.enable
-                    BlackBoxCore.get().setModuleEnable(item.packageName, item.enable)
-                    mAdapter.replaceAt(position, item)
-                    toast(R.string.restart_module)
-                }.setItemLongClickListener { _, item, _ ->
-                    unInstallModule(item.packageName)
-                }
-
-            viewBinding.recyclerView.layoutManager = LinearLayoutManager(this)
-            viewBinding.stateView.showEmpty()
-        }
+        viewBinding.recyclerView.layoutManager = LinearLayoutManager(this)
+        viewBinding.stateView.showEmpty()
+    }
 
     private fun initFab() {
         viewBinding.fab.setOnClickListener {
@@ -90,9 +83,7 @@ class XpActivity : LoadingActivity() {
             intent.putExtra("onlyShowXp", true)
             apkPathResult.launch(intent)
         }
-
     }
-
 
     override fun onStart() {
         super.onStart()
@@ -107,7 +98,6 @@ class XpActivity : LoadingActivity() {
         viewModel.resultLiveData.removeObservers(this)
     }
 
-
     private fun unInstallModule(packageName: String) {
         MaterialDialog(this).show {
             title(R.string.uninstall_module)
@@ -120,12 +110,10 @@ class XpActivity : LoadingActivity() {
         }
     }
 
-
     private fun installModule(source: String) {
         showLoading()
         viewModel.installModule(source)
     }
-
 
     private val apkPathResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
         if (it.resultCode == RESULT_OK) {
@@ -135,11 +123,8 @@ class XpActivity : LoadingActivity() {
                     installModule(source)
                 }
             }
-
         }
     }
-
-
 
     companion object {
         fun start(context: Context) {
@@ -147,5 +132,4 @@ class XpActivity : LoadingActivity() {
             context.startActivity(intent)
         }
     }
-
 }

@@ -6,7 +6,6 @@ import black.android.ddm.BRDdmHandleAppName;
 import black.android.os.BRProcess;
 
 public class VirtualRuntime {
-
     private static String sInitialPackageName;
     private static String sProcessName;
 

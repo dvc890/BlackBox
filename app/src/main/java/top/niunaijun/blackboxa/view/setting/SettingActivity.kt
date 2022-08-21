@@ -9,7 +9,6 @@ import top.niunaijun.blackboxa.util.inflate
 import top.niunaijun.blackboxa.view.base.BaseActivity
 
 class SettingActivity : BaseActivity() {
-
     private val viewBinding: ActivitySettingBinding by inflate()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -21,12 +20,11 @@ class SettingActivity : BaseActivity() {
                 .commit()
     }
 
-    companion object{
+    companion object {
         fun start(context: Context){
             val intent = Intent(context,SettingActivity::class.java)
             intent.action = Intent.ACTION_OPEN_DOCUMENT
             context.startActivity(intent)
         }
     }
-
 }

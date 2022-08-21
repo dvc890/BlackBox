@@ -30,7 +30,6 @@ import top.niunaijun.blackboxa.util.MathUtil;
  * GitHub: https://github.com/GcsSloop
  */
 public class RockerView extends SurfaceView implements Runnable, SurfaceHolder.Callback {
-
     private static final int DEFAULT_AREA_RADIUS = 100;
     private static final int DEFAULT_ROCKER_RADIUS = 35;
 
@@ -41,8 +40,6 @@ public class RockerView extends SurfaceView implements Runnable, SurfaceHolder.C
     private static final int DEFAULT_CALLBACK_CYCLE = 300;
 
     private SurfaceHolder mHolder;
-    private static Thread mDrawThread;
-    private static Thread mCallbackThread;
     private static boolean mDrawOk = true;
     private static boolean mCallbackOk = true;
 
@@ -63,7 +60,6 @@ public class RockerView extends SurfaceView implements Runnable, SurfaceHolder.C
      */
     private Point mRockerPosition;
 
-
     private int mAreaRadius = -1;
     private int mRockerRadius = -1;
 
@@ -74,7 +70,6 @@ public class RockerView extends SurfaceView implements Runnable, SurfaceHolder.C
 
     private boolean canMove = true;
 
-
     private RockerListener mListener;
     public static final int EVENT_ACTION = 1;
     public static final int EVENT_CLOCK = 2;
@@ -82,9 +77,7 @@ public class RockerView extends SurfaceView implements Runnable, SurfaceHolder.C
     private int mRefreshCycle = DEFAULT_REFRESH_CYCLE;
     private int mCallbackCycle = DEFAULT_CALLBACK_CYCLE;
 
-
     /*Life Cycle***********************************************************************************/
-
     public RockerView(Context context) {
         this(context, null);
     }
@@ -95,7 +88,6 @@ public class RockerView extends SurfaceView implements Runnable, SurfaceHolder.C
 
     public RockerView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-
         // init attrs
         initAttrs(context, attrs);
 
@@ -118,7 +110,6 @@ public class RockerView extends SurfaceView implements Runnable, SurfaceHolder.C
         mRockerColor = DEFAULT_ROCKER_COLOR;
         mAreaRadius = DEFAULT_AREA_RADIUS;
         mRockerRadius = DEFAULT_ROCKER_RADIUS;
-
     }
 
     private void setPaint() {
@@ -141,9 +132,8 @@ public class RockerView extends SurfaceView implements Runnable, SurfaceHolder.C
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        int measureWidth = 0, measureHeight = 0;
+        int measureWidth, measureHeight;
         int defaultWidth = (mAreaRadius + mRockerRadius) * 2;
-        int defalutHeight = defaultWidth;
 
         int widthsize = MeasureSpec.getSize(widthMeasureSpec);      //取出宽度的确切数值
         int widthmode = MeasureSpec.getMode(widthMeasureSpec);      //取出宽度的测量模式
@@ -157,9 +147,8 @@ public class RockerView extends SurfaceView implements Runnable, SurfaceHolder.C
             measureWidth = widthsize;
         }
 
-
         if (heightmode == MeasureSpec.AT_MOST || heightmode == MeasureSpec.UNSPECIFIED || heightsize < 0) {
-            measureHeight = defalutHeight;
+            measureHeight = defaultWidth;
         } else {
             measureHeight = heightsize;
         }
@@ -170,7 +159,6 @@ public class RockerView extends SurfaceView implements Runnable, SurfaceHolder.C
     @Override
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
         super.onSizeChanged(w, h, oldw, oldh);
-
         mAreaPosition = new Point(w / 2, h / 2);
         mRockerPosition = new Point(mAreaPosition);
 
@@ -186,12 +174,11 @@ public class RockerView extends SurfaceView implements Runnable, SurfaceHolder.C
     @Override
     public void surfaceCreated(SurfaceHolder holder) {
         try {
-            mDrawThread = new Thread(this);
+            Thread mDrawThread = new Thread(this);
             mDrawThread.start();
-
-            mCallbackThread = new Thread(() -> {
+            // listener callback
+            Thread mCallbackThread = new Thread(() -> {
                 while (mCallbackOk) {
-
                     // listener callback
                     listenerCallback();
 
@@ -203,7 +190,6 @@ public class RockerView extends SurfaceView implements Runnable, SurfaceHolder.C
                 }
             });
             mCallbackThread.start();
-
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -232,12 +218,10 @@ public class RockerView extends SurfaceView implements Runnable, SurfaceHolder.C
     }
 
     /*Event Response*******************************************************************************/
-
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         try {
             int len = MathUtil.getDistance(mAreaPosition.x, mAreaPosition.y, event.getX(), event.getY());
-
             if (event.getAction() == MotionEvent.ACTION_DOWN) {
                 //如果屏幕接触点不在摇杆挥动范围内,则不处理
                 if (len > mAreaRadius) {
@@ -249,7 +233,6 @@ public class RockerView extends SurfaceView implements Runnable, SurfaceHolder.C
                 if (len <= mAreaRadius) {
                     //如果手指在摇杆活动范围内，则摇杆处于手指触摸位置
                     mRockerPosition.set((int) event.getX(), (int) event.getY());
-
                 } else {
                     //设置摇杆位置，使其处于手指触摸方向的 摇杆活动范围边缘
                     mRockerPosition = MathUtil.getPointByCutLength(mAreaPosition,
@@ -275,17 +258,13 @@ public class RockerView extends SurfaceView implements Runnable, SurfaceHolder.C
         return true;
     }
 
-
     /*Thread - draw view***************************************************************************/
-
     @Override
     public void run() {
         if (isInEditMode()) {
             return;
         }
-
         Canvas canvas = null;
-
         while (mDrawOk) {
             boolean canMove = this.canMove;
             try {
@@ -297,7 +276,6 @@ public class RockerView extends SurfaceView implements Runnable, SurfaceHolder.C
                     drawRocker(canvas);
                 }
                 Thread.sleep(mRefreshCycle);    // 休眠
-
             } catch (Exception e) {
                 e.printStackTrace();
             } finally {
@@ -309,8 +287,7 @@ public class RockerView extends SurfaceView implements Runnable, SurfaceHolder.C
     }
 
     private void drawArea(Canvas canvas) {
-
-        if (null != mAreaBitmap) {
+        if (mAreaBitmap != null) {
             mPaint.setColor(Color.BLACK);
             Rect src = new Rect(0, 0, mAreaBitmap.getWidth(), mAreaBitmap.getHeight());
             Rect dst = new Rect(
@@ -326,7 +303,7 @@ public class RockerView extends SurfaceView implements Runnable, SurfaceHolder.C
     }
 
     private void drawRocker(Canvas canvas) {
-        if (null != mRockerBitmap) {
+        if (mRockerBitmap != null) {
             mPaint.setColor(Color.BLACK);
             Rect src = new Rect(0, 0, mRockerBitmap.getWidth(), mRockerBitmap.getHeight());
             Rect dst = new Rect(
@@ -370,7 +347,6 @@ public class RockerView extends SurfaceView implements Runnable, SurfaceHolder.C
     }
 
     /*Getter Setter********************************************************************************/
-
     public void setCanMove(boolean isMove) {
         this.canMove = isMove;
     }
@@ -446,12 +422,10 @@ public class RockerView extends SurfaceView implements Runnable, SurfaceHolder.C
     }
 
     /*Rocker Listener******************************************************************************/
-
     /**
      * rocker listener
      */
     public interface RockerListener {
-
         /**
          * you can get some event from this method
          *
@@ -461,5 +435,4 @@ public class RockerView extends SurfaceView implements Runnable, SurfaceHolder.C
          */
         void callback(int eventType, float currentAngle, float currentDistance);
     }
-
 }

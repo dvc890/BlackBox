@@ -22,16 +22,11 @@ import kotlin.math.sin
  * @CreateDate: 2022/3/19 19:37
  */
 object RockerManager {
-
     private const val TAG = "RockerManager"
-
-
-    private const val Ea = 6378137     //   赤道半径  
-
+    private const val Ea = 6378137     //   赤道半径
     private const val Eb = 6356725     //   极半径 
 
     fun init(application: Application?, userId: Int) {
-
         if (application == null || !BLocationManager.isFakeLocationEnable()) {
             return
         }
@@ -44,9 +39,7 @@ object RockerManager {
             }
         }
 
-
         application.registerActivityLifecycleCallbacks(object : BaseActivityLifecycleCallback {
-
             override fun onActivityStarted(activity: Activity) {
                 super.onActivityStarted(activity)
                 FloatingView.get().attach(activity)
@@ -56,13 +49,10 @@ object RockerManager {
                 super.onActivityStopped(activity)
                 FloatingView.get().detach(activity)
             }
-
         })
-
     }
 
     private fun initFloatView(): FloatingMagnetView? {
-
         val params = FrameLayout.LayoutParams(
             RelativeLayout.LayoutParams.WRAP_CONTENT,
             RelativeLayout.LayoutParams.WRAP_CONTENT
@@ -73,7 +63,6 @@ object RockerManager {
         view.layoutParams = params
 
         FloatingView.get().customView(view)
-
         return FloatingView.get().view
     }
 
@@ -83,17 +72,12 @@ object RockerManager {
         val dx = distance  * sin(angle * Math.PI / 180.0)
         val dy = distance  * cos(angle * Math.PI / 180.0)
 
-
         val ec = Eb + (Ea - Eb) * (90.0 - location.latitude) / 90.0
         val ed = ec * cos(location.latitude * Math.PI / 180)
-
         val newLng = (dx / ed + location.longitude * Math.PI / 180.0) * 180.0 / Math.PI
-
         val newLat = (dy / ec + location.latitude * Math.PI / 180.0) * 180.0 / Math.PI
         val newLocation = BLocation(newLat, newLng)
 
         BLocationManager.get().setLocation(userId, packageName, newLocation)
     }
-
-
 }

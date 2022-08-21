@@ -33,7 +33,8 @@ public abstract class MethodReplacement extends MethodHook {
      */
     protected abstract Object replaceCall(Pine.CallFrame callFrame) throws Throwable;
 
-    @Override public final void beforeCall(Pine.CallFrame callFrame) {
+    @Override
+    public final void beforeCall(Pine.CallFrame callFrame) {
         try {
             callFrame.setResult(replaceCall(callFrame));
         } catch (Throwable e) {
@@ -41,7 +42,8 @@ public abstract class MethodReplacement extends MethodHook {
         }
     }
 
-    @Override public final void afterCall(Pine.CallFrame callFrame) {
+    @Override
+    public final void afterCall(Pine.CallFrame callFrame) {
     }
 
     /**

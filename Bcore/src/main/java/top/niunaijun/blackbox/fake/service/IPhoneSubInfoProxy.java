@@ -1,9 +1,6 @@
 package top.niunaijun.blackbox.fake.service;
 
-import android.util.Log;
-
 import java.lang.reflect.Method;
-import java.util.Arrays;
 
 import black.android.telephony.BRTelephonyManager;
 import top.niunaijun.blackbox.BlackBoxCore;
@@ -40,7 +37,7 @@ public class IPhoneSubInfoProxy extends ClassInvocationStub {
 
     @Override
     public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
-//        Log.d(TAG, "call: " + method.getName());
+        //Log.d(TAG, "call: " + method.getName());
         MethodParameterUtils.replaceLastAppPkg(args);
         return super.invoke(proxy, method, args);
     }
@@ -50,7 +47,6 @@ public class IPhoneSubInfoProxy extends ClassInvocationStub {
         return false;
     }
 
-
     @ProxyMethod("getLine1NumberForSubscriber")
     public static class getLine1NumberForSubscriber extends MethodHook {
         @Override
@@ -58,7 +54,6 @@ public class IPhoneSubInfoProxy extends ClassInvocationStub {
             return null;
         }
     }
-
 
     @ProxyMethod("getSubscriberIdForSubscriber")
     public static class GetSubscriberIdForSubscriber extends MethodHook {
@@ -78,5 +73,4 @@ public class IPhoneSubInfoProxy extends ClassInvocationStub {
 
     @ProxyMethod("getIccSerialNumberForSubscriber")
     public static class GetIccSerialNumberForSubscriber extends GetIccSerialNumber {}
-
 }

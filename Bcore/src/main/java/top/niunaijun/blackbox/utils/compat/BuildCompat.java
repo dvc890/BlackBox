@@ -3,7 +3,6 @@ package top.niunaijun.blackbox.utils.compat;
 import android.os.Build;
 
 public class BuildCompat {
-
     public static int getPreviewSDKInt() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             try {
@@ -98,9 +97,7 @@ public class BuildCompat {
         return SystemPropertiesCompat.isExist("ro.vivo.os.build.display.id");
     }
 
-
     private static ROMType sRomType;
-
     public static ROMType getROMType() {
         if (sRomType == null) {
             if (isEMUI()) {

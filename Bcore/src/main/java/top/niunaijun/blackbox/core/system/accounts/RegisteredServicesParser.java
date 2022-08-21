@@ -14,7 +14,6 @@ import top.niunaijun.blackbox.core.system.pm.BPackageSettings;
 import top.niunaijun.blackbox.core.system.pm.PackageManagerCompat;
 
 public class RegisteredServicesParser {
-
     public XmlResourceParser getParser(Context context, ServiceInfo serviceInfo, String name) {
         Bundle meta = serviceInfo.metaData;
         if (meta != null) {

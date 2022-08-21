@@ -14,7 +14,6 @@ import java.security.PublicKey;
  * 此处无Bug
  */
 public class VerifierInfo implements Parcelable {
-
     public static final Parcelable.Creator<VerifierInfo> CREATOR = new Parcelable.Creator<VerifierInfo>() {
         public VerifierInfo createFromParcel(final Parcel source) {
             return new VerifierInfo(source);

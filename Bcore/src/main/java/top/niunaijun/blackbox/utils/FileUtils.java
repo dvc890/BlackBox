@@ -27,7 +27,6 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class FileUtils {
-
     public static int count(File file) {
         if (!file.exists()) {
             return -1;
@@ -193,7 +192,7 @@ public class FileUtils {
         final int BUFFER = 1024;
         BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(target));
         int count;
-        byte data[] = new byte[BUFFER];
+        byte[] data = new byte[BUFFER];
         while ((count = dataIns.read(data, 0, BUFFER)) != -1) {
             bos.write(data, 0, count);
         }
@@ -368,7 +367,7 @@ public class FileUtils {
      */
     public static class FileLock {
         private static FileLock singleton;
-        private Map<String, FileLockCount> mRefCountMap = new ConcurrentHashMap<String, FileLockCount>();
+        private final Map<String, FileLockCount> mRefCountMap = new ConcurrentHashMap<String, FileLockCount>();
 
         public static FileLock getInstance() {
             if (singleton == null) {
@@ -408,7 +407,6 @@ public class FileUtils {
         }
 
         public boolean LockExclusive(File targetFile) {
-
             if (targetFile == null) {
                 return false;
             }
@@ -434,7 +432,6 @@ public class FileUtils {
          * unlock odex file
          **/
         public void unLock(File targetFile) {
-
             File lockFile = new File(targetFile.getParentFile().getAbsolutePath().concat("/lock"));
             if (!lockFile.exists()) {
                 return;
@@ -508,5 +505,4 @@ public class FileUtils {
     private static boolean isMediaDocument(Uri uri) {
         return "com.android.providers.media.documents".equals(uri.getAuthority());
     }
-
 }

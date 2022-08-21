@@ -16,13 +16,11 @@ import top.niunaijun.blackboxa.databinding.ItemXpBinding
  * @CreateDate: 2021/5/2 21:32
  */
 class XpAdapter : RVHolderFactory() {
-
     override fun createViewHolder(parent: ViewGroup?, viewType: Int, item: Any): RVHolder<out Any> {
         return XpVH(inflate(R.layout.item_xp, parent))
     }
 
     class XpVH(itemView: View) : RVHolder<XpModuleInfo>(itemView) {
-
         private val binding = ItemXpBinding.bind(itemView)
 
         override fun setContent(item: XpModuleInfo, isSelected: Boolean, payload: Any?) {
@@ -34,9 +32,7 @@ class XpAdapter : RVHolderFactory() {
                 if (buttonView.isPressed) {
                     binding.root.performClick()
                 }
-
             }
         }
     }
-
 }

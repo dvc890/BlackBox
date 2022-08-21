@@ -28,7 +28,7 @@ public class StartActivityCompat {
 
     static {
         if (BuildCompat.isR()) {
-            appThreadIndex = index++;
+            index++;
             callingPageIndex = index++;
             callingFeatureIdIndex = index++;
             intentIndex = index++;
@@ -40,7 +40,7 @@ public class StartActivityCompat {
             profilerInfoIndex = index++;
             optionsIndex = index++;
         } else {
-            appThreadIndex = index++;
+            index++;
             callingPageIndex = index++;
             intentIndex = index++;
             resolvedTypeIndex = index++;
@@ -122,7 +122,6 @@ public class StartActivityCompat {
         }
         return (Bundle) args[optionsIndex];
     }
-
 
     public static int getAppThreadIndex() {
         return appThreadIndex;

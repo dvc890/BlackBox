@@ -328,4 +328,3 @@ bool ArtMethod::TestDontCompile(JNIEnv* env) {
     env->DeleteLocalRef(exception);
     return special;
 }
-

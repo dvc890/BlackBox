@@ -24,14 +24,10 @@ import top.niunaijun.blackbox.utils.Slog;
  */
 public class BroadcastManager implements PackageMonitor {
     public static final String TAG = "BroadcastManager";
-
     public static final int TIMEOUT = 9000;
-
     public static final int MSG_TIME_OUT = 1;
+    private static volatile BroadcastManager sBroadcastManager;
 
-    private static BroadcastManager sBroadcastManager;
-
-    private final BActivityManagerService mAms;
     private final BPackageManagerService mPms;
     private final Map<String, List<BroadcastReceiver>> mReceivers = new HashMap<>();
     private final Map<String, PendingResultData> mReceiversData = new HashMap<>();
@@ -40,15 +36,13 @@ public class BroadcastManager implements PackageMonitor {
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
-            switch (msg.what) {
-                case MSG_TIME_OUT:
-                    try {
-                        PendingResultData data = (PendingResultData) msg.obj;
-                        data.build().finish();
-                        Slog.d(TAG, "Timeout Receiver: " + data);
-                    } catch (Throwable ignore) {
-                    }
-                    break;
+            if (msg.what == MSG_TIME_OUT) {
+                try {
+                    PendingResultData data = (PendingResultData) msg.obj;
+                    data.build().finish();
+                    Slog.d(TAG, "Timeout Receiver: " + data);
+                } catch (Throwable ignore) {
+                }
             }
         }
     };
@@ -65,7 +59,6 @@ public class BroadcastManager implements PackageMonitor {
     }
 
     public BroadcastManager(BActivityManagerService ams, BPackageManagerService pms) {
-        mAms = ams;
         mPms = pms;
     }
 

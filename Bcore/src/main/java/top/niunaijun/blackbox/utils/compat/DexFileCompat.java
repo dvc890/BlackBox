@@ -15,7 +15,6 @@ import top.niunaijun.blackbox.utils.Reflector;
  * 此处无Bug
  */
 public class DexFileCompat {
-
     public static List<Long> getCookies(ClassLoader classLoader) {
         List<Long> cookies = new ArrayList<>();
         List<DexFile> dexFiles = getDexFiles(classLoader);
@@ -53,7 +52,7 @@ public class DexFileCompat {
             try {
                 dexFiles.add(Reflector.with(dexElement)
                         .field("dexFile")
-                        .<DexFile>get());
+                        .get());
             } catch (Exception e) {
                 e.printStackTrace();
             }

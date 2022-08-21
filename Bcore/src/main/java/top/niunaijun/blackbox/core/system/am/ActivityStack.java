@@ -25,6 +25,7 @@ import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 import java.util.UUID;
 
@@ -155,10 +156,7 @@ public class ActivityStack {
         // 移至前台
         mAms.moveTaskToFront(taskRecord.id, 0);
 
-        boolean notStartToFront = false;
-        if (clearTop || singleTop || clearTask) {
-            notStartToFront = true;
-        }
+        boolean notStartToFront = clearTop || singleTop || clearTask;
 
         boolean startTaskToFront = !notStartToFront
                 && ComponentUtils.intentFilterEquals(taskRecord.rootIntent, intent)
@@ -175,12 +173,12 @@ public class ActivityStack {
         if (clearTop) {
             if (targetActivityRecord != null) {
                 // 目标栈上面所有activity出栈
-                synchronized (targetActivityRecord.task.activities) {
+                synchronized (Objects.requireNonNull(targetActivityRecord.task).activities) {
                     for (int i = targetActivityRecord.task.activities.size() - 1; i >= 0; i--) {
                         ActivityRecord next = targetActivityRecord.task.activities.get(i);
                         if (next != targetActivityRecord) {
                             next.finished = true;
-                            Slog.d(TAG, "makerFinish: " + next.component.toString());
+                            Slog.d(TAG, "makerFinish: " + Objects.requireNonNull(next.component));
                         } else {
                             if (singleTop) {
                                 newIntentRecord = targetActivityRecord;
@@ -198,16 +196,16 @@ public class ActivityStack {
         if (singleTop && !clearTop) {
             if (ComponentUtils.intentFilterEquals(topActivityRecord.intent, intent)) {
                 newIntentRecord = topActivityRecord;
-            } else {
-//                synchronized (mLaunchingActivities) {
-//                    for (ActivityRecord launchingActivity : mLaunchingActivities.values()) {
-//                        if (!launchingActivity.finished && launchingActivity.component.equals(intent.getComponent())) {
-//                            // todo update onNewIntent from intent
-//                            ignore = true;
-//                        }
-//                    }
-//                }
-            }
+            } /*else {
+                synchronized (mLaunchingActivities) {
+                    for (ActivityRecord launchingActivity : mLaunchingActivities.values()) {
+                        if (!launchingActivity.finished && launchingActivity.component.equals(intent.getComponent())) {
+                            // todo update onNewIntent from intent
+                            ignore = true;
+                        }
+                    }
+                }
+            }*/
         }
 
         if (activityInfo.launchMode == ActivityInfo.LAUNCH_SINGLE_TASK && !clearTop) {
@@ -250,8 +248,6 @@ public class ActivityStack {
             // 通知onNewIntent
             deliverNewIntentLocked(newIntentRecord, intent);
             return 0;
-        } else if (ignore) {
-            return 0;
         }
 
         if (resultTo == null) {
@@ -272,7 +268,7 @@ public class ActivityStack {
     private void deliverNewIntentLocked(ActivityRecord activityRecord, Intent intent) {
         Log.d(TAG, "deliverNewIntentLocked");
         try {
-            activityRecord.processRecord.bActivityThread.handleNewIntent(activityRecord.token, intent);
+            Objects.requireNonNull(activityRecord.processRecord).bActivityThread.handleNewIntent(activityRecord.token, intent);
         } catch (RemoteException e) {
             e.printStackTrace();
         }
@@ -316,7 +312,7 @@ public class ActivityStack {
         if (resultTo == null) {
             shadow.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         }
-        return realStartActivityLocked(sourceRecord.processRecord.appThread, shadow, resolvedType, resultTo, resultWho, requestCode, flags, options);
+        return realStartActivityLocked(Objects.requireNonNull(sourceRecord.processRecord).appThread, shadow, resolvedType, resultTo, resultWho, requestCode, flags, options);
     }
 
     private int realStartActivityLocked(IInterface appThread, Intent intent, String resolvedType,
@@ -349,17 +345,16 @@ public class ActivityStack {
 
     // 销毁进程
     void processDied(ProcessRecord processRecord) {
-
         Log.d(TAG, "processDied");
         synchronized (mTasks) {
             synchronizeTasks();
             for (int i = mTasks.size() - 1; i >= 0; i--) {
                 TaskRecord taskRecord = mTasks.get(i);
-                synchronized (taskRecord.activities) {
+                synchronized (Objects.requireNonNull(taskRecord).activities) {
                     Iterator<ActivityRecord> iterator = taskRecord.activities.iterator();
                     while (iterator.hasNext()) {
                         ActivityRecord activityRecord = iterator.next();
-                        if (activityRecord.processRecord.pid != processRecord.pid) {
+                        if (Objects.requireNonNull(activityRecord.processRecord).pid != processRecord.pid) {
                             continue;
                         }
                         iterator.remove();
@@ -408,13 +403,13 @@ public class ActivityStack {
     }
 
     private void finishAllActivity(int userId) {
-
         Log.d(TAG, "finishAllActivity");
         for (TaskRecord task : mTasks.values()) {
             for (ActivityRecord activity : task.activities) {
                 if (activity.userId == userId) {
                     if (activity.finished) {
                         try {
+                            assert activity.processRecord != null;
                             activity.processRecord.bActivityThread.finishActivity(activity.token);
                         } catch (RemoteException ignored) {
                         }
@@ -444,7 +439,7 @@ public class ActivityStack {
         for (TaskRecord next : mTasks.values()) {
             if (userId == next.userId) {
                 for (ActivityRecord activity : next.activities) {
-                    if (activity.component.equals(componentName)) {
+                    if (Objects.equals(activity.component, componentName)) {
                         record = activity;
                         break;
                     }
@@ -513,7 +508,7 @@ public class ActivityStack {
             synchronizeTasks();
             TaskRecord taskRecord = mTasks.get(taskId);
             if (taskRecord == null) {
-                taskRecord = new TaskRecord(taskId, record.userId, ComponentUtils.getTaskAffinity(record.info));
+                taskRecord = new TaskRecord(taskId, record.userId, ComponentUtils.getTaskAffinity(Objects.requireNonNull(record.info)));
                 taskRecord.rootIntent = record.intent;
                 mTasks.put(taskId, taskRecord);
             }
@@ -521,7 +516,7 @@ public class ActivityStack {
             record.processRecord = processRecord;
             record.task = taskRecord;
             taskRecord.addTopActivity(record);
-            Slog.d(TAG, "onActivityCreated : " + record.component.toString());
+            Slog.d(TAG, "onActivityCreated : " + Objects.requireNonNull(record.component));
         }
     }
 
@@ -534,8 +529,8 @@ public class ActivityStack {
             if (activityRecord == null) {
                 return;
             }
-            Slog.d(TAG, "onActivityResumed : " + activityRecord.component.toString());
-            synchronized (activityRecord.task.activities) {
+            Slog.d(TAG, "onActivityResumed : " + Objects.requireNonNull(activityRecord.component));
+            synchronized (Objects.requireNonNull(activityRecord.task).activities) {
                 activityRecord.task.removeActivity(activityRecord);
                 activityRecord.task.addTopActivity(activityRecord);
             }
@@ -551,8 +546,8 @@ public class ActivityStack {
                 return;
             }
             activityRecord.finished = true;
-            Slog.d(TAG, "onActivityDestroyed : " + activityRecord.component.toString());
-            synchronized (activityRecord.task.activities) {
+            Slog.d(TAG, "onActivityDestroyed : " + Objects.requireNonNull(activityRecord.component));
+            synchronized (Objects.requireNonNull(activityRecord.task).activities) {
                 activityRecord.task.removeActivity(activityRecord);
             }
         }
@@ -567,7 +562,7 @@ public class ActivityStack {
                 return;
             }
             activityRecord.finished = true;
-            Slog.d(TAG, "onFinishActivity : " + activityRecord.component.toString());
+            Slog.d(TAG, "onFinishActivity : " + Objects.requireNonNull(activityRecord.component));
         }
     }
 
@@ -579,7 +574,7 @@ public class ActivityStack {
             if (activityRecordByToken != null) {
                 ActivityRecord resultTo = findActivityRecordByToken(userId, activityRecordByToken.resultTo);
                 if (resultTo != null) {
-                    return resultTo.info.packageName;
+                    return Objects.requireNonNull(resultTo.info).packageName;
                 }
             }
             return BlackBoxCore.getHostPkg();
@@ -587,7 +582,6 @@ public class ActivityStack {
     }
 
     public ComponentName getCallingActivity(IBinder token, int userId) {
-
         Log.d(TAG, "getCallingActivity");
         synchronized (mTasks) {
             synchronizeTasks();

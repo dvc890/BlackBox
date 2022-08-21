@@ -1,7 +1,5 @@
 package black.android.content.pm;
 
-
-import android.content.pm.PackageManager;
 import android.content.pm.PackageParser;
 
 import java.io.File;

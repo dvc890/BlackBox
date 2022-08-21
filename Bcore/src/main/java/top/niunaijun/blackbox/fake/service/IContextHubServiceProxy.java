@@ -1,6 +1,5 @@
 package top.niunaijun.blackbox.fake.service;
 
-
 import black.android.hardware.location.BRIContextHubServiceStub;
 import black.android.os.BRServiceManager;
 import top.niunaijun.blackbox.fake.hook.BinderInvocationStub;
@@ -11,7 +10,6 @@ import top.niunaijun.blackbox.utils.compat.BuildCompat;
  * Created by BlackBox on 2022/3/2.
  */
 public class IContextHubServiceProxy extends BinderInvocationStub {
-
     public IContextHubServiceProxy() {
         super(BRServiceManager.get().getService(getServiceName()));
     }

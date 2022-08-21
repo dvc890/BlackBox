@@ -19,7 +19,6 @@ import top.niunaijun.blackbox.utils.MethodParameterUtils;
  * 此处无Bug
  */
 public class IAppWidgetManagerProxy extends BinderInvocationStub {
-
     public IAppWidgetManagerProxy() {
         super(BRServiceManager.get().getService(Context.APPWIDGET_SERVICE));
     }

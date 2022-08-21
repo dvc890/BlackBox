@@ -12,7 +12,9 @@ import top.canyie.pine.Pine;
 /**
  * @author canyie
  */
-@SuppressWarnings("JavaReflectionMemberAccess") @SuppressLint("PrivateApi") public final class Primitives {
+@SuppressWarnings("JavaReflectionMemberAccess")
+@SuppressLint("PrivateApi")
+public final class Primitives {
     private static final String TAG = "Primitives";
     private static Class<?> unsafeClass;
     private static Object unsafe;

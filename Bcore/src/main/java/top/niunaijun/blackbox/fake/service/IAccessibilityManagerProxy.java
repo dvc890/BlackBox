@@ -22,7 +22,6 @@ import top.niunaijun.blackbox.fake.hook.ProxyMethods;
  * 此处无Bug
  */
 public class IAccessibilityManagerProxy extends BinderInvocationStub {
-
     public IAccessibilityManagerProxy() {
         super(BRServiceManager.get().getService(Context.ACCESSIBILITY_SERVICE));
     }

@@ -26,7 +26,6 @@ import top.niunaijun.blackbox.utils.compat.ParceledListSliceCompat;
  * 未实现，全部拦截
  */
 public class IShortcutManagerProxy extends BinderInvocationStub {
-
     public IShortcutManagerProxy() {
         super(BRServiceManager.get().getService(Context.SHORTCUT_SERVICE));
     }

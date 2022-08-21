@@ -22,15 +22,12 @@ import top.niunaijun.blackboxa.view.main.ShortcutActivity
  * @CreateDate: 2022/2/27 22:56
  */
 object ShortcutUtil {
-
-
     /**
      * 创建桌面快捷方式
      * @param userID Int userID
      * @param info AppInfo
      */
     fun createShortcut(context: Context,userID: Int, info: AppInfo) {
-
         if (ShortcutManagerCompat.isRequestPinShortcutSupported(context)) {
             val labelName = info.name + userID
             val intent = Intent(context, ShortcutActivity::class.java)
@@ -58,7 +55,6 @@ object ShortcutUtil {
                 positiveButton(R.string.done)
                 negativeButton(R.string.cancel)
             }
-
         } else {
             toast(R.string.cannot_create_shortcut)
         }
@@ -81,6 +77,5 @@ object ShortcutUtil {
                 AppManager.mBlackBoxLoader.invalidShortcutPermissionDialog(false)
             }
         }
-
     }
 }

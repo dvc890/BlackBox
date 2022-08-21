@@ -2,9 +2,9 @@ package top.niunaijun.blackbox.utils;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Objects;
 
 public class TrieTree {
-
     //The root node of TrieTree
     private final TrieNode root = new TrieNode();
 
@@ -21,7 +21,6 @@ public class TrieTree {
             this.content = content;
             this.word    = word;
         }
-
 
         @Override
         public boolean equals(Object object) {
@@ -47,7 +46,7 @@ public class TrieTree {
             char content = word.charAt(index);
             wordBuilder.append(content);
             TrieNode node = new TrieNode(content, wordBuilder.toString());
-            if (current.children.contains(node)) {
+            if (Objects.requireNonNull(current).children.contains(node)) {
                 current = current.nextNode(content);
             } else {
                 current.children.add(node);
@@ -55,7 +54,7 @@ public class TrieTree {
             }
 
             if (index == (word.length() - 1))
-                current.isEnd = true;
+                Objects.requireNonNull(current).isEnd = true;
         }
     }
 
@@ -76,7 +75,7 @@ public class TrieTree {
             else
                 return null;
 
-            if (current.isEnd)
+            if (Objects.requireNonNull(current).isEnd)
                 return current.word;
         }
         return null;

@@ -15,8 +15,6 @@ import top.niunaijun.blackboxa.util.getString
  * @CreateDate: 2022/3/2 21:14
  */
 class GmsRepository {
-
-
     fun getGmsInstalledList(mInstalledLiveData: MutableLiveData<List<GmsBean>>) {
         val userList = arrayListOf<GmsBean>()
 

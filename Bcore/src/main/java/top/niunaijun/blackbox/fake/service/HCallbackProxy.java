@@ -37,7 +37,6 @@ import top.niunaijun.blackbox.proxy.record.ProxyActivityRecord;
 import top.niunaijun.blackbox.utils.Slog;
 import top.niunaijun.blackbox.utils.compat.BuildCompat;
 
-
 /**
  * Created by Milk on 3/31/21.
  * * ∧＿∧
@@ -49,7 +48,7 @@ import top.niunaijun.blackbox.utils.compat.BuildCompat;
 public class HCallbackProxy implements IInjectHook, Handler.Callback {
     public static final String TAG = "HCallbackProxy";
     private Handler.Callback mOtherCallback;
-    private AtomicBoolean mBeing = new AtomicBoolean(false);
+    private final AtomicBoolean mBeing = new AtomicBoolean(false);
 
     private Handler.Callback getHCallback() {
         return BRHandler.get(getH()).mCallback();
@@ -80,7 +79,7 @@ public class HCallbackProxy implements IInjectHook, Handler.Callback {
         if (!mBeing.getAndSet(true)) {
             try {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
-//                    Log.d(TAG, "BuildCompat.isPie()");
+                    //Log.d(TAG, "BuildCompat.isPie()");
                     if (msg.what == BRActivityThreadH.get().EXECUTE_TRANSACTION()) {
                         if (handleLaunchActivity(msg.obj)) {
                             getH().sendMessageAtFrontOfQueue(Message.obtain(msg));

@@ -308,7 +308,7 @@ public class CharUtils {
         if (ch < 128) {
             return CHAR_STRING_ARRAY[ch];
         }
-        return new String(new char[] {ch});
+        return String.valueOf(ch);
     }
     
     /**

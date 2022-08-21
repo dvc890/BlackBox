@@ -11,9 +11,7 @@ import top.niunaijun.blackboxa.R
  * @CreateDate: 2022/3/2 21:49
  */
 abstract class LoadingActivity : BaseActivity() {
-
     private lateinit var loadingView: CatLoadingView
-
 
     fun showLoading() {
         if (!this::loadingView.isInitialized) {
@@ -33,7 +31,6 @@ abstract class LoadingActivity : BaseActivity() {
             }
         }
     }
-
 
     fun hideLoading() {
         if (this::loadingView.isInitialized) {

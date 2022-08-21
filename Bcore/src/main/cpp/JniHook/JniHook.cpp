@@ -276,4 +276,3 @@ void JniHook::InitJniHook(JNIEnv *env, int api_level) {
     HookEnv.get_method_name_id = env->GetStaticMethodID(HookEnv.method_utils_class, "getMethodName",
                                                         "(Ljava/lang/reflect/Method;)Ljava/lang/String;");
 }
-

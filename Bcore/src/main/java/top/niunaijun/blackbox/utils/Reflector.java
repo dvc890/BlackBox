@@ -22,7 +22,6 @@ public class Reflector {
     protected Field mField;
     protected Method mMethod;
 
-
     public static Reflector on(String name) throws Exception {
         return on(name, true, Reflector.class.getClassLoader());
     }

@@ -10,7 +10,6 @@ import android.os.RemoteException;
 import android.os.SystemClock;
 
 public class ContentProviderCompat {
-
     public static Bundle call(Context context, Uri uri, String method, String arg, Bundle extras, int retryCount) throws IllegalAccessException {
         if (VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN_MR1) {
             return context.getContentResolver().call(uri, method, arg, extras);
@@ -27,7 +26,6 @@ public class ContentProviderCompat {
             releaseQuietly(client);
         }
     }
-
 
     private static ContentProviderClient acquireContentProviderClient(Context context, Uri uri) {
         try {

@@ -19,17 +19,21 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+
     aaptOptions {
         cruncherEnabled = false
         useNewCruncher = false
     }
+
     testOptions {
         unitTests.returnDefaultValues = true
     }
+
     lintOptions {
         checkReleaseBuilds false
         abortOnError false
@@ -41,19 +45,18 @@ android {
     }
 }
 
-
 tasks.withType(Javadoc) {
     options.addStringOption('Xdoclint:none', '-quiet')
     options.addStringOption('encoding', 'UTF-8')
     options.addStringOption('charSet', 'UTF-8')
 }
 
-
 dependencies {
     implementation project(':Bcore:black-hook')
     implementation "androidx.core:core-ktx:$ktx_version"
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 }
+
 repositories {
     mavenCentral()
 }

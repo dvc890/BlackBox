@@ -14,7 +14,6 @@ import kotlin.reflect.KProperty
  * @created by 2021/5/10
  */
 open class AppSharedPreferenceDelegate<Data>(context: Context, private val default: Data, spName: String? = null) : ReadWriteProperty<Any, Data?> {
-
     private val mSharedPreferences by lazy {
         val tmpCacheName = if (TextUtils.isEmpty(spName)) {
             AppSharedPreferenceDelegate::class.java.simpleName
@@ -32,7 +31,7 @@ open class AppSharedPreferenceDelegate<Data>(context: Context, private val defau
         putData(property.name, value)
     }
 
-    protected fun findData(key: String, default: Data): Data {
+    private fun findData(key: String, default: Data): Data {
         with(mSharedPreferences) {
             val result: Any = when (default) {
                 is Int -> getInt(key, default)
@@ -46,7 +45,7 @@ open class AppSharedPreferenceDelegate<Data>(context: Context, private val defau
         }
     }
 
-    protected fun putData(key: String, value: Data?) {
+    private fun putData(key: String, value: Data?) {
         mSharedPreferences.edit {
             if (value == null) {
                 remove(key)

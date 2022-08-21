@@ -22,11 +22,9 @@ import static android.os.Build.VERSION_CODES.M;
 import static android.os.Build.VERSION_CODES.N;
 
 public class PackageParserCompat {
-
     public static final int[] GIDS = new int[]{};
     private static final int API_LEVEL = Build.VERSION.SDK_INT;
     private static final int myUserId = 0;
-
 
     public static PackageParser createParser(File packageFile) {
         if (BuildCompat.isQ()) {

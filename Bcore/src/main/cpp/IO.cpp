@@ -2,31 +2,14 @@
 // Created by Milk on 4/10/21.
 //
 
+#include <sys/mman.h>
+#include <bits/sysconf.h>
 #include "IO.h"
 #include "Log.h"
-#include "shadowhook.h"
 #include "JniHook/JniHook.h"
-#include <fcntl.h>
-#include <stdio.h>
-
-
-
-#define HOOK_SYM_NAME(lib, sym)                                                                           \
-  do {                                                                                                    \
-    if (NULL != stub_##sym) break;                                                                        \
-    errno_##sym = 0;                                                                                      \
-    if (NULL == (stub_##sym = shadowhook_hook_sym_name(                                                   \
-                     TO_STR(lib), TO_STR(sym),                                                            \
-                     SHADOWHOOK_IS_UNIQUE_MODE ? (void *)unique_proxy_##sym : (void *)shared_proxy_##sym, \
-                     (void **)&orig_##sym)))                                                              \
-      LOG("hook sym name FAILED: " TO_STR(lib) ", " TO_STR(sym) ". errno: %d",                            \
-          errno_##sym = shadowhook_get_errno());                                                          \
-    else                                                                                                  \
-      errno_##sym = shadowhook_get_errno();                                                               \
-  } while (0)
+#include "dobby.h"
 
 jmethodID getAbsolutePathMethodId;
-
 list<IO::RelocateInfo> relocate_rule;
 list<const char *> white_rule;
 
@@ -67,6 +50,7 @@ const char *IO::redirectPath(const char *__path) {
     }
     return __path;
 }
+
 //#ifdef __arm__ https://developer.android.com/games/optimize/64-bit?hl=zh-cn
 HOOK_JNI(void *, openat, int fd, const char *pathname, int flags, int mode){
     // 执行 stack 清理（不可省略），只需调用一次
@@ -100,20 +84,20 @@ HOOK_JNI(FILE *, popen, const char* cmd, const char* mode){
 }
 //#endif
 jstring IO::redirectPath(JNIEnv *env, jstring path) {
-//    const char * pathC = env->GetStringUTFChars(path, JNI_FALSE);
-//    const char *redirect = redirectPath(pathC);
-//    env->ReleaseStringUTFChars(path, pathC);
-//    return env->NewStringUTF(redirect);
+    /*const char * pathC = env->GetStringUTFChars(path, JNI_FALSE);
+    const char *redirect = redirectPath(pathC);
+    env->ReleaseStringUTFChars(path, pathC);
+    return env->NewStringUTF(redirect);*/
     return BoxCore::redirectPathString(env, path);
 }
 
 jobject IO::redirectPath(JNIEnv *env, jobject path) {
-//    auto pathStr =
-//            reinterpret_cast<jstring>(env->CallObjectMethod(path, getAbsolutePathMethodId));
-//    jstring redirect = redirectPath(env, pathStr);
-//    jobject file = env->NewObject(fileClazz, fileNew, redirect);
-//    env->DeleteLocalRef(pathStr);
-//    env->DeleteLocalRef(redirect);
+    /*auto pathStr =
+            reinterpret_cast<jstring>(env->CallObjectMethod(path, getAbsolutePathMethodId));
+    jstring redirect = redirectPath(env, pathStr);
+    jobject file = env->NewObject(fileClazz, fileNew, redirect);
+    env->DeleteLocalRef(pathStr);
+    env->DeleteLocalRef(redirect);*/
     return BoxCore::redirectPathFile(env, path);
 }
 
@@ -128,12 +112,26 @@ void IO::addRule(const char *targetPath, const char *relocatePath) {
     relocate_rule.push_back(info);
 }
 
+void IO::unProtect(const char *libraryName, const char *symbol) {
+    auto pageSize = sysconf(_SC_PAGE_SIZE);
+    auto symbolAddress = ((uintptr_t) DobbySymbolResolver(libraryName, symbol)) & (-pageSize);
+    mprotect((void *) symbolAddress, pageSize, PROT_READ | PROT_WRITE | PROT_EXEC);
+}
+
 void IO::init(JNIEnv *env) {
     jclass tmpFile = env->FindClass("java/io/File");
     getAbsolutePathMethodId = env->GetMethodID(tmpFile, "getAbsolutePath", "()Ljava/lang/String;");
-//    shadowhook_hook_sym_name("libc.so", "open", (void *) shared_proxy_read, NULL);
-    SHADOWHOOK_STACK_SCOPE();
-    shadowhook_hook_sym_name("libc.so", "openat", (void *) new_openat, (void **)&orig_openat);
-    shadowhook_hook_sym_name("libc.so", "popen", (void *) new_popen, (void **)&orig_popen);
-}
+    //shadowhook_hook_sym_name("libc.so", "open", (void *) shared_proxy_read, NULL);
 
+    IO::unProtect("libc.so", "openat");
+    void *openatAddress = DobbySymbolResolver("libc.so", "openat");
+    if (openatAddress) {
+        DobbyHook(openatAddress, (void *) new_openat, (void **) &orig_openat);
+    }
+
+    IO::unProtect("libc.so", "popen");
+    void *popenAddress = DobbySymbolResolver("libc.so", "popen");
+    if (popenAddress) {
+        DobbyHook(popenAddress, (void *) new_popen, (void **) &orig_popen);
+    }
+}

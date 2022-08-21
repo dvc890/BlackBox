@@ -42,7 +42,6 @@ public class IDevicePolicyManagerProxy extends BinderInvocationStub {
 
     @ProxyMethod("getStorageEncryptionStatus")
     public static class GetStorageEncryptionStatus extends MethodHook {
-
         @Override
         protected Object hook(Object who, Method method, Object[] args) throws Throwable {
             MethodParameterUtils.replaceFirstAppPkg(args);
@@ -52,7 +51,6 @@ public class IDevicePolicyManagerProxy extends BinderInvocationStub {
 
     @ProxyMethod("getDeviceOwnerComponent")
     public static class GetDeviceOwnerComponent extends MethodHook {
-
         @Override
         protected Object hook(Object who, Method method, Object[] args) throws Throwable {
             return new ComponentName("", "");
@@ -61,7 +59,6 @@ public class IDevicePolicyManagerProxy extends BinderInvocationStub {
 
     @ProxyMethod("getDeviceOwnerName")
     public static class getDeviceOwnerName extends MethodHook {
-
         @Override
         protected Object hook(Object who, Method method, Object[] args) throws Throwable {
             return "BlackBox";
@@ -70,7 +67,6 @@ public class IDevicePolicyManagerProxy extends BinderInvocationStub {
 
     @ProxyMethod("getProfileOwnerName")
     public static class getProfileOwnerName extends MethodHook {
-
         @Override
         protected Object hook(Object who, Method method, Object[] args) throws Throwable {
             return "BlackBox";

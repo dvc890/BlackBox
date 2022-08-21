@@ -25,7 +25,6 @@ import top.niunaijun.blackbox.core.system.user.BUserManagerService;
  * 此处无Bug
  */
 public class ServiceManager {
-    private static ServiceManager sServiceManager = null;
     public static final String ACTIVITY_MANAGER = "activity_manager";
     public static final String JOB_MANAGER = "job_manager";
     public static final String PACKAGE_MANAGER = "package_manager";
@@ -38,15 +37,12 @@ public class ServiceManager {
 
     private final Map<String, IBinder> mCaches = new HashMap<>();
 
+    private static final class SServiceManagerHolder {
+        static final ServiceManager sServiceManager = new ServiceManager();
+    }
+
     public static ServiceManager get() {
-        if (sServiceManager == null) {
-            synchronized (ServiceManager.class) {
-                if (sServiceManager == null) {
-                    sServiceManager = new ServiceManager();
-                }
-            }
-        }
-        return sServiceManager;
+        return SServiceManagerHolder.sServiceManager;
     }
 
     public static IBinder getService(String name) {

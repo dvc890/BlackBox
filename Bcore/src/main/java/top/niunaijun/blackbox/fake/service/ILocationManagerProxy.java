@@ -8,13 +8,17 @@ import android.os.IInterface;
 import android.util.Log;
 
 import java.lang.reflect.Method;
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
+import java.util.Date;
+import java.util.Locale;
 import java.util.Objects;
 
 import black.android.location.BRILocationManagerStub;
 import black.android.location.provider.BRProviderProperties;
 import black.android.os.BRServiceManager;
 import top.niunaijun.blackbox.app.BActivityThread;
+import top.niunaijun.blackbox.entity.location.BLocation;
 import top.niunaijun.blackbox.fake.frameworks.BLocationManager;
 import top.niunaijun.blackbox.fake.hook.BinderInvocationStub;
 import top.niunaijun.blackbox.fake.hook.MethodHook;
@@ -62,14 +66,38 @@ public class ILocationManagerProxy extends BinderInvocationStub {
 
     @ProxyMethod("registerGnssStatusCallback")
     public static class RegisterGnssStatusCallback extends MethodHook {
-
         @Override
         protected Object hook(Object who, Method method, Object[] args) throws Throwable {
             if (BLocationManager.isFakeLocationEnable()) {
-                // todo
-//                Object transport = MethodParameterUtils.getFirstParam(args, GnssStatusListenerTransport.class);
-//                if (transport != null) {
-//                }
+                Class<?> gnssStatusListenerTransportClass = Class.forName("android.location.LocationManager$GnssStatusListenerTransport");
+                Object transport = MethodParameterUtils.getFirstParam(args, gnssStatusListenerTransportClass);
+                if (transport != null) {
+                    gnssStatusListenerTransportClass.getMethod("onGnssStarted").invoke(transport);
+                    BLocation location = BLocationManager.get().getLocation(BActivityThread.getUserId(), BActivityThread.getAppPackageName());
+                    if (location != null) {
+                        try {
+                            String date = new SimpleDateFormat("HHmmss:SS", Locale.US).format(new Date());
+                            String latitude = BLocation.getGPSLatitude(location.getLatitude());
+                            String longitude = BLocation.getGPSLatitude(location.getLongitude());
+                            String latitudeNorthWest = BLocation.getNorthWest(location);
+                            String longitudeSouthEast = BLocation.getSouthEast(location);
+                            String $GPGGA = BLocation.checkSum(String.format("$GPGGA,%s,%s,%s,%s,%s,1,%s,692,.00,M,.00,M,,,", date, latitude, latitudeNorthWest, longitude, longitudeSouthEast, location.convert2SystemLocation().getExtras().getInt("satellites")));
+                            String $GPRMC = BLocation.checkSum(String.format("$GPRMC,%s,A,%s,%s,%s,%s,0,0,260717,,,A,", date, latitude, latitudeNorthWest, longitude, longitudeSouthEast));
+
+                            gnssStatusListenerTransportClass.getMethod("onNmeaReceived", long.class, String.class).invoke(transport, System.currentTimeMillis(), "$GPGSV,1,1,04,12,05,159,36,15,41,087,15,19,38,262,30,31,56,146,19,*73");
+                            if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.N) {
+                                Class<?> gpsStatusListenerTransportClass = Class.forName("android.location.LocationManager$GpsStatusListenerTransport");
+                                gpsStatusListenerTransportClass.getMethod("onNmeaReceived", long.class, String.class).invoke(transport, System.currentTimeMillis(), "$GPGSV,1,1,04,12,05,159,36,15,41,087,15,19,38,262,30,31,56,146,19,*73");
+                                gpsStatusListenerTransportClass.getMethod("onNmeaReceived", long.class, String.class).invoke(transport, System.currentTimeMillis(), $GPGGA);
+                                gpsStatusListenerTransportClass.getMethod("onNmeaReceived", long.class, String.class).invoke(transport, System.currentTimeMillis(), "$GPVTG,0,T,0,M,0,N,0,K,A,*25");
+                                gpsStatusListenerTransportClass.getMethod("onNmeaReceived", long.class, String.class).invoke(transport, System.currentTimeMillis(), $GPRMC);
+                                gpsStatusListenerTransportClass.getMethod("onNmeaReceived", long.class, String.class).invoke(transport, System.currentTimeMillis(), "$GPGSA,A,2,12,15,19,31,,,,,,,,,604,712,986,*27");
+                            }
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
                 return true;
             }
             return method.invoke(who, args);
@@ -78,7 +106,6 @@ public class ILocationManagerProxy extends BinderInvocationStub {
 
     @ProxyMethod("registerLocationListener")
     public static class RegisterLocationListener extends MethodHook {
-
         @Override
         protected Object hook(Object who, Method method, Object[] args) throws Throwable {
             if (BLocationManager.isFakeLocationEnable()) {
@@ -96,10 +123,8 @@ public class ILocationManagerProxy extends BinderInvocationStub {
         }
     }
 
-
     @ProxyMethod("getLastLocation")
     public static class GetLastLocation extends MethodHook {
-
         @Override
         protected Object hook(Object who, Method method, Object[] args) throws Throwable {
             Log.d(TAG, "GetLastLocation");
@@ -112,10 +137,8 @@ public class ILocationManagerProxy extends BinderInvocationStub {
 
     @ProxyMethod("getLastKnownLocation")
     public static class GetLastKnownLocation extends MethodHook {
-
         @Override
         protected Object hook(Object who, Method method, Object[] args) throws Throwable {
-
             Log.d(TAG, "GetLastKnownLocation");
             if (BLocationManager.isFakeLocationEnable()) {
                 return BLocationManager.get().getLocation(BActivityThread.getUserId(), BActivityThread.getAppPackageName()).convert2SystemLocation();
@@ -125,8 +148,7 @@ public class ILocationManagerProxy extends BinderInvocationStub {
     }
 
     @ProxyMethod("getCurrentLocation")
-    public static class  GetCurrentLocation extends MethodHook {
-
+    public static class GetCurrentLocation extends MethodHook {
         @Override
         protected Object hook(Object who, Method method, Object[] args) throws Throwable {
             Log.d(TAG, "GetCurrentLocation");
@@ -139,10 +161,9 @@ public class ILocationManagerProxy extends BinderInvocationStub {
 
     @ProxyMethod("requestLocationUpdates")
     public static class RequestLocationUpdates extends MethodHook {
-
         @Override
         protected Object hook(Object who, Method method, Object[] args) throws Throwable {
-//            Log.d(TAG, "RequestLocationUpdates");
+            //Log.d(TAG, "RequestLocationUpdates");
             if (BLocationManager.isFakeLocationEnable()) {
                 Log.d(TAG, "isFakeLocationEnable RequestLocationUpdates");
                 if (args[1] instanceof IInterface) {
@@ -157,7 +178,6 @@ public class ILocationManagerProxy extends BinderInvocationStub {
 
     @ProxyMethod("removeUpdates")
     public static class RemoveUpdates extends MethodHook {
-
         @Override
         protected Object hook(Object who, Method method, Object[] args) throws Throwable {
             if (args[0] instanceof IInterface) {
@@ -171,7 +191,6 @@ public class ILocationManagerProxy extends BinderInvocationStub {
 
     @ProxyMethod("getProviderProperties")
     public static class GetProviderProperties extends MethodHook {
-
         @Override
         protected Object hook(Object who, Method method, Object[] args) throws Throwable {
             Object providerProperties = method.invoke(who, args);
@@ -187,17 +206,18 @@ public class ILocationManagerProxy extends BinderInvocationStub {
 
     @ProxyMethod("removeGpsStatusListener")
     public static class RemoveGpsStatusListener extends MethodHook {
-
         @Override
         protected Object hook(Object who, Method method, Object[] args) throws Throwable {
-            // todo
-            return 0;
+            MethodParameterUtils.replaceLastAppPkg(args);
+            if (BLocationManager.isFakeLocationEnable()) {
+                return 0;
+            }
+            return method.invoke(who, args);
         }
     }
 
     @ProxyMethod("getBestProvider")
     public static class GetBestProvider extends MethodHook {
-
         @Override
         protected Object hook(Object who, Method method, Object[] args) throws Throwable {
             if (BLocationManager.isFakeLocationEnable()) {
@@ -209,7 +229,6 @@ public class ILocationManagerProxy extends BinderInvocationStub {
 
     @ProxyMethod("getAllProviders")
     public static class GetAllProviders extends MethodHook {
-
         @Override
         protected Object hook(Object who, Method method, Object[] args) throws Throwable {
             return Arrays.asList(LocationManager.GPS_PROVIDER, LocationManager.NETWORK_PROVIDER);
@@ -218,7 +237,6 @@ public class ILocationManagerProxy extends BinderInvocationStub {
 
     @ProxyMethod("isProviderEnabledForUser")
     public static class isProviderEnabledForUser extends MethodHook {
-
         @Override
         protected Object hook(Object who, Method method, Object[] args) throws Throwable {
             String provider = (String) args[0];
@@ -228,7 +246,6 @@ public class ILocationManagerProxy extends BinderInvocationStub {
 
     @ProxyMethod("setExtraLocationControllerPackageEnabled")
     public static class setExtraLocationControllerPackageEnabled extends MethodHook {
-
         @Override
         protected Object hook(Object who, Method method, Object[] args) throws Throwable {
             return 0;

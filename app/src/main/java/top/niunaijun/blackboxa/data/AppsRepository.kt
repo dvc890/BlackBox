@@ -16,16 +16,14 @@ import top.niunaijun.blackboxa.bean.InstalledAppBean
 import top.niunaijun.blackboxa.util.getString
 import java.io.File
 
-
 /**
  *
  * @Description:
  * @Author: wukaicheng
  * @CreateDate: 2021/4/29 23:05
  */
-
 class AppsRepository {
-    val TAG: String = "AppsRepository"
+    private val TAG: String = "AppsRepository"
     private var mInstalledList = mutableListOf<AppInfo>()
 
     fun previewInstallList() {
@@ -58,8 +56,6 @@ class AppsRepository {
             this.mInstalledList.clear()
             this.mInstalledList.addAll(installedList)
         }
-
-
     }
 
     fun getInstalledAppList(
@@ -82,17 +78,13 @@ class AppsRepository {
             }
             appsLiveData.postValue(newInstalledList)
             loadingLiveData.postValue(false)
-
-
         }
-
     }
 
     fun getInstalledModuleList(
         loadingLiveData: MutableLiveData<Boolean>,
         appsLiveData: MutableLiveData<List<InstalledAppBean>>
     ) {
-
         loadingLiveData.postValue(true)
         synchronized(mInstalledList) {
             val blackBoxCore = BlackBoxCore.get()
@@ -110,9 +102,7 @@ class AppsRepository {
             appsLiveData.postValue(moduleList)
             loadingLiveData.postValue(false)
         }
-
     }
-
 
     fun getVmInstallList(userId: Int, appsLiveData: MutableLiveData<List<AppInfo>>) {
         val sortListData =
@@ -140,7 +130,6 @@ class AppsRepository {
             appInfoList.add(info)
         }
 
-
         appsLiveData.postValue(appInfoList)
     }
 
@@ -150,10 +139,8 @@ class AppsRepository {
                 return@isInstalledXpModule true
             }
         }
-
         return false
     }
-
 
     fun installApk(source: String, userId: Int, resultLiveData: MutableLiveData<String>) {
         val blackBoxCore = BlackBoxCore.get()
@@ -180,12 +167,10 @@ class AppsRepository {
         resultLiveData.postValue(getString(R.string.uninstall_success))
     }
 
-
     fun launchApk(packageName: String, userId: Int, launchLiveData: MutableLiveData<Boolean>) {
         val result = BlackBoxCore.get().launchApk(packageName, userId)
         launchLiveData.postValue(result)
     }
-
 
     fun clearApkData(packageName: String, userID: Int, resultLiveData: MutableLiveData<String>) {
         BlackBoxCore.get().clearPackage(packageName, userID)
@@ -216,7 +201,6 @@ class AppsRepository {
         }
     }
 
-
     /**
      * 更新排序列表
      * @param userID Int
@@ -224,7 +208,6 @@ class AppsRepository {
      * @param isAdd Boolean true是添加，false是移除
      */
     private fun updateAppSortList(userID: Int, pkg: String, isAdd: Boolean) {
-
         val savedSortList =
             AppManager.mRemarkSharedPreferences.getString("AppList$userID", "")
 
@@ -242,7 +225,6 @@ class AppsRepository {
         AppManager.mRemarkSharedPreferences.edit {
             putString("AppList$userID", sortList.joinToString(","))
         }
-
     }
 
     /**
@@ -253,7 +235,5 @@ class AppsRepository {
             putString("AppList$userID",
                 dataList.joinToString(",") { it.packageName })
         }
-
     }
-
 }

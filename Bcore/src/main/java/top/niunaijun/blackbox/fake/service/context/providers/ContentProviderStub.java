@@ -3,6 +3,7 @@ package top.niunaijun.blackbox.fake.service.context.providers;
 import android.os.IInterface;
 
 import java.lang.reflect.Method;
+import java.util.Objects;
 
 import black.android.content.BRAttributionSource;
 import top.niunaijun.blackbox.app.BActivityThread;
@@ -60,7 +61,7 @@ public class ContentProviderStub extends ClassInvocationStub implements BContent
         try {
             return method.invoke(mBase, args);
         } catch (Throwable e) {
-            throw e.getCause();
+            throw Objects.requireNonNull(e.getCause());
         }
     }
 

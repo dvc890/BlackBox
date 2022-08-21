@@ -18,13 +18,10 @@ import java.io.File
  * @CreateDate: 2021/5/6 23:38
  */
 class BlackBoxLoader {
-
-
     private var mHideRoot by AppSharedPreferenceDelegate(App.getContext(), false)
     private var mHideXposed by AppSharedPreferenceDelegate(App.getContext(), false)
     private var mDaemonEnable by AppSharedPreferenceDelegate(App.getContext(), false)
     private var mShowShortcutPermissionDialog by AppSharedPreferenceDelegate(App.getContext(), true)
-
 
     fun hideRoot(): Boolean {
         return mHideRoot
@@ -76,7 +73,6 @@ class BlackBoxLoader {
                 )
             }
 
-
             override fun beforeApplicationOnCreate(
                 packageName: String?,
                 processName: String?,
@@ -126,14 +122,9 @@ class BlackBoxLoader {
 
     fun doOnCreate(context: Context) {
         BlackBoxCore.get().doCreate()
-
     }
-
 
     companion object {
-
         val TAG: String = BlackBoxLoader::class.java.simpleName
-
     }
-
 }

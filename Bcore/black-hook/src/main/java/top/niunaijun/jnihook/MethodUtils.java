@@ -8,14 +8,12 @@ package top.niunaijun.jnihook;
  * しーＪ
  * 此处无Bug
  */
-
 import androidx.annotation.Keep;
 
 import java.lang.reflect.Method;
 
 @Keep
 public class MethodUtils {
-
     // native call
     public static String getDeclaringClass(final Method method) {
         return method.getDeclaringClass().getName().replace(".", "/");

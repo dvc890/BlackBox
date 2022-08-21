@@ -12,9 +12,7 @@ import top.niunaijun.blackboxa.view.base.BaseViewModel
  * @CreateDate: 2022/3/14
  */
 class FakeLocationViewModel(private val mRepo: FakeLocationRepository) : BaseViewModel() {
-
     val appsLiveData = MutableLiveData<List<FakeLocationBean>>()
-
 
     fun getInstallAppList(userID: Int) {
         launchOnUI {
@@ -33,5 +31,4 @@ class FakeLocationViewModel(private val mRepo: FakeLocationRepository) : BaseVie
             mRepo.setLocation(userId, pkg, location)
         }
     }
-
 }

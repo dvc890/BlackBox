@@ -20,7 +20,7 @@ public final class SELinuxHelper {
 
     private static boolean sIsSELinuxEnabled = false;
     // Dreamland changed: Only supports DirectAccessService
-    private static BaseService sServiceAppDataFile = new DirectAccessService();
+    private static final BaseService sServiceAppDataFile = new DirectAccessService();
 
     // Dreamland changed: sIsSELinuxEnabled will be initialized in static block
     static {

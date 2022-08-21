@@ -1,8 +1,5 @@
 package top.niunaijun.blackbox.fake.service;
 
-import android.content.Context;
-import android.os.IBinder;
-
 import black.android.net.wifi.BRIWifiManagerStub;
 import black.android.os.BRServiceManager;
 import top.niunaijun.blackbox.fake.hook.BinderInvocationStub;
@@ -13,7 +10,6 @@ import top.niunaijun.blackbox.fake.hook.BinderInvocationStub;
  * @date :2022/4/3 13:05
  **/
 public class IWifiScannerProxy extends BinderInvocationStub {
-
     public IWifiScannerProxy() {
         super(BRServiceManager.get().getService("wifiscanner"));
     }

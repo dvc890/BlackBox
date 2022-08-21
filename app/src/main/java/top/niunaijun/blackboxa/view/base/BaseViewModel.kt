@@ -11,7 +11,6 @@ import kotlinx.coroutines.*
  * @CreateDate: 2021/4/29 23:33
  */
 open class BaseViewModel : ViewModel() {
-
     fun launchOnUI(block: suspend CoroutineScope.() -> Unit) {
         viewModelScope.launch {
             withContext(Dispatchers.IO) {
@@ -20,15 +19,12 @@ open class BaseViewModel : ViewModel() {
                 } catch (e: Throwable) {
                     e.printStackTrace()
                 }
-
             }
         }
     }
-
 
     override fun onCleared() {
         super.onCleared()
         viewModelScope.cancel()
     }
-
 }

@@ -32,7 +32,7 @@ public class ProxyActivity extends Activity {
         finish();
 
         HookManager.get().checkEnv(HCallbackProxy.class);
-//        HookManager.get().checkEnv(AppInstrumentation.class);
+        //HookManager.get().checkEnv(AppInstrumentation.class);
 
         ProxyActivityRecord record = ProxyActivityRecord.create(getIntent());
         if (record.mTarget != null) {

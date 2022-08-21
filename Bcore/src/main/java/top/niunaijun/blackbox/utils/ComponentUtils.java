@@ -13,7 +13,6 @@ import top.niunaijun.blackbox.app.BActivityThread;
 import static android.content.pm.ActivityInfo.LAUNCH_SINGLE_INSTANCE;
 
 public class ComponentUtils {
-
     public static boolean isRequestInstall(Intent intent) {
         return "application/vnd.android.package-archive".equals(intent.getType());
     }
@@ -77,9 +76,7 @@ public class ComponentUtils {
             if (!Objects.equals(a.getComponent(), b.getComponent())) {
                 return false;
             }
-            if (!Objects.equals(a.getCategories(), b.getCategories())) {
-                return false;
-            }
+            return Objects.equals(a.getCategories(), b.getCategories());
         }
         return true;
     }

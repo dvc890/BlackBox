@@ -16,7 +16,6 @@ import top.niunaijun.blackbox.entity.am.PendingResultData;
 import top.niunaijun.blackbox.entity.am.RunningServiceInfo;
 
 // Declare any non-default types here with import statements
-
 interface IBActivityManagerService {
     AppConfig initProcess(String packageName, String processName, int userId);
     void restartProcess(String packageName, String processName, int userId);

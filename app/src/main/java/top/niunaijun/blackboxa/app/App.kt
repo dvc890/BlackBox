@@ -11,9 +11,7 @@ import android.content.Context
  * @CreateDate: 2021/4/29 21:21
  */
 class App : Application() {
-
     companion object {
-
         @SuppressLint("StaticFieldLeak")
         @Volatile
         private lateinit var mContext: Context
@@ -28,7 +26,6 @@ class App : Application() {
         super.attachBaseContext(base)
         mContext = base!!
         AppManager.doAttachBaseContext(base)
-
     }
 
     override fun onCreate() {
