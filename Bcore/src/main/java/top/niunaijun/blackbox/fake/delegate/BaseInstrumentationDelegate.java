@@ -20,6 +20,8 @@ import android.os.UserHandle;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 
+import androidx.annotation.RequiresApi;
+
 import top.niunaijun.blackbox.BlackBoxCore;
 import top.niunaijun.blackbox.app.BActivityThread;
 import top.niunaijun.blackbox.app.configuration.AppLifecycleCallback;
@@ -55,6 +57,7 @@ public class BaseInstrumentationDelegate extends Instrumentation {
         mBaseInstrumentation.sendStatus(resultCode, results);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public void addResults(Bundle results) {
         mBaseInstrumentation.addResults(results);

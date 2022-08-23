@@ -20,6 +20,8 @@ import black.android.app.BRContextImpl;
 import top.niunaijun.blackbox.BlackBoxCore;
 import top.niunaijun.blackbox.app.BActivityThread;
 import top.niunaijun.blackbox.core.env.AppSystemEnv;
+import top.niunaijun.blackbox.core.system.pm.BPackageManagerService;
+import top.niunaijun.blackbox.core.system.pm.BPackageSettings;
 import top.niunaijun.blackbox.fake.hook.BinderInvocationStub;
 import top.niunaijun.blackbox.fake.hook.MethodHook;
 import top.niunaijun.blackbox.fake.hook.ProxyMethod;
@@ -347,8 +349,20 @@ public class IPackageManagerProxy extends BinderInvocationStub {
     public static class GetSharedLibraries extends MethodHook {
         @Override
         protected Object hook(Object who, Method method, Object[] args) throws Throwable {
-            // todo
-            return ParceledListSliceCompat.create(new ArrayList<>());
+            String packageName = (String) args[0];
+            BPackageSettings packageSettings = BPackageManagerService.get().getBPackageSetting(packageName);
+            if (packageSettings != null) {
+                ArrayList<String> packageLibraries = new ArrayList<>();
+                if (packageSettings.pkg.usesLibraries != null) {
+                    packageLibraries.addAll(packageSettings.pkg.usesLibraries);
+                }
+
+                if (packageSettings.pkg.usesOptionalLibraries != null) {
+                    packageLibraries.addAll(packageSettings.pkg.usesOptionalLibraries);
+                }
+                return ParceledListSliceCompat.create(packageLibraries);
+            }
+            return method.invoke(who, args);
         }
     }
 

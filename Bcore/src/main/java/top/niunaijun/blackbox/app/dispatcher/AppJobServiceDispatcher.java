@@ -91,7 +91,7 @@ public class AppJobServiceDispatcher {
             }
             try {
                 JobRecord record = BlackBoxCore.getBJobManager().queryJobRecord(BActivityThread.getAppProcessName(), jobId);
-                if (record == null){
+                if (record == null) {
                     return null;
                 }
                 record.mJobService = BActivityThread.currentActivityThread().createJobService(record.mServiceInfo);

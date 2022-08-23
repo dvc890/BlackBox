@@ -115,7 +115,7 @@ public class IActivityManagerProxy extends ClassInvocationStub {
             /*try {
                 BlackBoxCore.getBPackageManager().resolveContentProvider((String) auth, GET_META_DATA, BActivityThread.getUserId());
 
-            } catch (Exception e){
+            } catch (Exception e) {
                 Log.e(TAG, "BlackBoxCore.getBPackageManager().resolveContentProvider Failed");
                 e.printStackTrace();
             }

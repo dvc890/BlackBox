@@ -1,12 +1,14 @@
-apply plugin: 'com.android.library'
-apply plugin: 'kotlin-android'
+plugins {
+    id 'com.android.library'
+    id 'org.jetbrains.kotlin.android'
+}
 
 android {
-    compileSdkVersion rootProject.ext.compileSdkVersion
+    compileSdk rootProject.ext.compileSdk
 
     defaultConfig {
-        minSdkVersion 19
-        targetSdkVersion rootProject.ext.targetSdkVersion
+        minSdkVersion rootProject.ext.minSdkVersion
+        targetSdk rootProject.ext.targetSdk
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles 'consumer-rules.pro'
@@ -33,11 +35,11 @@ android {
         cmake {
             path "src/main/cpp/CMakeLists.txt"
         }
-    }*/
+    }
 
     buildFeatures {
-        // prefab true
-    }
+        prefab true
+    }*/
 }
 
 dependencies {
@@ -47,8 +49,4 @@ dependencies {
     implementation project(':Bcore:black-fake')
     implementation "androidx.core:core-ktx:$ktx_version"
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-}
-
-repositories {
-    mavenCentral()
 }

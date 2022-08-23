@@ -3439,7 +3439,7 @@ public class ArrayUtils {
              * - safer, in case check turns out to be too strict
              */
             final Class<?> type2 = array2.getClass().getComponentType();
-            if (!type1.isAssignableFrom(type2)){
+            if (!type1.isAssignableFrom(type2)) {
                 throw new IllegalArgumentException("Cannot store "+type2.getName()+" in an array of "
                         +type1.getName(), ase);
             }
@@ -3711,7 +3711,7 @@ public class ArrayUtils {
      */
     public static <T> T[] add(T[] array, T element) {
         Class<?> type;
-        if (array != null){
+        if (array != null) {
             type = array.getClass();
         } else if (element != null) {
             type = element.getClass();

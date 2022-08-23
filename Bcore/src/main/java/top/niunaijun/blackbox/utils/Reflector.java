@@ -2,6 +2,9 @@ package top.niunaijun.blackbox.utils;
 
 
 import android.annotation.SuppressLint;
+import android.os.Build;
+
+import androidx.annotation.RequiresApi;
 
 import org.lsposed.hiddenapibypass.HiddenApiBypass;
 
@@ -143,16 +146,17 @@ public class Reflector {
 
     @SuppressWarnings("unchecked")
     protected Field findStaticField(String name) throws NoSuchFieldException {
-        List<Field> allStaticFields = HiddenApiBypass.getStaticFields(mType);
-        for (Field f : allStaticFields) {
-            if (f.getName().equals(name)) {
-                return f;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+            List<Field> allStaticFields = HiddenApiBypass.getStaticFields(mType);
+            for (Field f : allStaticFields) {
+                if (f.getName().equals(name)) {
+                    return f;
+                }
             }
         }
         throw new NoSuchFieldException();
     }
 
-    @SuppressWarnings("unchecked")
     public <R> R get() throws Exception {
         return get(mCaller);
     }

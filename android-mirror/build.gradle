@@ -1,13 +1,12 @@
 plugins {
     id 'com.android.library'
+    id 'org.jetbrains.kotlin.android'
 }
-apply plugin: 'kotlin-android'
 
 android {
-    compileSdkVersion rootProject.ext.compileSdkVersion
-
-    aidlPackageWhiteList "android/app/IServiceConnection.aidl"
-    aidlPackageWhiteList "android/accounts/IAccountManagerResponse.aidl"
+    compileSdk rootProject.ext.compileSdk
+    aidlPackagedList "android/app/IServiceConnection.aidl"
+    aidlPackagedList "android/accounts/IAccountManagerResponse.aidl"
 
     defaultConfig {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
@@ -28,14 +27,10 @@ android {
 }
 
 dependencies {
-    implementation 'androidx.appcompat:appcompat:1.2.0'
+    implementation 'androidx.appcompat:appcompat:1.5.0'
     implementation project(':Bcore:black-fake')
     implementation "com.github.CodingGay.BlackReflection:core:$rootProject.ext.blackReflection"
     annotationProcessor "com.github.CodingGay.BlackReflection:compiler:$rootProject.ext.blackReflection"
     implementation "androidx.core:core-ktx:$ktx_version"
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-}
-
-repositories {
-    mavenCentral()
 }

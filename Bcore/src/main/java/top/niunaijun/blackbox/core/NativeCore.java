@@ -16,8 +16,6 @@ import top.niunaijun.blackbox.utils.compat.DexFileCompat;
 
 import static top.niunaijun.blackbox.core.env.BEnvironment.EMPTY_JAR;
 
-import com.bytedance.shadowhook.ShadowHook;
-
 /**
  * Created by Milk on 4/9/21.
  * * ∧＿∧

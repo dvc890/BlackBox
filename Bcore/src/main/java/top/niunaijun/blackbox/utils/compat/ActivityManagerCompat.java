@@ -102,7 +102,7 @@ public class ActivityManagerCompat {
             IBinder token = BRActivity.get(parent).mToken();
             try {
 				BRIActivityManager.get(BRActivityManagerNative.get().getDefault()).setRequestedOrientation(token, orientation);
-            } catch (Throwable ex){
+            } catch (Throwable ex) {
                 ex.printStackTrace();
             }
         }

@@ -3,6 +3,9 @@ package top.niunaijun.blackbox.fake.service;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ShortcutInfo;
+import android.os.Build;
+
+import androidx.annotation.RequiresApi;
 
 import java.lang.reflect.Method;
 import java.util.ArrayList;
@@ -61,7 +64,7 @@ public class IShortcutManagerProxy extends BinderInvocationStub {
         addMethodHook(new PkgMethodProxy("removeAllDynamicShortcuts"));
         addMethodHook(new PkgMethodProxy("removeDynamicShortcuts"));
         addMethodHook(new PkgMethodProxy("removeLongLivedShortcuts"));
-        addMethodHook(new PkgMethodProxy("getManifestShortcuts"){
+        addMethodHook(new PkgMethodProxy("getManifestShortcuts") {
             @Override
             protected Object hook(Object who, Method method, Object[] args) throws Throwable {
                 return ParceledListSliceCompat.create(new ArrayList<ShortcutInfo>());

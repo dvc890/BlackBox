@@ -12,7 +12,6 @@ import top.niunaijun.blackbox.utils.MethodParameterUtils;
 /**
  * Created by BlackBox on 2022/3/3.
  */
-//@TargetApi(Build.VERSION_CODES.O)
 public class IStorageStatsManagerProxy extends BinderInvocationStub {
     public IStorageStatsManagerProxy() {
         super(BRServiceManager.get().getService(Context.STORAGE_STATS_SERVICE));
