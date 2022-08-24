@@ -2,6 +2,7 @@ package top.niunaijun.blackbox.core.system.am;
 
 import android.annotation.SuppressLint;
 import android.app.ActivityManager;
+import android.app.Notification;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
@@ -18,11 +19,13 @@ import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.atomic.AtomicInteger;
 
+import black.android.os.UserHandle;
 import top.niunaijun.blackbox.BlackBoxCore;
 import top.niunaijun.blackbox.core.IEmpty;
 import top.niunaijun.blackbox.core.system.BProcessManagerService;
 import top.niunaijun.blackbox.core.system.ProcessRecord;
 import top.niunaijun.blackbox.core.system.pm.BPackageManagerService;
+import top.niunaijun.blackbox.entity.ServiceRecord;
 import top.niunaijun.blackbox.entity.UnbindRecord;
 import top.niunaijun.blackbox.entity.am.RunningServiceInfo;
 import top.niunaijun.blackbox.proxy.ProxyManifest;
@@ -166,6 +169,10 @@ public class ActiveServices {
         if (runningServiceByToken != null) {
             stopService(runningServiceByToken.mIntent, null, userId);
         }
+    }
+
+    public void setServiceForeground(ComponentName className, IBinder token, int id, Notification notification, int flags, int foregroundServiceType, int userId) {
+
     }
 
     public void onStartCommand(Intent proxyIntent, int userId) {

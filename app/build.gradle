@@ -10,8 +10,8 @@ android {
         applicationId "top.niunaijun.blackbox"
         minSdk rootProject.ext.minSdkVersion
         targetSdk rootProject.ext.targetSdk
-        versionCode 12
-        versionName "2.1.4"
+        versionCode 7
+        versionName "1.6.0"
 
         flavorDimensions "BlackBox32"
         multiDexEnabled true
@@ -96,6 +96,7 @@ android {
             jniLibs.srcDirs = ['libs']
         }
     }
+
     lint {
         abortOnError false
         checkOnly 'NewApi', 'InlinedApi'

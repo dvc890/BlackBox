@@ -29,6 +29,7 @@ android {
     testOptions {
         unitTests.returnDefaultValues = true
     }
+
     lint {
         abortOnError false
         checkOnly 'NewApi', 'InlinedApi'
@@ -38,7 +39,6 @@ android {
         textReport false
         warningsAsErrors false
     }
-
 }
 
 tasks.withType(Javadoc) {

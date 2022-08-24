@@ -1,6 +1,7 @@
 package top.niunaijun.blackbox.fake.frameworks;
 
 import android.app.Activity;
+import android.app.Notification;
 import android.content.ComponentName;
 import android.content.Intent;
 import android.content.pm.ProviderInfo;
@@ -289,5 +290,13 @@ public class BActivityManager extends BlackManager<IBActivityManagerService> {
             e.printStackTrace();
         }
         return -1;
+    }
+
+    public void setServiceForeground(ComponentName className, IBinder token, int id, Notification notification, int flags, int foregroundServiceType) {
+        try {
+            getService().setServiceForeground(className, token, id, notification, flags, foregroundServiceType, BActivityThread.getUserId());
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
     }
 }

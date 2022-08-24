@@ -42,6 +42,7 @@ android {
     testOptions {
         unitTests.returnDefaultValues = true
     }
+
     lint {
         abortOnError false
         checkOnly 'NewApi', 'InlinedApi'
@@ -57,7 +58,6 @@ android {
             abiFilters 'armeabi-v7a', 'arm64-v8a'
         }
     }
-
 
     buildFeatures {
         prefab true
