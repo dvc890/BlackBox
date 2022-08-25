@@ -44,7 +44,7 @@ const char *IO::redirectPath(const char *__path) {
         IO::RelocateInfo info = *iterator;
         if (strstr(__path, info.targetPath) && !strstr(__path, "/blackbox/")) {
             char *ret = replace(__path, info.targetPath, info.relocatePath);
-            // ALOGD("redirectPath %s  => %s", __path, ret);
+            //ALOGD("redirectPath %s  => %s", __path, ret);
             return ret;
         }
     }
@@ -52,7 +52,7 @@ const char *IO::redirectPath(const char *__path) {
 }
 
 //#ifdef __arm__ https://developer.android.com/games/optimize/64-bit?hl=zh-cn
-HOOK_JNI(void *, openat, int fd, const char *pathname, int flags, int mode){
+HOOK_JNI(void *, openat, int fd, const char *pathname, int flags, int mode) {
     // 执行 stack 清理（不可省略），只需调用一次
     // SHADOWHOOK_STACK_SCOPE();
     list<const char *>::iterator white_iterator;
@@ -75,7 +75,7 @@ HOOK_JNI(void *, openat, int fd, const char *pathname, int flags, int mode){
     return orig_openat(fd, pathname, flags, mode);
 }
 
-HOOK_JNI(FILE *, popen, const char* cmd, const char* mode){
+HOOK_JNI(FILE *, popen, const char* cmd, const char* mode) {
     // 执行 stack 清理（不可省略），只需调用一次
     // SHADOWHOOK_STACK_SCOPE();
 

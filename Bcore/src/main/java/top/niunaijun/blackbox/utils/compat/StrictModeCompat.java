@@ -9,7 +9,7 @@ public class StrictModeCompat {
     public static int PENALTY_DEATH_ON_FILE_URI_EXPOSURE = BRStrictMode.get().PENALTY_DEATH_ON_FILE_URI_EXPOSURE() == null ?
             (0x04 << 24) : BRStrictMode.get().PENALTY_DEATH_ON_FILE_URI_EXPOSURE();
 
-    public static void disableDeathOnFileUriExposure(){
+    public static void disableDeathOnFileUriExposure() {
         try {
             BRStrictMode.get().disableDeathOnFileUriExposure();
         } catch (Throwable e) {

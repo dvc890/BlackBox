@@ -123,7 +123,7 @@ public class ActivityManagerCommonProxy {
             String[] resolvedTypes = (String[]) args[index++];
             IBinder resultTo = (IBinder) args[index++];
             Bundle options = (Bundle) args[index];
-            // todo ??
+
             if (!ComponentUtils.isSelf(intents)) {
                 return method.invoke(who, args);
             }

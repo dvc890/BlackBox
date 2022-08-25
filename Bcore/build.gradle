@@ -1,12 +1,14 @@
-apply plugin: 'com.android.library'
-apply plugin: 'kotlin-android'
+plugins {
+    id 'com.android.library'
+    id 'org.jetbrains.kotlin.android'
+}
 
 android {
-    compileSdkVersion 32
+    compileSdk rootProject.ext.compileSdk
 
     defaultConfig {
-        minSdkVersion 21
-        targetSdkVersion rootProject.ext.targetSdkVersion
+        minSdkVersion rootProject.ext.minSdkVersion
+        targetSdk rootProject.ext.targetSdk
 
         consumerProguardFiles "consumer-rules.pro"
         ndk {
@@ -37,13 +39,18 @@ android {
         targetCompatibility JavaVersion.VERSION_1_8
     }
 
-    aaptOptions {
-        cruncherEnabled = false
-        useNewCruncher = false
-    }
-
     testOptions {
         unitTests.returnDefaultValues = true
+    }
+
+    lint {
+        abortOnError false
+        checkOnly 'NewApi', 'InlinedApi'
+        checkReleaseBuilds false
+        disable 'UnusedResources', 'RestrictedApi'
+        textOutput file('stdout')
+        textReport false
+        warningsAsErrors false
     }
 
     defaultConfig {
@@ -52,22 +59,8 @@ android {
         }
     }
 
-    lintOptions {
-        checkReleaseBuilds false
-        abortOnError false
-        warningsAsErrors false
-        disable "UnusedResources", 'RestrictedApi'
-        textOutput "stdout"
-        textReport false
-        checkOnly 'NewApi', 'InlinedApi'
-    }
-
     buildFeatures {
         prefab true
-    }
-
-    packagingOptions {
-        exclude '**/libshadowhook.so'
     }
 }
 
@@ -79,12 +72,11 @@ tasks.withType(Javadoc) {
 
 dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar", "*.aar"])
-    implementation 'androidx.appcompat:appcompat:1.2.0'
+    implementation 'androidx.appcompat:appcompat:1.5.0'
 
     implementation "com.github.CodingGay.BlackReflection:core:$rootProject.ext.blackReflection"
     implementation 'org.lsposed.hiddenapibypass:hiddenapibypass:4.3'
-    implementation 'com.bytedance.android:shadowhook:1.0.3'
-    implementation 'com.iqiyi.xcrash:xcrash-android-lib:3.0.0'
+    implementation 'com.iqiyi.xcrash:xcrash-android-lib:3.1.0'
 
     implementation project(':Bcore:black-fake')
     implementation project(':Bcore:black-hook')
@@ -95,8 +87,4 @@ dependencies {
     implementation project(':Bcore:pine-xposed-res')
     implementation "androidx.core:core-ktx:$ktx_version"
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-}
-
-repositories {
-    mavenCentral()
 }

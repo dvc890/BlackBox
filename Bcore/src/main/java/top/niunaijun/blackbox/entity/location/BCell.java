@@ -67,7 +67,7 @@ public class BCell implements Parcelable {
         dest.writeInt(this.TYPE);
     }
 
-    public BCell(){}
+    public BCell() {}
     public BCell(int MCC, int MNC, int LAC, int CID) {
         this.TYPE = PHONE_TYPE_GSM;
         this.MCC = MCC;

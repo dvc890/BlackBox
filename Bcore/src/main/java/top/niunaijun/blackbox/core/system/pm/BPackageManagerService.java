@@ -15,6 +15,7 @@ import android.content.pm.ResolveInfo;
 import android.content.pm.ServiceInfo;
 import android.net.Uri;
 import android.os.Binder;
+import android.os.Build;
 import android.os.RemoteException;
 import android.text.TextUtils;
 import android.util.Log;
@@ -66,7 +67,6 @@ public class BPackageManagerService extends IBPackageManagerService.Stub impleme
     private static final BUserManagerService sUserManager = BUserManagerService.get();
     private final List<PackageMonitor> mPackageMonitors = new ArrayList<>();
 
-
     final Map<String, BPackageSettings> mPackages = mSettings.mPackages;
     final Object mInstallLock = new Object();
 
@@ -80,21 +80,20 @@ public class BPackageManagerService extends IBPackageManagerService.Stub impleme
         filter.addAction("android.intent.action.PACKAGE_ADDED");
         filter.addAction("android.intent.action.PACKAGE_REMOVED");
         filter.addDataScheme("package");
+        BroadcastReceiver mPackageChangedHandler = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                String action = intent.getAction();
+                if (!TextUtils.isEmpty(action)) {
+                    if ("android.intent.action.PACKAGE_ADDED".equals(action) || "android.intent.action.PACKAGE_REMOVED".equals(action)) {
+                        mSettings.scanPackage();
+                    }
+                }
+            }
+        };
         BlackBoxCore.getContext()
                 .registerReceiver(mPackageChangedHandler, filter);
     }
-
-    private final BroadcastReceiver mPackageChangedHandler = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            String action = intent.getAction();
-            if (!TextUtils.isEmpty(action)) {
-                if ("android.intent.action.PACKAGE_ADDED".equals(action) || "android.intent.action.PACKAGE_REMOVED".equals(action)) {
-                    mSettings.scanPackage();
-                }
-            }
-        }
-    };
 
     @Override
     public ApplicationInfo getApplicationInfo(String packageName, int flags, int userId) {
@@ -771,14 +770,16 @@ public class BPackageManagerService extends IBPackageManagerService.Stub impleme
      * Update given flags based on encryption status of current user.
      */
     private int updateFlags(int flags, int userId) {
-        if ((flags & (PackageManager.MATCH_DIRECT_BOOT_UNAWARE
+        if ((flags & (MATCH_DIRECT_BOOT_UNAWARE
                 | PackageManager.MATCH_DIRECT_BOOT_AWARE)) != 0) {
             // Caller expressed an explicit opinion about what encryption
             // aware/unaware components they want to see, so fall through and
             // give them what they want
         } else {
             // Caller expressed no opinion, so match based on user state
-            flags |= PackageManager.MATCH_DIRECT_BOOT_AWARE | MATCH_DIRECT_BOOT_UNAWARE;
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                flags |= PackageManager.MATCH_DIRECT_BOOT_AWARE | MATCH_DIRECT_BOOT_UNAWARE;
+            }
         }
         return flags;
     }

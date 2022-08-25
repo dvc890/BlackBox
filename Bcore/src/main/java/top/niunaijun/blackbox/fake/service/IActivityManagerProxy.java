@@ -1,8 +1,12 @@
 package top.niunaijun.blackbox.fake.service;
 
+import static android.content.pm.PackageManager.GET_META_DATA;
+import static android.content.pm.PackageManager.PERMISSION_GRANTED;
+
 import android.Manifest;
 import android.app.ActivityManager;
 import android.app.IServiceConnection;
+import android.app.Notification;
 import android.content.ComponentName;
 import android.content.IIntentReceiver;
 import android.content.Intent;
@@ -30,6 +34,7 @@ import black.android.util.BRSingleton;
 import top.niunaijun.blackbox.BlackBoxCore;
 import top.niunaijun.blackbox.app.BActivityThread;
 import top.niunaijun.blackbox.core.env.AppSystemEnv;
+import top.niunaijun.blackbox.core.system.DaemonService;
 import top.niunaijun.blackbox.entity.AppConfig;
 import top.niunaijun.blackbox.entity.am.RunningAppProcessInfo;
 import top.niunaijun.blackbox.entity.am.RunningServiceInfo;
@@ -53,9 +58,6 @@ import top.niunaijun.blackbox.utils.compat.ActivityManagerCompat;
 import top.niunaijun.blackbox.utils.compat.BuildCompat;
 import top.niunaijun.blackbox.utils.compat.ParceledListSliceCompat;
 import top.niunaijun.blackbox.utils.compat.TaskDescriptionCompat;
-
-import static android.content.pm.PackageManager.GET_META_DATA;
-import static android.content.pm.PackageManager.PERMISSION_GRANTED;
 
 /**
  * Created by Milk on 3/30/21.
@@ -115,7 +117,7 @@ public class IActivityManagerProxy extends ClassInvocationStub {
             /*try {
                 BlackBoxCore.getBPackageManager().resolveContentProvider((String) auth, GET_META_DATA, BActivityThread.getUserId());
 
-            } catch (Exception e){
+            } catch (Exception e) {
                 Log.e(TAG, "BlackBoxCore.getBPackageManager().resolveContentProvider Failed");
                 e.printStackTrace();
             }
@@ -395,18 +397,6 @@ public class IActivityManagerProxy extends ClassInvocationStub {
         }
     }
 
-    @ProxyMethod("getIntentSenderWithSourceToken")
-    public static class GetIntentSenderWithSourceToken extends GetIntentSender {
-    }
-
-    @ProxyMethod("getIntentSenderWithFeature")
-    public static class GetIntentSenderWithFeature extends GetIntentSender {
-    }
-
-    @ProxyMethod("broadcastIntentWithFeature")
-    public static class BroadcastIntentWithFeature extends BroadcastIntent {
-    }
-
     @ProxyMethod("broadcastIntent")
     public static class BroadcastIntent extends MethodHook {
         @Override
@@ -441,30 +431,6 @@ public class IActivityManagerProxy extends ClassInvocationStub {
         }
     }
 
-    @ProxyMethod("unregisterReceiver")
-    public static class unregisterReceiver extends MethodHook {
-        @Override
-        protected Object hook(Object who, Method method, Object[] args) throws Throwable {
-            return method.invoke(who, args);
-        }
-    }
-
-    @ProxyMethod("finishReceiver")
-    public static class finishReceiver extends MethodHook {
-        @Override
-        protected Object hook(Object who, Method method, Object[] args) throws Throwable {
-            return method.invoke(who, args);
-        }
-    }
-
-    @ProxyMethod("publishService")
-    public static class PublishService extends MethodHook {
-        @Override
-        protected Object hook(Object who, Method method, Object[] args) throws Throwable {
-            return method.invoke(who, args);
-        }
-    }
-
     @ProxyMethod("peekService")
     public static class PeekService extends MethodHook {
         @Override
@@ -472,8 +438,7 @@ public class IActivityManagerProxy extends ClassInvocationStub {
             MethodParameterUtils.replaceLastAppPkg(args);
             Intent intent = (Intent) args[0];
             String resolvedType = (String) args[1];
-            IBinder peek = BlackBoxCore.getBActivityManager().peekService(intent, resolvedType, BActivityThread.getUserId());
-            return peek;
+            return BlackBoxCore.getBActivityManager().peekService(intent, resolvedType, BActivityThread.getUserId());
         }
     }
 
@@ -484,11 +449,6 @@ public class IActivityManagerProxy extends ClassInvocationStub {
         protected Object hook(Object who, Method method, Object[] args) throws Throwable {
             return 0;
         }
-    }
-
-    // android 10
-    @ProxyMethod("registerReceiverWithFeature")
-    public static class RegisterReceiverWithFeature extends RegisterReceiver {
     }
 
     @ProxyMethod("registerReceiver")
@@ -544,14 +504,22 @@ public class IActivityManagerProxy extends ClassInvocationStub {
     }
 
     @ProxyMethod("setServiceForeground")
-    public static class setServiceForeground extends MethodHook {
+    public static class SetServiceForeground extends MethodHook {
         @Override
         protected Object hook(Object who, Method method, Object[] args) throws Throwable {
-            /*if (args[0] instanceof ComponentName) {
-                args[0] = new ComponentName(BlackBoxCore.getHostPkg(), ProxyManifest.getProxyService(BActivityThread.getAppPid()));
+            Notification notification = (Notification) args[3];
+
+            Intent intent = new Intent(BlackBoxCore.getContext(), DaemonService.class);
+            if (notification != null) {
+                if (BuildCompat.isOreo()) {
+                    BlackBoxCore.getContext().startForegroundService(intent);
+                } else {
+                    BlackBoxCore.getContext().startService(intent);
+                }
+            } else {
+                BlackBoxCore.getContext().stopService(intent);
             }
-            return method.invoke(who, args);*/
-            return 0;
+            return method.invoke(who, args);
         }
     }
 
@@ -601,44 +569,6 @@ public class IActivityManagerProxy extends ClassInvocationStub {
             ActivityManager.TaskDescription td = (ActivityManager.TaskDescription) args[1];
             args[1] = TaskDescriptionCompat.fix(td);
             return method.invoke(who, args);
-        }
-    }
-
-    @ProxyMethod("setRequestedOrientation")
-    public static class setRequestedOrientation extends MethodHook {
-
-        @Override
-        protected Object hook(Object who, Method method, Object[] args) throws Throwable {
-            try {
-                return method.invoke(who, args);
-            } catch (Throwable e) {
-                e.printStackTrace();
-            }
-            return 0;
-        }
-    }
-
-    @ProxyMethod("registerUidObserver")
-    public static class registerUidObserver extends MethodHook {
-        @Override
-        protected Object hook(Object who, Method method, Object[] args) throws Throwable {
-            return 0;
-        }
-    }
-
-    @ProxyMethod("unregisterUidObserver")
-    public static class unregisterUidObserver extends MethodHook {
-        @Override
-        protected Object hook(Object who, Method method, Object[] args) throws Throwable {
-            return 0;
-        }
-    }
-
-    @ProxyMethod("updateConfiguration")
-    public static class updateConfiguration extends MethodHook {
-        @Override
-        protected Object hook(Object who, Method method, Object[] args) throws Throwable {
-            return 0;
         }
     }
 }

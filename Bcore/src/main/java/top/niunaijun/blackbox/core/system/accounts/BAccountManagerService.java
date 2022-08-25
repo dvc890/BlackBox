@@ -862,7 +862,7 @@ public class BAccountManagerService extends IBAccountManagerService.Stub impleme
 
     private void completeCloningAccount(IAccountManagerResponse response,
                                         final Bundle accountCredentials, final Account account, final BUserAccounts targetUser,
-                                        final int parentUserId){
+                                        final int parentUserId) {
         new Session(targetUser, response, account.type, false,
                 false /* stripAuthTokenFromResult */, account.name,
                 false /* authDetailsRequired */) {

@@ -48,12 +48,12 @@ public class LocationListenerStub extends ClassInvocationStub {
 
         @Override
         protected Object hook(Object who, Method method, Object[] args) throws Throwable {
-            if(args[0] instanceof List){
+            if (args[0] instanceof List) {
                 List<Location> locations = (List<Location>) args[0];
                 locations.clear();
                 locations.add(BLocationManager.get().getLocation(BActivityThread.getUserId(), BActivityThread.getAppPackageName()).convert2SystemLocation());
                 args[0] = locations;
-            }else if(args[0] instanceof  Location){
+            } else if(args[0] instanceof  Location) {
                 args[0] = BLocationManager.get().getLocation(BActivityThread.getUserId(), BActivityThread.getAppPackageName()).convert2SystemLocation();
             }
             return method.invoke(who, args);

@@ -1,6 +1,7 @@
 package top.niunaijun.blackbox.core.system.am;
 
 import android.app.ActivityManager;
+import android.app.Notification;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
@@ -270,6 +271,14 @@ public class BActivityManagerService extends IBActivityManagerService.Stub imple
             }
         }
         return -1;
+    }
+
+    @Override
+    public void setServiceForeground(ComponentName className, IBinder token, int id, Notification notification, int flags, int foregroundServiceType, int userId) {
+        UserSpace userSpace = getOrCreateSpaceLocked(userId);
+        synchronized (userSpace.mActiveServices) {
+            userSpace.mActiveServices.setServiceForeground(className, token, id, notification, flags, foregroundServiceType, userId);
+        }
     }
 
     @Override

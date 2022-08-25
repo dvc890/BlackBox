@@ -108,17 +108,17 @@ public class BProcessManagerService implements ISystemService {
         return app;
     }
 
-    private void killProcess(final ProcessRecord app){
+    private void killProcess(final ProcessRecord app) {
         // make sure process be killed
-        if(app.pid > 0 ){
+        if(app.pid > 0) {
             Process.killProcess(app.pid);
-        }else{
+        } else {
             try {
                 ActivityManager manager = (ActivityManager) BlackBoxCore.getContext().getSystemService(Context.ACTIVITY_SERVICE);
                 List<ActivityManager.RunningAppProcessInfo> runningAppProcesses = manager.getRunningAppProcesses();
                 for (ActivityManager.RunningAppProcessInfo runningAppProcess : runningAppProcesses) {
                     int bpid = parseBPid(runningAppProcess.processName);
-                    if(bpid != -1 && app.bpid == bpid){
+                    if (bpid != -1 && app.bpid == bpid) {
                         Slog.d(TAG, "force kill process: "+app.processName+", pid: "+runningAppProcess.pid+", bpid: "+bpid);
                         Process.killProcess(runningAppProcess.pid);
                     }
