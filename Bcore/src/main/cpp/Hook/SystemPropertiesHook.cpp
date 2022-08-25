@@ -30,6 +30,7 @@ HOOK_JNI(jstring, native_get, JNIEnv *env, jobject obj, jstring key, jstring def
 }
 
 HOOK_JNI(int, __system_property_get, const char *name, char *value) {
+    //SHADOWHOOK_STACK_SCOPE();
     log_print_debug("calling __system_property_get");
     if (NULL == name || NULL == value) {
         return orig___system_property_get(name, value);
@@ -65,6 +66,8 @@ void SystemPropertiesHook::init(JNIEnv *env) {
                         (void *) new_native_get,
                         (void **) (&orig_native_get), true);
 
+    // shadowhook_hook_sym_name("libc.so", "__system_property_get", (void *) new___system_property_get,
+    //                          (void **) (&orig___system_property_get));
     IO::unProtect("libc.so", "__system_property_get");
     void *popenAddress = DobbySymbolResolver("libc.so", "__system_property_get");
     if (popenAddress) {
