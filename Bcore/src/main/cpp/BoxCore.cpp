@@ -74,7 +74,7 @@ void nativeHook(JNIEnv *env) {
     VMClassLoaderHook::init(env);
 
     // SystemPropertiesHook会引起小米k40，安卓11上的抖音崩溃
-    SystemPropertiesHook::init(env);
+    //SystemPropertiesHook::init(env);
 
     RuntimeHook::init(env);
     BinderHook::init(env);
