@@ -496,9 +496,9 @@ public final class Pine {
             // I think we don't need makeClassesVisiblyInitialized here
             assert method instanceof Method;
             resolve((Method) method);
-//            if (PineConfig.sdkLevel >= Build.VERSION_CODES.R) {
-//                makeClassesVisiblyInitialized(currentArtThread0());
-//            }
+			/*if (PineConfig.sdkLevel >= Build.VERSION_CODES.R) {
+				makeClassesVisiblyInitialized(currentArtThread0());
+			}*/
         }
 
         return callBackupMethod(hookRecord.target, hookRecord.backup, thisObject, args);

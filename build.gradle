@@ -11,18 +11,17 @@ task clean(type: Delete) {
 
 ext {
     kotlin_version = '1.7.10'
-    ktx_version = '1.8.0'
+    ktx_version = '1.9.0'
     minSdkVersion = 21
     compileSdk = 33
     buildToolsVersion = "33.0.0"
     targetSdk = 33
-    abiFilters = "armeabi-v7a, arm64-v8a"
 
     ndkVersion = "25.1.8937393"
     cmakeVersion = "3.22.1"
 
-    versionName = '1.0'
-    versionCode = 1
+    versionName = "1.6.0"
+    versionCode = 7
     useASAN = false
     blackReflection = '1.1.4'
 }

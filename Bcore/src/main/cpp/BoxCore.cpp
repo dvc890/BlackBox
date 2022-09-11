@@ -9,6 +9,7 @@
 #include <JniHook/JniHook.h>
 #include <Hook/VMClassLoaderHook.h>
 #include <Hook/UnixFileSystemHook.h>
+#include <Hook/LinuxHook.h>
 #include <Hook/SystemPropertiesHook.h>
 #include <Hook/BinderHook.h>
 #include <Hook/RuntimeHook.h>
@@ -20,8 +21,6 @@ struct {
     jmethodID getCallingUidId;
     jmethodID redirectPathString;
     jmethodID redirectPathFile;
-    jmethodID loadEmptyDex;
-    jmethodID loadEmptyDexL;
     int api_level;
 } VMEnv;
 
@@ -55,11 +54,6 @@ jobject BoxCore::redirectPathFile(JNIEnv *env, jobject path) {
     return env->CallStaticObjectMethod(VMEnv.NativeCoreClass, VMEnv.redirectPathFile, path);
 }
 
-jlongArray BoxCore::loadEmptyDex(JNIEnv *env) {
-    env = ensureEnvCreated();
-    return (jlongArray) env->CallStaticObjectMethod(VMEnv.NativeCoreClass, VMEnv.loadEmptyDex);
-}
-
 int BoxCore::getApiLevel() {
     return VMEnv.api_level;
 }
@@ -71,10 +65,11 @@ JavaVM *BoxCore::getJavaVM() {
 void nativeHook(JNIEnv *env) {
     BaseHook::init(env);
     UnixFileSystemHook::init(env);
+    LinuxHook::init(env);
     VMClassLoaderHook::init(env);
 
     // SystemPropertiesHook会引起小米k40，安卓11上的抖音崩溃
-    //SystemPropertiesHook::init(env);
+    // SystemPropertiesHook::init(env);
 
     RuntimeHook::init(env);
     BinderHook::init(env);
@@ -94,8 +89,6 @@ void init(JNIEnv *env, jobject clazz, jint api_level) {
                                                       "(Ljava/lang/String;)Ljava/lang/String;");
     VMEnv.redirectPathFile = env->GetStaticMethodID(VMEnv.NativeCoreClass, "redirectPath",
                                                     "(Ljava/io/File;)Ljava/io/File;");
-    VMEnv.loadEmptyDex = env->GetStaticMethodID(VMEnv.NativeCoreClass, "loadEmptyDex",
-                                                "()[J");
 
     JniHook::InitJniHook(env, api_level);
 }
@@ -113,7 +106,6 @@ void addWhiteList(JNIEnv *env, jclass clazz, jstring path) {
 }
 
 void enableIO(JNIEnv *env, jclass clazz) {
-    IO::init(env);
     nativeHook(env);
 }
 

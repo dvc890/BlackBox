@@ -4,8 +4,7 @@ import android.graphics.Point;
 import android.graphics.PointF;
 
 public class MathUtil {
-    public MathUtil() {
-    }
+    public MathUtil() { }
 
     /**
      * Get the distance between two points.
@@ -53,7 +52,6 @@ public class MathUtil {
         radian = radian * (B.y < A.y ? -1 : 1);
         return radian;
     }
-
 
     /**
      * angle to radian

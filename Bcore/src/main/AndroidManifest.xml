@@ -1,6 +1,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="top.niunaijun.blackbox">
+    package="top.niunaijun.bcore">
 
     <!-- unknown -->
     <uses-permission android:name="android.permission.WRITE_SOCIAL_STREAM" />
@@ -333,7 +333,7 @@
 
     <application>
         <provider
-            android:name="top.niunaijun.blackbox.core.system.SystemCallProvider"
+            android:name="top.niunaijun.bcore.core.system.SystemCallProvider"
             android:authorities="${applicationId}.blackbox.SystemCallProvider"
             android:exported="false"
             android:process="@string/black_box_service_name" />

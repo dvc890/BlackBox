@@ -1,8 +1,4 @@
 //
-// Created by Milk on 2021/5/5.
-//
-
-//
 // Created by Milk on 5/5/21.
 //
 
@@ -14,7 +10,7 @@ static bool hideXposedClass = false;
 
 HOOK_JNI(jobject, findLoadedClass, JNIEnv *env, jobject obj, jobject class_loader, jstring name) {
     const char * nameC = env->GetStringUTFChars(name, JNI_FALSE);
-//     ALOGD("findLoadedClass: %s", nameC);
+	// ALOGD("findLoadedClass: %s", nameC);
     if (hideXposedClass) {
         if (strstr(nameC, "de/robv/android/xposed/") ||
             strstr(nameC, "me/weishu/epic") ||

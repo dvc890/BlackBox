@@ -116,16 +116,16 @@ public class RockerView extends SurfaceView implements Runnable, SurfaceHolder.C
     }
 
     private void configSurfaceView() {
-        setKeepScreenOn(true);          // do not lock screen when surfaceView is running.
-        setFocusable(true);             // make sure this surfaceView can get focus from keyboard.
-        setFocusableInTouchMode(true);  // make sure this surfaceView can get focus from touch.
-        setZOrderOnTop(true);           // make sure this surface is placed on top of the window
+        setKeepScreenOn(true); // do not lock screen when surfaceView is running.
+        setFocusable(true); // make sure this surfaceView can get focus from keyboard.
+        setFocusableInTouchMode(true); // make sure this surfaceView can get focus from touch.
+        setZOrderOnTop(true); // make sure this surface is placed on top of the window
     }
 
     private void configSurfaceHolder() {
         mHolder = getHolder();
         mHolder.addCallback(this);
-        mHolder.setFormat(PixelFormat.TRANSPARENT); //设置背景透明
+        mHolder.setFormat(PixelFormat.TRANSPARENT); // 设置背景透明
     }
 
     @Override
@@ -133,11 +133,11 @@ public class RockerView extends SurfaceView implements Runnable, SurfaceHolder.C
         int measureWidth, measureHeight;
         int defaultWidth = (mAreaRadius + mRockerRadius) * 2;
 
-        int widthsize = MeasureSpec.getSize(widthMeasureSpec);      //取出宽度的确切数值
-        int widthmode = MeasureSpec.getMode(widthMeasureSpec);      //取出宽度的测量模式
+        int widthsize = MeasureSpec.getSize(widthMeasureSpec);      // 取出宽度的确切数值
+        int widthmode = MeasureSpec.getMode(widthMeasureSpec);      // 取出宽度的测量模式
 
-        int heightsize = MeasureSpec.getSize(heightMeasureSpec);    //取出高度的确切数值
-        int heightmode = MeasureSpec.getMode(heightMeasureSpec);    //取出高度的测量模式
+        int heightsize = MeasureSpec.getSize(heightMeasureSpec);    // 取出高度的确切数值
+        int heightmode = MeasureSpec.getMode(heightMeasureSpec);    // 取出高度的测量模式
 
         if (widthmode == MeasureSpec.AT_MOST || widthmode == MeasureSpec.UNSPECIFIED || widthsize < 0) {
             measureWidth = defaultWidth;
@@ -219,7 +219,7 @@ public class RockerView extends SurfaceView implements Runnable, SurfaceHolder.C
         try {
             int len = MathUtil.getDistance(mAreaPosition.x, mAreaPosition.y, event.getX(), event.getY());
             if (event.getAction() == MotionEvent.ACTION_DOWN) {
-                //如果屏幕接触点不在摇杆挥动范围内,则不处理
+                // 如果屏幕接触点不在摇杆挥动范围内,则不处理
                 if (len > mAreaRadius) {
                     return true;
                 }
@@ -227,10 +227,10 @@ public class RockerView extends SurfaceView implements Runnable, SurfaceHolder.C
 
             if (event.getAction() == MotionEvent.ACTION_MOVE) {
                 if (len <= mAreaRadius) {
-                    //如果手指在摇杆活动范围内，则摇杆处于手指触摸位置
+                    // 如果手指在摇杆活动范围内，则摇杆处于手指触摸位置
                     mRockerPosition.set((int) event.getX(), (int) event.getY());
                 } else {
-                    //设置摇杆位置，使其处于手指触摸方向的 摇杆活动范围边缘
+                    // 设置摇杆位置，使其处于手指触摸方向的 摇杆活动范围边缘
                     mRockerPosition = MathUtil.getPointByCutLength(mAreaPosition,
                             new Point((int) event.getX(), (int) event.getY()), mAreaRadius);
                 }
@@ -241,7 +241,7 @@ public class RockerView extends SurfaceView implements Runnable, SurfaceHolder.C
                     mListener.callback(EVENT_ACTION, angle, distance);
                 }
             }
-            //如果手指离开屏幕，则摇杆返回初始位置
+            // 如果手指离开屏幕，则摇杆返回初始位置
             if (event.getAction() == MotionEvent.ACTION_UP) {
                 mRockerPosition = new Point(mAreaPosition);
                 if (mListener != null) {
@@ -271,7 +271,7 @@ public class RockerView extends SurfaceView implements Runnable, SurfaceHolder.C
                     drawArea(canvas);
                     drawRocker(canvas);
                 }
-                Thread.sleep(mRefreshCycle);    // 休眠
+                Thread.sleep(mRefreshCycle); // 休眠
             } catch (Exception e) {
                 e.printStackTrace();
             } finally {
@@ -327,7 +327,7 @@ public class RockerView extends SurfaceView implements Runnable, SurfaceHolder.C
         }
     }
 
-    //获取摇杆偏移角度 上方中间为0，左为负，右为正
+    // 获取摇杆偏移角度 上方中间为0，左为负，右为正
     private float getAngleConvert(float radian) {
         return 90 + Math.round(radian / Math.PI * 180);
     }

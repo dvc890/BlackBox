@@ -11,7 +11,7 @@ import androidx.core.content.edit
 import androidx.viewpager2.widget.ViewPager2
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.input.input
-import top.niunaijun.blackbox.BlackBoxCore
+import top.niunaijun.bcore.BlackBoxCore
 import top.niunaijun.blackbox.R
 import top.niunaijun.blackbox.app.App
 import top.niunaijun.blackbox.app.AppManager
@@ -41,7 +41,7 @@ class MainActivity : LoadingActivity() {
 
     private fun initToolbarSubTitle() {
         updateUserRemark(0)
-        //hack code
+        // hack code
         viewBinding.toolbarLayout.toolbar.getChildAt(1).setOnClickListener {
             MaterialDialog(this).show {
                 title(res = R.string.userRemark)
@@ -163,7 +163,7 @@ class MainActivity : LoadingActivity() {
             }
 
             R.id.fake_location -> {
-                //toast("Still Developing")
+                // toast("Still Developing")
                 val intent = Intent(this, FakeManagerActivity::class.java)
                 intent.putExtra("userID", currentUser)
                 startActivity(intent)

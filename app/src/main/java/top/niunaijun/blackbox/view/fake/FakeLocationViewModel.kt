@@ -1,7 +1,7 @@
 package top.niunaijun.blackbox.view.fake
 
 import androidx.lifecycle.MutableLiveData
-import top.niunaijun.blackbox.entity.location.BLocation
+import top.niunaijun.bcore.entity.location.BLocation
 import top.niunaijun.blackbox.bean.FakeLocationBean
 import top.niunaijun.blackbox.data.FakeLocationRepository
 import top.niunaijun.blackbox.view.base.BaseViewModel

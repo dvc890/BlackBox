@@ -14,4 +14,4 @@ public:
 };
 
 
-#endif //VIRTUALM_BASEHOOK_H
+#endif // VIRTUALM_BASEHOOK_H

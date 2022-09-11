@@ -12,4 +12,4 @@ public:
     static void init(JNIEnv *env);
 };
 
-#endif //BLACKBOX_BINDERHOOK_H
+#endif // BLACKBOX_BINDERHOOK_H

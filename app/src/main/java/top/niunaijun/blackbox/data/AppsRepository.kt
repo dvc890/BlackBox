@@ -8,9 +8,9 @@ import android.util.Log
 import android.webkit.URLUtil
 import androidx.core.content.edit
 import androidx.lifecycle.MutableLiveData
-import top.niunaijun.blackbox.BlackBoxCore
-import top.niunaijun.blackbox.BlackBoxCore.getPackageManager
-import top.niunaijun.blackbox.utils.AbiUtils
+import top.niunaijun.bcore.BlackBoxCore
+import top.niunaijun.bcore.BlackBoxCore.getPackageManager
+import top.niunaijun.bcore.utils.AbiUtils
 import top.niunaijun.blackbox.R
 import top.niunaijun.blackbox.app.AppManager
 import top.niunaijun.blackbox.bean.AppInfo

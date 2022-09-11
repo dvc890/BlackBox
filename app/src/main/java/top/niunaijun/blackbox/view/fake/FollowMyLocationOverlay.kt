@@ -14,7 +14,7 @@ import org.osmdroid.tileprovider.tilesource.TileSourceFactory
 import org.osmdroid.util.GeoPoint
 import org.osmdroid.views.overlay.MapEventsOverlay
 import org.osmdroid.views.overlay.Marker
-import top.niunaijun.blackbox.entity.location.BLocation
+import top.niunaijun.bcore.entity.location.BLocation
 import top.niunaijun.blackbox.databinding.ActivityOsmdroidBinding
 import top.niunaijun.blackbox.util.inflate
 import top.niunaijun.blackbox.util.toast
@@ -32,19 +32,19 @@ class FollowMyLocationOverlay : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        //handle permissions first, before map is created. not depicted here
+        // handle permissions first, before map is created. not depicted here
 
-        //load/initialize the osmdroid configuration, this can be done
-        //This won't work unless you have imported this: org.osmdroid.config.Configuration.*
+        // load/initialize the osmdroid configuration, this can be done
+        // This won't work unless you have imported this: org.osmdroid.config.Configuration.*
         Configuration.getInstance().load(this, PreferenceManager.getDefaultSharedPreferences(this))
-        //setting this before the layout is inflated is a good idea
-        //it 'should' ensure that the map has a writable location for the map cache, even without permissions
-        //if no tiles are displayed, you can try overriding the cache path using Configuration.getInstance().setCachePath
-        //see also StorageUtils
-        //note, the load method also sets the HTTP User Agent to your application's package name, if you abuse osm's
-        //tile servers will get you banned based on this string.
+        // setting this before the layout is inflated is a good idea
+        // it 'should' ensure that the map has a writable location for the map cache, even without permissions
+        // if no tiles are displayed, you can try overriding the cache path using Configuration.getInstance().setCachePath
+        // see also StorageUtils
+        // note, the load method also sets the HTTP User Agent to your application's package name, if you abuse osm's
+        // tile servers will get you banned based on this string.
 
-        //inflate and create the map
+        // inflate and create the map
         setContentView(binding.root)
 
         val location: BLocation? = if (Build.VERSION.SDK_INT >= 33) {
@@ -80,7 +80,7 @@ class FollowMyLocationOverlay : AppCompatActivity() {
         binding.map.overlays.add(MapEventsOverlay(mReceive))
         val mapController = binding.map.controller
         mapController.setZoom(12.5)
-        //val startPoint = GeoPoint(30.2736, 120.1563)
+        // val startPoint = GeoPoint(30.2736, 120.1563)
         mapController.setCenter(startPoint)
         binding.map.setTileSource(TileSourceFactory.MAPNIK)
         onBackPressedDispatcher
@@ -96,20 +96,20 @@ class FollowMyLocationOverlay : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        //this will refresh the osmdroid configuration on resuming.
-        //if you make changes to the configuration, use
-        //SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this)
-        //Configuration.getInstance().load(this, PreferenceManager.getDefaultSharedPreferences(this))
-        binding.map.onResume() //needed for compass, my location overlays, v6.0.0 and up
+        // this will refresh the osmdroid configuration on resuming.
+        // if you make changes to the configuration, use
+        // SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this)
+        // Configuration.getInstance().load(this, PreferenceManager.getDefaultSharedPreferences(this))
+        binding.map.onResume() // needed for compass, my location overlays, v6.0.0 and up
     }
 
     override fun onPause() {
         super.onPause()
-        //this will refresh the osmdroid configuration on resuming.
-        //if you make changes to the configuration, use
-        //SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this)
-        //Configuration.getInstance().save(this, prefs)
-        binding.map.onPause()  //needed for compass, my location overlays, v6.0.0 and up
+        // this will refresh the osmdroid configuration on resuming.
+        // if you make changes to the configuration, use
+        // SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this)
+        // Configuration.getInstance().save(this, prefs)
+        binding.map.onPause()  // needed for compass, my location overlays, v6.0.0 and up
     }
 
     override fun onRequestPermissionsResult(
