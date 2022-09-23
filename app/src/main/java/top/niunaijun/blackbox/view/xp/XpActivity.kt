@@ -9,7 +9,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import cbfg.rvadapter.RVAdapter
 import com.afollestad.materialdialogs.MaterialDialog
-import top.niunaijun.blackbox.BlackBoxCore
+import top.niunaijun.bcore.BlackBoxCore
 import top.niunaijun.blackbox.R
 import top.niunaijun.blackbox.bean.XpModuleInfo
 import top.niunaijun.blackbox.databinding.ActivityXpBinding

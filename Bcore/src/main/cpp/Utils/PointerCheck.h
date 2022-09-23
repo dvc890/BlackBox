@@ -10,4 +10,4 @@ public:
     static bool check(void *addr);
 };
 
-#endif //BLACKBOX_POINTERCHECK_H
+#endif // BLACKBOX_POINTERCHECK_H

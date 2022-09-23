@@ -10,4 +10,4 @@ class HexDump {
 };
 void HexDump(char *buf, int len, int addr);
 
-#endif //SPEED_HEXDUMP_H
+#endif // SPEED_HEXDUMP_H

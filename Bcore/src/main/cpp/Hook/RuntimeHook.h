@@ -13,4 +13,4 @@ public:
     static void init(JNIEnv *env);
 };
 
-#endif //BLACKBOX_RUNTIMEHOOK_H
+#endif // BLACKBOX_RUNTIMEHOOK_H

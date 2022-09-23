@@ -13,7 +13,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.ItemTouchHelper
 import cbfg.rvadapter.RVAdapter
 import com.afollestad.materialdialogs.MaterialDialog
-import top.niunaijun.blackbox.BlackBoxCore
+import top.niunaijun.bcore.BlackBoxCore
 import top.niunaijun.blackbox.R
 import top.niunaijun.blackbox.bean.AppInfo
 import top.niunaijun.blackbox.databinding.FragmentAppsBinding
@@ -155,8 +155,8 @@ class AppsFragment : Fragment() {
     private fun setOnLongClick() {
         mAdapter.setItemLongClickListener { view, data, _ ->
             popupMenu = PopupMenu(requireContext(), view).also {
-//        mAdapter.setItemClickListener { view, data, _ ->
-//            PopupMenu(requireContext(),view).also {
+                // mAdapter.setItemClickListener { view, data, _ ->
+                // PopupMenu(requireContext(),view).also {
                 it.inflate(R.menu.app_menu)
                 it.setOnMenuItemClickListener { item ->
                     when (item.itemId) {

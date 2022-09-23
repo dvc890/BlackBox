@@ -47,7 +47,7 @@ tasks.withType(Javadoc) {
 }
 
 dependencies {
-    implementation project(':Bcore:black-hook')
+    implementation project(':BCore:black-hook')
     implementation "androidx.core:core-ktx:$ktx_version"
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 }

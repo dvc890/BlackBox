@@ -3,10 +3,10 @@ package top.niunaijun.blackbox.view.main
 import android.app.Application
 import android.content.Context
 import android.util.Log
-import top.niunaijun.blackbox.BlackBoxCore
-import top.niunaijun.blackbox.app.BActivityThread
-import top.niunaijun.blackbox.app.configuration.AppLifecycleCallback
-import top.niunaijun.blackbox.app.configuration.ClientConfiguration
+import top.niunaijun.bcore.BlackBoxCore
+import top.niunaijun.bcore.app.BActivityThread
+import top.niunaijun.bcore.app.configuration.AppLifecycleCallback
+import top.niunaijun.bcore.app.configuration.ClientConfiguration
 import top.niunaijun.blackbox.app.App
 import top.niunaijun.blackbox.biz.cache.AppSharedPreferenceDelegate
 import java.io.File
@@ -85,7 +85,7 @@ class BlackBoxLoader {
                 userId: Int
             ) {
                 Log.d(TAG, "afterApplicationOnCreate: pkg $packageName, processName $processName")
-                //RockerManager.init(application, userId)
+                // RockerManager.init(application, userId)
             }
         })
     }

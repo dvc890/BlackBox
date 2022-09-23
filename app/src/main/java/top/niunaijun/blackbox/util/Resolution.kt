@@ -142,7 +142,7 @@ object Resolution {
         val metrics = resources.displayMetrics
         return px / (metrics.densityDpi / 160f)
     }
-    ///////////////////////////////////////////////////////////////////////
+
     /**
      * 获取屏幕密度
      */
@@ -258,7 +258,7 @@ object Resolution {
         val obj: Any
         val field: Field?
         val x: Int
-        var sbar = 38 //默认为38，貌似大部分是这样的
+        var sbar = 38 // 默认为38，貌似大部分是这样的
         try {
             c = Class.forName("com.android.internal.R\$dimen")
             obj = c.newInstance()
@@ -271,8 +271,8 @@ object Resolution {
         return sbar
     }
 
-    //http://stackoverflow.com/questions/20264268/how-to-get-height-and-width-of-navigation-bar-programmatically
-    //获取屏幕下方导航栏高度
+    // http://stackoverflow.com/questions/20264268/how-to-get-height-and-width-of-navigation-bar-programmatically
+    // 获取屏幕下方导航栏高度
     fun getNavigationBarSize(context: Context): Point {
         val appUsableSize = getScreenSize(context, null)
 

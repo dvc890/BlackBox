@@ -5,7 +5,7 @@ import android.os.Bundle
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 import androidx.preference.SwitchPreferenceCompat
-import top.niunaijun.blackbox.BlackBoxCore
+import top.niunaijun.bcore.BlackBoxCore
 import top.niunaijun.blackbox.R
 import top.niunaijun.blackbox.app.AppManager
 import top.niunaijun.blackbox.util.toast
@@ -32,7 +32,7 @@ class SettingFragment : PreferenceFragmentCompat() {
             BlackBoxCore.get().isXPEnable = (newValue == true)
             true
         }
-        //xp模块跳转
+        // xp模块跳转
         xpModule = findPreference("xp_module")!!
         xpModule.setOnPreferenceClickListener {
             val intent = Intent(requireActivity(), XpActivity::class.java)

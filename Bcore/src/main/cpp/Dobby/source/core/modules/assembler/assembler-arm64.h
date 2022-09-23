@@ -104,7 +104,7 @@ public:
 private:
 #if 0
   // From a design perspective, these fix-function write as callback, maybe beeter.
-  void FixLdr(PseudoLabelInstruction *instruction) {
+  void FixLdr(PseudoLabelInstruction *instruction){
       // dummy
   };
 #endif

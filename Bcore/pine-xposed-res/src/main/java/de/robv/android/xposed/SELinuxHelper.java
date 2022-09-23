@@ -26,18 +26,17 @@ public final class SELinuxHelper {
     static {
         try {
             sIsSELinuxEnabled = SELinux.isSELinuxEnabled();
-        } catch (NoClassDefFoundError ignored) {
-        }
+        } catch (NoClassDefFoundError ignored) { }
     }
 
     private SELinuxHelper() {}
 
     // Dreamland changed: Don't use SELinuxHelper.initOnce(), sIsSELinuxEnabled will be initialized in static block
-//    public static void initOnce() {
-//        try {
-//            sIsSELinuxEnabled = SELinux.isSELinuxEnabled();
-//        } catch (NoClassDefFoundError ignored) {}
-//    }
+    /*public static void initOnce() {
+        try {
+            sIsSELinuxEnabled = SELinux.isSELinuxEnabled();
+        } catch (NoClassDefFoundError ignored) { }
+    }*/
 
 
     /**
@@ -97,9 +96,9 @@ public final class SELinuxHelper {
      */
     public static BaseService getAppDataFileService() {
         // Dreamland changed: Only supports DirectAccessService
-//        if (sServiceAppDataFile != null)
-//            return sServiceAppDataFile;
-//        throw new UnsupportedOperationException();
+        /*if (sServiceAppDataFile != null)
+            return sServiceAppDataFile;
+        throw new UnsupportedOperationException();*/
         return sServiceAppDataFile;
     }
 

@@ -12,4 +12,4 @@ public:
     static void init(JNIEnv *env);
 };
 
-#endif //VIRTUALM_UNIXFILESYSTEMHOOK_H
+#endif // VIRTUALM_UNIXFILESYSTEMHOOK_H

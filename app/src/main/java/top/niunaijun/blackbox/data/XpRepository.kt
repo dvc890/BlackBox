@@ -3,8 +3,8 @@ package top.niunaijun.blackbox.data
 import android.net.Uri
 import android.webkit.URLUtil
 import androidx.lifecycle.MutableLiveData
-import top.niunaijun.blackbox.BlackBoxCore
-import top.niunaijun.blackbox.BlackBoxCore.getPackageManager
+import top.niunaijun.bcore.BlackBoxCore
+import top.niunaijun.bcore.BlackBoxCore.getPackageManager
 import top.niunaijun.blackbox.R
 import top.niunaijun.blackbox.bean.XpModuleInfo
 import top.niunaijun.blackbox.util.getString
@@ -40,7 +40,7 @@ class XpRepository {
             val uri = Uri.parse(source)
             blackBoxCore.installXPModule(uri)
         } else {
-            //source == packageName
+            // source == packageName
             blackBoxCore.installXPModule(source)
         }
 

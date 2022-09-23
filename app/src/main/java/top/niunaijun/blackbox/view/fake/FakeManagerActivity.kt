@@ -14,8 +14,8 @@ import com.ferfalk.simplesearchview.SimpleSearchView
 import top.niunaijun.blackbox.R
 import top.niunaijun.blackbox.bean.FakeLocationBean
 import top.niunaijun.blackbox.databinding.ActivityListBinding
-import top.niunaijun.blackbox.entity.location.BLocation
-import top.niunaijun.blackbox.fake.frameworks.BLocationManager
+import top.niunaijun.bcore.entity.location.BLocation
+import top.niunaijun.bcore.fake.frameworks.BLocationManager
 import top.niunaijun.blackbox.util.InjectionUtil
 import top.niunaijun.blackbox.util.inflate
 import top.niunaijun.blackbox.util.toast
@@ -29,7 +29,7 @@ import top.niunaijun.blackbox.view.base.BaseActivity
 class FakeManagerActivity : BaseActivity() {
     val TAG: String = "FakeManagerActivity"
     private val viewBinding: ActivityListBinding by inflate()
-    //private lateinit var mAdapter: ListAdapter
+    // private lateinit var mAdapter: ListAdapter
     private lateinit var mAdapter: RVAdapter<FakeLocationBean>
     private lateinit var viewModel: FakeLocationViewModel
     private var appList: List<FakeLocationBean> = ArrayList()

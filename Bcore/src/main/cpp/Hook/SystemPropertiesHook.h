@@ -12,7 +12,7 @@
 class SystemPropertiesHook : public BaseHook{
 public:
     static void init(JNIEnv *env);
-    //static std::map<std::string , std::string > prop_map;
+    // static std::map<std::string , std::string > prop_map;
 };
 
-#endif //BLACKBOX_SystemPropertiesHook_H
+#endif // BLACKBOX_SystemPropertiesHook_H

@@ -4,7 +4,7 @@ import android.view.View
 import android.view.ViewGroup
 import cbfg.rvadapter.RVHolder
 import cbfg.rvadapter.RVHolderFactory
-import top.niunaijun.blackbox.fake.frameworks.BLocationManager
+import top.niunaijun.bcore.fake.frameworks.BLocationManager
 import top.niunaijun.blackbox.R
 import top.niunaijun.blackbox.bean.FakeLocationBean
 import top.niunaijun.blackbox.databinding.ItemFakeBinding

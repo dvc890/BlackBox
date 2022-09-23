@@ -10,10 +10,10 @@ android {
         applicationId "top.niunaijun.blackbox"
         minSdk rootProject.ext.minSdkVersion
         targetSdk rootProject.ext.targetSdk
-        versionCode 7
-        versionName "1.6.0"
+        versionCode rootProject.ext.versionCode
+        versionName rootProject.ext.versionName
 
-        flavorDimensions "BlackBox32"
+        flavorDimensions "BlackBox64"
         multiDexEnabled true
     }
 
@@ -37,25 +37,14 @@ android {
             manifestPlaceholders = [APP_ICON      : "@mipmap/ic_launcher",
                                     APP_ROUND_ICON: "@mipmap/ic_launcher_round"]
         }
+    }
 
-        BlackBox32Beta {
-            applicationId "top.niunaijun.blackbox32_beta"
-            ndk {
-                abiFilters "armeabi-v7a"
-            }
-            resValue "string", "app_name", "BlackBox32 Beta"
-            manifestPlaceholders = [APP_ICON      : "@mipmap/ic_launcher_beta",
-                                    APP_ROUND_ICON: "@mipmap/ic_launcher_round_beta"]
-        }
-
-        BlackBox64Beta {
-            applicationId "top.niunaijun.blackbox64_beta"
-            ndk {
-                abiFilters "arm64-v8a"
-            }
-            resValue "string", "app_name", "BlackBox64 Beta"
-            manifestPlaceholders = [APP_ICON      : "@mipmap/ic_launcher_round_beta",
-                                    APP_ROUND_ICON: "@mipmap/ic_launcher_round_beta"]
+    signingConfigs {
+        release {
+            storeFile file("release.jks")
+            storePassword "BlackBox"
+            keyAlias "BlackBox"
+            keyPassword "BlackBox"
         }
     }
 
@@ -64,11 +53,13 @@ android {
             debuggable true
             jniDebuggable true
             minifyEnabled false
+
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
 
         release {
-            minifyEnabled false
+            signingConfig signingConfigs.release
+
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
@@ -89,7 +80,6 @@ android {
     testOptions {
         unitTests.returnDefaultValues = true
     }
-
 
     sourceSets {
         main {
@@ -115,11 +105,11 @@ tasks.withType(Javadoc) {
 }
 
 dependencies {
-    implementation project(':Bcore')
+    implementation project(':BCore')
 
-    //android
+    // android
     implementation 'com.google.android.material:material:1.6.1'
-    implementation 'androidx.appcompat:appcompat:1.6.0-beta01'
+    implementation 'androidx.appcompat:appcompat:1.6.0-rc01'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
     implementation 'androidx.recyclerview:recyclerview:1.2.1'
     implementation 'androidx.viewpager2:viewpager2:1.0.0'
@@ -127,7 +117,7 @@ dependencies {
     implementation 'androidx.fragment:fragment-ktx:1.5.2'
     implementation 'androidx.preference:preference-ktx:1.2.0'
 
-    //coroutines
+    // coroutines
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.4'
 
     //viewModel liveData  lifecycle
@@ -135,27 +125,27 @@ dependencies {
     implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.5.1'
     implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.5.1'
 
-    //third
+    // third
     implementation 'com.tbuonomo:dotsindicator:4.3'
-    //viewPager2 指示点
+    // viewPager2 指示点
     implementation 'com.afollestad.material-dialogs:core:3.3.0'
     implementation 'com.afollestad.material-dialogs:input:3.3.0'
-    //dialog
+    // dialog
     implementation 'com.github.nukc.stateview:kotlin:2.2.0'
-    //状态控制控件
+    // 状态控制控件
     implementation 'com.roger.catloadinglibrary:catloadinglibrary:1.0.9'
-    //加载dialog
+    // 加载dialog
     implementation 'com.github.Ferfalk:SimpleSearchView:0.2.0'
-    //searchView
+    // searchView
     implementation 'com.github.Othershe:CornerLabelView:1.0.0'
-    //图标角标
+    // 图标角标
 
     // osmdroid
     implementation 'org.osmdroid:osmdroid-android:6.1.14'
-    //adapter
+    // adapter
     implementation 'com.gitee.cbfg5210:RVAdapter:0.3.7'
 
-    //悬浮窗
+    // 悬浮窗
     implementation 'com.imuxuan:floatingview:1.6'
     implementation "androidx.core:core-ktx:$ktx_version"
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"

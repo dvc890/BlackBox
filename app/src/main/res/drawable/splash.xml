@@ -5,6 +5,7 @@
             <solid android:color="@android:color/white" />
         </shape>
     </item>
+
     <item>
         <bitmap
                 android:gravity="center"

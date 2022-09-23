@@ -16,11 +16,14 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.BlackBox"
         tools:targetApi="n">
+
         <activity
             android:name=".view.fake.FollowMyLocationOverlay"
             android:exported="false" />
+
         <activity android:name=".view.setting.SettingActivity" />
         <activity android:name=".view.gms.GmsManagerActivity" />
+
         <activity
             android:name=".view.main.WelcomeActivity"
             android:launchMode="singleTop"
@@ -32,13 +35,16 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity android:name=".view.list.ListActivity" />
         <activity android:name=".view.fake.FakeManagerActivity" />
         <activity android:name=".view.xp.XpActivity" />
+
         <activity
             android:name=".view.main.ShortcutActivity"
             android:excludeFromRecents="true"
             android:exported="true" />
+
         <activity android:name=".view.main.MainActivity" android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

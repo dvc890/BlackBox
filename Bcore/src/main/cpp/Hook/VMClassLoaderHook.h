@@ -14,4 +14,4 @@ public:
     static void init(JNIEnv *env);
 };
 
-#endif //BLACKBOX_VMCLASSLOADERHOOK_H
+#endif // BLACKBOX_VMCLASSLOADERHOOK_H

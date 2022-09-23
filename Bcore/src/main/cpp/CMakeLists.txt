@@ -6,6 +6,7 @@
 cmake_minimum_required(VERSION 3.4.1)
 enable_language(ASM)
 project(blackbox)
+
 # Creates and names a library, sets it as either STATIC
 # or SHARED, and provides the relative paths to its source code.
 # You can define multiple libraries, and CMake builds them for you.
@@ -29,6 +30,7 @@ aux_source_directory(Utils SRC2)
 aux_source_directory(Hook SRC3)
 aux_source_directory(JniHook SRC4)
 add_compile_options(-w)
+
 add_library( # Sets the name of the library.
         blackbox
         # Sets the library as a shared library.
@@ -38,8 +40,7 @@ add_library( # Sets the name of the library.
         ${SRC1}
         ${SRC2}
         ${SRC3}
-        ${SRC4}
-        )
+        ${SRC4})
 
 # Searches for a specified prebuilt library and stores the path as a
 # variable. Because CMake includes system libraries in the search path by
@@ -64,5 +65,4 @@ target_link_libraries( # Specifies the target library.
         # included in the NDK.
         ${log-lib}
         z
-        dobby
-        )
+        dobby)

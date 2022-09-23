@@ -15,7 +15,7 @@ class AppsViewModel(private val repo: AppsRepository) : BaseViewModel() {
     val appsLiveData = MutableLiveData<List<AppInfo>>()
     val resultLiveData = MutableLiveData<String>()
     val launchLiveData = MutableLiveData<Boolean>()
-    //利用LiveData只更新最后一次的特性，用来保存app顺序
+    // 利用LiveData只更新最后一次的特性，用来保存app顺序
     val updateSortLiveData = MutableLiveData<Boolean>()
 
     fun getInstalledApps(userId: Int) {

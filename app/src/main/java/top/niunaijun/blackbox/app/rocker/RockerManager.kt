@@ -8,8 +8,8 @@ import android.widget.RelativeLayout
 import com.imuxuan.floatingview.FloatingMagnetView
 import com.imuxuan.floatingview.FloatingView
 import top.niunaijun.blackbox.app.App
-import top.niunaijun.blackbox.entity.location.BLocation
-import top.niunaijun.blackbox.fake.frameworks.BLocationManager
+import top.niunaijun.bcore.entity.location.BLocation
+import top.niunaijun.bcore.fake.frameworks.BLocationManager
 import top.niunaijun.blackbox.widget.EnFloatView
 import kotlin.math.cos
 import kotlin.math.sin
@@ -22,8 +22,8 @@ import kotlin.math.sin
  */
 object RockerManager {
     private const val TAG = "RockerManager"
-    private const val Ea = 6378137     //赤道半径
-    private const val Eb = 6356725     //极半径
+    private const val Ea = 6378137 // 赤道半径
+    private const val Eb = 6356725 // 极半径
 
     fun init(application: Application?, userId: Int) {
         if (application == null || !BLocationManager.isFakeLocationEnable()) {

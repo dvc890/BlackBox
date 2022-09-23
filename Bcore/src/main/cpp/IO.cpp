@@ -9,7 +9,6 @@
 #include "JniHook/JniHook.h"
 #include "dobby.h"
 
-jmethodID getAbsolutePathMethodId;
 list<IO::RelocateInfo> relocate_rule;
 list<const char *> white_rule;
 
@@ -26,7 +25,7 @@ char *replace(const char *str, const char *src, const char *dst) {
     memset(result, 0, strlen(result));
 
     const char *left = str;
-    const char *right = nullptr;
+    const char *right;
 
     while ((right = strstr(left, src))) {
         strncat(result, left, right - left);
@@ -44,7 +43,7 @@ const char *IO::redirectPath(const char *__path) {
         IO::RelocateInfo info = *iterator;
         if (strstr(__path, info.targetPath) && !strstr(__path, "/blackbox/")) {
             char *ret = replace(__path, info.targetPath, info.relocatePath);
-            //ALOGD("redirectPath %s  => %s", __path, ret);
+            // ALOGD("redirectPath %s  => %s", __path, ret);
             return ret;
         }
     }
@@ -75,29 +74,11 @@ HOOK_JNI(void *, openat, int fd, const char *pathname, int flags, int mode) {
     return orig_openat(fd, pathname, flags, mode);
 }
 
-HOOK_JNI(FILE *, popen, const char* cmd, const char* mode) {
-    // 执行 stack 清理（不可省略），只需调用一次
-    // SHADOWHOOK_STACK_SCOPE();
-
-    // 调用原函数
-    return orig_popen(cmd, mode);
-}
-//#endif
 jstring IO::redirectPath(JNIEnv *env, jstring path) {
-    /*const char * pathC = env->GetStringUTFChars(path, JNI_FALSE);
-    const char *redirect = redirectPath(pathC);
-    env->ReleaseStringUTFChars(path, pathC);
-    return env->NewStringUTF(redirect);*/
     return BoxCore::redirectPathString(env, path);
 }
 
 jobject IO::redirectPath(JNIEnv *env, jobject path) {
-    /*auto pathStr =
-            reinterpret_cast<jstring>(env->CallObjectMethod(path, getAbsolutePathMethodId));
-    jstring redirect = redirectPath(env, pathStr);
-    jobject file = env->NewObject(fileClazz, fileNew, redirect);
-    env->DeleteLocalRef(pathStr);
-    env->DeleteLocalRef(redirect);*/
     return BoxCore::redirectPathFile(env, path);
 }
 
@@ -116,20 +97,4 @@ void IO::unProtect(const char *libraryName, const char *symbol) {
     auto pageSize = sysconf(_SC_PAGE_SIZE);
     auto symbolAddress = ((uintptr_t) DobbySymbolResolver(libraryName, symbol)) & (-pageSize);
     mprotect((void *) symbolAddress, pageSize, PROT_READ | PROT_WRITE | PROT_EXEC);
-}
-
-void IO::init(JNIEnv *env) {
-    jclass tmpFile = env->FindClass("java/io/File");
-    getAbsolutePathMethodId = env->GetMethodID(tmpFile, "getAbsolutePath", "()Ljava/lang/String;");
-//    shadowhook_hook_sym_name("libc.so", "open", (void *) shared_proxy_read, NULL);
-    // SHADOWHOOK_STACK_SCOPE();
-    // shadowhook_hook_sym_name("libc.so", "openat", (void *) new_openat, (void **)&orig_openat);
-    // shadowhook_hook_sym_name("libc.so", "popen", (void *) new_popen, (void **)&orig_popen);
-
-
-    IO::unProtect("libc.so", "popen");
-    void *popenAddress = DobbySymbolResolver("libc.so", "popen");
-    if (popenAddress) {
-        DobbyHook(popenAddress, (void *) new_popen, (void **) &orig_popen);
-    }
 }

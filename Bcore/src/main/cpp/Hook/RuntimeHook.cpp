@@ -14,11 +14,11 @@ HOOK_JNI(jstring, nativeLoad, JNIEnv *env, jobject obj, jstring name, jobject cl
     return result;
 }
 
-HOOK_JNI(jstring, nativeLoad2, JNIEnv *env, jobject obj, jstring name, jobject class_loader,
+HOOK_JNI(jstring, nativeLoadNew, JNIEnv *env, jobject obj, jstring name, jobject class_loader,
          jobject caller) {
     const char *nameC = env->GetStringUTFChars(name, JNI_FALSE);
     ALOGD("nativeLoad: %s", nameC);
-    jstring result = orig_nativeLoad2(env, obj, name, class_loader, caller);
+    jstring result = orig_nativeLoadNew(env, obj, name, class_loader, caller);
     env->ReleaseStringUTFChars(name, nameC);
     return result;
 }
@@ -28,8 +28,8 @@ void RuntimeHook::init(JNIEnv *env) {
     if (BoxCore::getApiLevel() >= __ANDROID_API_Q__) {
         JniHook::HookJniFun(env, className, "nativeLoad",
                             "(Ljava/lang/String;Ljava/lang/ClassLoader;Ljava/lang/Class;)Ljava/lang/String;",
-                            (void *) new_nativeLoad2,
-                            (void **) (&orig_nativeLoad2), true);
+                            (void *) new_nativeLoadNew,
+                            (void **) (&orig_nativeLoadNew), true);
     } else {
         JniHook::HookJniFun(env, className, "nativeLoad",
                             "(Ljava/lang/String;Ljava/lang/ClassLoader;)Ljava/lang/String;",
