@@ -1,6 +1,5 @@
 package top.niunaijun.blackbox.fake.hook;
 
-import android.os.Build;
 import android.util.Log;
 
 import java.util.HashMap;
@@ -129,26 +128,26 @@ public class HookManager {
 
             addInjector(new BuildProxy());
             // 12.0
-            if (Build.VERSION.SDK_INT >= 31) {
+            if (BuildCompat.isS()) {
                 addInjector(new IActivityClientProxy(null));
                 addInjector(new IVpnManagerProxy());
             }
             // 11.0
 //            if (Build.VERSION.SDK_INT >= 30) {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            if (BuildCompat.isR()) {
                 addInjector(new IPermissionManagerProxy());
             }
             // 10.0
 //            if (Build.VERSION.SDK_INT >= 29) {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            if (BuildCompat.isQ()) {
                 addInjector(new IActivityTaskManagerProxy());
             }
             // 9.0
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+            if (BuildCompat.isPie()) {
                 addInjector(new ISystemUpdateProxy());
             }
             // 8.0
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            if (BuildCompat.isOreo()) {
                 addInjector(new IAutofillManagerProxy());
                 addInjector(new IDeviceIdentifiersPolicyProxy());
                 addInjector(new IStorageStatsManagerProxy());

@@ -86,6 +86,7 @@ public class ActivityStack {
     }
 
     public int startActivitiesLocked(int userId, Intent[] intents, String[] resolvedTypes, IBinder resultTo, Bundle options) {
+        Log.d(TAG, "startActivityLocked1");
         if (intents == null) {
             throw new NullPointerException("intents is null");
         }
@@ -102,6 +103,7 @@ public class ActivityStack {
     }
 
     public int startActivityLocked(int userId, Intent intent, String resolvedType, IBinder resultTo, String resultWho, int requestCode, int flags, Bundle options) {
+        Log.d(TAG, "startActivityLocked2");
         synchronized (mTasks) {
             synchronizeTasks();
         }
@@ -268,6 +270,7 @@ public class ActivityStack {
     }
 
     private void deliverNewIntentLocked(ActivityRecord activityRecord, Intent intent) {
+        Log.d(TAG, "deliverNewIntentLocked");
         try {
             activityRecord.processRecord.bActivityThread.handleNewIntent(activityRecord.token, intent);
         } catch (RemoteException e) {
@@ -277,6 +280,7 @@ public class ActivityStack {
 
     private Intent startActivityProcess(int userId, Intent intent, ActivityInfo
             info, ActivityRecord record) {
+        Log.d(TAG, "startActivityProcess");
         ProxyActivityRecord stubRecord = new ProxyActivityRecord(userId, info, intent, record.mBToken);
         ProcessRecord targetApp = BProcessManagerService.get().startProcessLocked(info.packageName, info.processName, userId, -1, Binder.getCallingPid());
         if (targetApp == null) {
@@ -287,6 +291,7 @@ public class ActivityStack {
 
     private int startActivityInNewTaskLocked(int userId, Intent intent, ActivityInfo
             activityInfo, IBinder resultTo, int launchMode) {
+        Log.d(TAG, "startActivityInNewTaskLocked");
         ActivityRecord record = newActivityRecord(intent, activityInfo, resultTo, userId);
         Intent shadow = startActivityProcess(userId, intent, activityInfo, record);
 
@@ -303,6 +308,7 @@ public class ActivityStack {
                                           IBinder resultTo, String resultWho, int requestCode, int flags,
                                           Bundle options,
                                           int userId, ActivityRecord sourceRecord, ActivityInfo activityInfo, int launchMode) {
+        Log.d(TAG, "startActivityInSourceTask");
         ActivityRecord selfRecord = newActivityRecord(intent, activityInfo, resultTo, userId);
         Intent shadow = startActivityProcess(userId, intent, activityInfo, selfRecord);
         shadow.setAction(UUID.randomUUID().toString());
@@ -316,6 +322,7 @@ public class ActivityStack {
     private int realStartActivityLocked(IInterface appThread, Intent intent, String resolvedType,
                                         IBinder resultTo, String resultWho, int requestCode, int flags,
                                         Bundle options) {
+        Log.d(TAG, "realStartActivityLocked");
         try {
             flags &= ~ActivityManagerCompat.START_FLAG_DEBUG;
             flags &= ~ActivityManagerCompat.START_FLAG_NATIVE_DEBUGGING;
@@ -330,6 +337,7 @@ public class ActivityStack {
     }
 
     private ActivityRecord getTopActivityRecord() {
+        Log.d(TAG, "getTopActivityRecord");
         synchronized (mTasks) {
             synchronizeTasks();
         }
@@ -341,6 +349,8 @@ public class ActivityStack {
 
     // 销毁进程
     void processDied(ProcessRecord processRecord) {
+
+        Log.d(TAG, "processDied");
         synchronized (mTasks) {
             synchronizeTasks();
             for (int i = mTasks.size() - 1; i >= 0; i--) {
@@ -365,6 +375,7 @@ public class ActivityStack {
     private Intent getStartStubActivityIntentInner(Intent intent, int vpid,
                                                    int userId, ProxyActivityRecord target,
                                                    ActivityInfo activityInfo) {
+        Log.d(TAG, "getStartStubActivityIntentInner");
         Intent shadow = new Intent();
         TypedArray typedArray = null;
         try {
@@ -397,6 +408,8 @@ public class ActivityStack {
     }
 
     private void finishAllActivity(int userId) {
+
+        Log.d(TAG, "finishAllActivity");
         for (TaskRecord task : mTasks.values()) {
             for (ActivityRecord activity : task.activities) {
                 if (activity.userId == userId) {
@@ -413,6 +426,7 @@ public class ActivityStack {
 
     ActivityRecord newActivityRecord(Intent intent, ActivityInfo info, IBinder resultTo,
                                      int userId) {
+        Log.d(TAG, "newActivityRecord");
         ActivityRecord targetRecord = ActivityRecord.create(intent, info, resultTo, userId);
         synchronized (mLaunchingActivities) {
             mLaunchingActivities.put(targetRecord.mBToken, targetRecord);
@@ -424,6 +438,8 @@ public class ActivityStack {
 
     private ActivityRecord findActivityRecordByComponentName(int userId, ComponentName
             componentName) {
+
+        Log.d(TAG, "findActivityRecordByComponentName");
         ActivityRecord record = null;
         for (TaskRecord next : mTasks.values()) {
             if (userId == next.userId) {
@@ -439,6 +455,7 @@ public class ActivityStack {
     }
 
     private ActivityRecord findActivityRecordByToken(int userId, IBinder token) {
+        Log.d(TAG, "findActivityRecordByToken");
         ActivityRecord record = null;
         if (token != null) {
             for (TaskRecord next : mTasks.values()) {
@@ -456,6 +473,7 @@ public class ActivityStack {
     }
 
     private TaskRecord findTaskRecordByTaskAffinityLocked(int userId, String taskAffinity) {
+        Log.d(TAG, "findTaskRecordByTaskAffinityLocked");
         synchronized (mTasks) {
             for (TaskRecord next : mTasks.values()) {
                 if (userId == next.userId && next.taskAffinity.equals(taskAffinity))
@@ -466,6 +484,7 @@ public class ActivityStack {
     }
 
     private TaskRecord findTaskRecordByTokenLocked(int userId, IBinder token) {
+        Log.d(TAG, "findTaskRecordByTokenLocked");
         synchronized (mTasks) {
             for (TaskRecord next : mTasks.values()) {
                 if (userId == next.userId) {
@@ -482,6 +501,7 @@ public class ActivityStack {
 
     public void onActivityCreated(ProcessRecord processRecord, int taskId, IBinder
             token, String activityToken) {
+        Log.d(TAG, "onActivityCreated");
         ActivityRecord record = mLaunchingActivities.get(activityToken);
         if (record == null) return;
 
@@ -507,6 +527,7 @@ public class ActivityStack {
 
     // bug: multiple activities belonged to same app.
     public void onActivityResumed(int userId, IBinder token) {
+        Log.d(TAG, "onActivityResumed");
         synchronized (mTasks) {
             synchronizeTasks();
             ActivityRecord activityRecord = findActivityRecordByToken(userId, token);
@@ -522,6 +543,7 @@ public class ActivityStack {
     }
 
     public void onActivityDestroyed(int userId, IBinder token) {
+        Log.d(TAG, "onActivityDestroyed");
         synchronized (mTasks) {
             synchronizeTasks();
             ActivityRecord activityRecord = findActivityRecordByToken(userId, token);
@@ -537,6 +559,7 @@ public class ActivityStack {
     }
 
     public void onFinishActivity(int userId, IBinder token) {
+        Log.d(TAG, "onFinishActivity");
         synchronized (mTasks) {
             synchronizeTasks();
             ActivityRecord activityRecord = findActivityRecordByToken(userId, token);
@@ -549,6 +572,7 @@ public class ActivityStack {
     }
 
     public String getCallingPackage(IBinder token, int userId) {
+        Log.d(TAG, "getCallingPackage");
         synchronized (mTasks) {
             synchronizeTasks();
             ActivityRecord activityRecordByToken = findActivityRecordByToken(userId, token);
@@ -563,6 +587,8 @@ public class ActivityStack {
     }
 
     public ComponentName getCallingActivity(IBinder token, int userId) {
+
+        Log.d(TAG, "getCallingActivity");
         synchronized (mTasks) {
             synchronizeTasks();
             ActivityRecord activityRecordByToken = findActivityRecordByToken(userId, token);

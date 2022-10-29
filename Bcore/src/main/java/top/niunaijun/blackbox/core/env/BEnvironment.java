@@ -74,6 +74,10 @@ public class BEnvironment {
         return new File(getSystemDir(), "fake-location.conf");
     }
 
+    public static File getFakeDeviceConf() {
+        return new File(getSystemDir(), "fake-device.conf");
+    }
+
     public static File getPackageConf(String packageName) {
         return new File(getAppDir(packageName), "package.conf");
     }

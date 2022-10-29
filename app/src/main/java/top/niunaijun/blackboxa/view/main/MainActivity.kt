@@ -155,24 +155,24 @@ class MainActivity : LoadingActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item?.itemId) {
-//            R.id.main_git -> {
-//                val intent =
-//                    Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/FBlackBox/BlackBox"))
-//                startActivity(intent)
-//            }
+            R.id.main_git -> {
+                val intent =
+                    Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/BlackBoxing/BlackBox"))
+                startActivity(intent)
+            }
 
             R.id.main_setting -> {
                 SettingActivity.start(this)
             }
 
-//            R.id.main_tg -> {
-//                val intent =
-//                    Intent(Intent.ACTION_VIEW, Uri.parse("https://t.me/fvblackbox"))
-//                startActivity(intent)
-//            }
+            R.id.main_tg -> {
+                val intent =
+                    Intent(Intent.ACTION_VIEW, Uri.parse("https://t.me/blackboxing"))
+                startActivity(intent)
+            }
 
             R.id.fake_location -> {
-//                toast("Still Developing")
+///                toast("Still Developing")
                 val intent = Intent(this, FakeManagerActivity::class.java)
                 intent.putExtra("userID", currentUser)
                 startActivity(intent)

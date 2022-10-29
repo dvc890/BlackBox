@@ -179,6 +179,7 @@ public class BlackBoxCore extends ClientConfiguration {
         return BRActivityThread.get().currentActivityThread();
     }
 
+
     public void startActivity(Intent intent, int userId) {
         if (mClientConfiguration.isEnableLauncherActivity()) {
             LauncherActivity.launch(intent, userId);

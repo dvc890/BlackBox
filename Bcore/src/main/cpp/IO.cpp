@@ -7,6 +7,7 @@
 #include "shadowhook.h"
 #include "JniHook/JniHook.h"
 #include <fcntl.h>
+#include <stdio.h>
 
 
 
@@ -66,10 +67,10 @@ const char *IO::redirectPath(const char *__path) {
     }
     return __path;
 }
-
+//#ifdef __arm__ https://developer.android.com/games/optimize/64-bit?hl=zh-cn
 HOOK_JNI(void *, openat, int fd, const char *pathname, int flags, int mode){
     // 执行 stack 清理（不可省略），只需调用一次
-    SHADOWHOOK_STACK_SCOPE();
+    // SHADOWHOOK_STACK_SCOPE();
     list<const char *>::iterator white_iterator;
     for (white_iterator = white_rule.begin();
          white_iterator != white_rule.end(); ++white_iterator) {
@@ -90,6 +91,14 @@ HOOK_JNI(void *, openat, int fd, const char *pathname, int flags, int mode){
     return orig_openat(fd, pathname, flags, mode);
 }
 
+HOOK_JNI(FILE *, popen, const char* cmd, const char* mode){
+    // 执行 stack 清理（不可省略），只需调用一次
+    // SHADOWHOOK_STACK_SCOPE();
+
+    // 调用原函数
+    return orig_popen(cmd, mode);
+}
+//#endif
 jstring IO::redirectPath(JNIEnv *env, jstring path) {
 //    const char * pathC = env->GetStringUTFChars(path, JNI_FALSE);
 //    const char *redirect = redirectPath(pathC);
@@ -122,7 +131,8 @@ void IO::addRule(const char *targetPath, const char *relocatePath) {
 void IO::init(JNIEnv *env) {
     jclass tmpFile = env->FindClass("java/io/File");
     getAbsolutePathMethodId = env->GetMethodID(tmpFile, "getAbsolutePath", "()Ljava/lang/String;");
-//    shadowhook_hook_sym_name("libc.so", "open", (void *) shared_proxy_read, NULL);
+    //SHADOWHOOK_STACK_SCOPE();
     shadowhook_hook_sym_name("libc.so", "openat", (void *) new_openat, (void **)&orig_openat);
+    //shadowhook_hook_sym_name("libc.so", "popen", (void *) new_popen, (void **)&orig_popen);
 }
 

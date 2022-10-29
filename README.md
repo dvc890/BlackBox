@@ -112,6 +112,11 @@ You can contribute to this project by making pull requests.
 4. 
 ## Known Issues
 * Death process restarting produce duplicated activities and process. Temporary solution: kill them all and restart application manually.
+* firefox crashed when inputting website url
+* ~~vlc crashed~~
+* crashed when getType of content provider calling
+* it appeared that an applicatiom has multi procoess of each activity, it should be a process containing activities of an application
+* static broadcast failed test.
 
 ## Sponsorship
 This project is a free open source project , routine maintenance consumes a lot of time and effort . If you want to speed up the progress or buy the author a cup of coffee.

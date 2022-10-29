@@ -66,6 +66,6 @@ void SystemPropertiesHook::init(JNIEnv *env) {
                         (void *) new_native_get,
                         (void **) (&orig_native_get), true);
 
-    shadowhook_hook_sym_name("libc.so", "__system_property_get", (void *) new___system_property_get,
-                             (void **) (&orig___system_property_get));
+    // shadowhook_hook_sym_name("libc.so", "__system_property_get", (void *) new___system_property_get,
+    //                          (void **) (&orig___system_property_get));
 }
