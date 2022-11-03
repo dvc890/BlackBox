@@ -1,6 +1,7 @@
 package top.niunaijun.blackbox.fake.service.context.providers;
 
 import android.os.IInterface;
+import android.util.Log;
 
 import java.lang.reflect.Method;
 
@@ -60,6 +61,7 @@ public class ContentProviderStub extends ClassInvocationStub implements BContent
         try {
             return method.invoke(mBase, args);
         } catch (Throwable e) {
+            Log.w("ContentProviderStubError", method.getName());
             throw e.getCause();
         }
     }

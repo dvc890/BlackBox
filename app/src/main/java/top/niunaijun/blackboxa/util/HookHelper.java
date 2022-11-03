@@ -173,24 +173,25 @@ public class HookHelper {
         }
     }
 
-    public static XC_MethodHook.Unhook hookPackageSign(Application application, String signature) {
+    public static void hookPackageSign(Application application, String signature) {
 
-        return XposedHelpers.findAndHookMethod("android.app.ApplicationPackageManager", application.getClassLoader(), "getPackageInfo", String.class, int.class, new XC_MethodHook() {
-
-            @Override
-            protected void afterHookedMethod(MethodHookParam param) throws Throwable {
-                if((int)param.args[1] == PackageManager.GET_SIGNATURES) {
-                    PackageInfo packageInfo = (PackageInfo)param.getResult();
-                    Log.e("Pipedvc", "signatures:"+packageInfo.signatures[0].toCharsString());
-                    if(!TextUtils.isEmpty(signature)) {
-                        packageInfo.signatures
-                            = new Signature[] {new Signature(signature)};
-                    }
-
-                }
-                super.afterHookedMethod(param);
-            }
-        });
+        SignaturesHook.hookSignature(application, signature);
+//        return XposedHelpers.findAndHookMethod("android.app.ApplicationPackageManager", application.getClassLoader(), "getPackageInfo", String.class, int.class, new XC_MethodHook() {
+//
+//            @Override
+//            protected void afterHookedMethod(MethodHookParam param) throws Throwable {
+//                if((int)param.args[1] == PackageManager.GET_SIGNATURES) {
+//                    PackageInfo packageInfo = (PackageInfo)param.getResult();
+//                    Log.e("Pipedvc", "signatures:"+packageInfo.signatures[0].toCharsString());
+//                    if(!TextUtils.isEmpty(signature)) {
+//                        packageInfo.signatures
+//                            = new Signature[] {new Signature(signature)};
+//                    }
+//
+//                }
+//                super.afterHookedMethod(param);
+//            }
+//        });
     }
 
     public static void dumpDex(String packageName) {

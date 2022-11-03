@@ -5,7 +5,7 @@ plugins {
 apply plugin: 'kotlin-android'
 
 android {
-    compileSdkVersion 32
+    compileSdkVersion rootProject.ext.compileSdkVersion
 
     defaultConfig {
         applicationId "top.niunaijun.blackboxa"

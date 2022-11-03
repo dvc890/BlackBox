@@ -4,6 +4,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.IInterface;
 import android.util.ArrayMap;
+import android.util.Log;
 
 import java.lang.reflect.Proxy;
 import java.util.HashSet;
@@ -47,10 +48,12 @@ public class ContentProviderDelegate {
         if (iInterface instanceof Proxy)
             return;
         IInterface bContentProvider;
+        Log.w("ContentProviderDelegate", auth);
         switch (auth) {
             case "media":
             case "telephony":
             case "settings":
+            case "com.android.externalstorage.documents":
                 bContentProvider = new SystemProviderStub().wrapper(iInterface, BlackBoxCore.getHostPkg());
                 break;
             default:

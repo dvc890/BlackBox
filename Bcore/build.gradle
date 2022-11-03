@@ -2,7 +2,7 @@ apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 
 android {
-    compileSdkVersion 31
+    compileSdkVersion rootProject.ext.compileSdkVersion
 
     defaultConfig {
         minSdkVersion 21
@@ -25,11 +25,11 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
-//    externalNativeBuild {
-//        cmake {
-//            path "src/main/cpp/CMakeLists.txt"
-//        }
-//    }
+    externalNativeBuild {
+        cmake {
+            path "src/main/cpp/CMakeLists.txt"
+        }
+    }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
@@ -84,12 +84,12 @@ dependencies {
     implementation project(':Bcore:black-hook')
     implementation project(':android-mirror')
 
-//    implementation project(':Bcore:pine-core')
-//    implementation project(':Bcore:pine-xposed')
-//    implementation project(':Bcore:pine-xposed-res')
-    implementation 'top.canyie.pine:core:+'
-    implementation 'top.canyie.pine:xposed:+'
-    implementation 'top.canyie.pine:enhances:+'
+    implementation project(':Bcore:pine-core')
+    implementation project(':Bcore:pine-xposed')
+    implementation project(':Bcore:pine-xposed-res')
+//    implementation 'top.canyie.pine:core:+'
+//    implementation 'top.canyie.pine:xposed:+'
+//    implementation 'top.canyie.pine:enhances:+'
 //    api project(':Bcore:pine-core')
     api project(':Bcore:pine-xposed')
     api project(':Bcore:pine-xposed-res')
