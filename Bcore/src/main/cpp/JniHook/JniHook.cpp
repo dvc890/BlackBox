@@ -146,7 +146,7 @@ JniHook::HookJniFun(JNIEnv *env, const char *class_name, const char *method_name
 
     auto artMethod = reinterpret_cast<uintptr_t *>(GetArtMethod(env, clazz, method));
     //  不检查系统包
-    if (!strncmp(class_name, "android.", 8) && !CheckFlags(artMethod)) {
+    if (strncmp(class_name, "android.", 8) && !CheckFlags(artMethod)) {
         ALOGE("check flags error. class：%s, method：%s", class_name, method_name);
         return;
     }

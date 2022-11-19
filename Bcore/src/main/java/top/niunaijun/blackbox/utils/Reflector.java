@@ -1,7 +1,8 @@
 package top.niunaijun.blackbox.utils;
 
-
+// HiddenApiBypass may not be compatible with versions below Android Pie.
 import android.annotation.SuppressLint;
+import android.os.Build;
 
 import org.lsposed.hiddenapibypass.HiddenApiBypass;
 
@@ -56,7 +57,10 @@ public class Reflector {
     @SuppressLint("NewApi")
     public Reflector constructor(Class<?>... parameterTypes) throws Exception {
         try {
-            mConstructor = HiddenApiBypass.getDeclaredConstructor(mType, parameterTypes);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P)
+                mConstructor = HiddenApiBypass.getDeclaredConstructor(mType, parameterTypes);
+            else
+                mConstructor = mType.getDeclaredConstructor(parameterTypes);
             mConstructor.setAccessible(true);
             mField = null;
             mMethod = null;
@@ -123,13 +127,23 @@ public class Reflector {
         try {
             return mType.getField(name);
         } catch (NoSuchFieldException e) {
-            try {
-                return findInstanceField(name);
-            } catch (NoSuchFieldException ex) {
-                return findStaticField(name);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+                try {
+                    return findInstanceField(name);
+                } catch (NoSuchFieldException ex) {
+                    return findStaticField(name);
+                }
+            } else {
+                for (Class<?> cls = mType; cls != null; cls = cls.getSuperclass()) {
+                    try {
+                        return cls.getDeclaredField(name);
+                    } catch (NoSuchFieldException ex) { }
+                }
+                throw e;
             }
         }
     }
+
 
     @SuppressLint("NewApi")
     protected Field findInstanceField(String name) throws NoSuchFieldException {
@@ -199,7 +213,16 @@ public class Reflector {
         try {
             return mType.getMethod(name, parameterTypes);
         } catch (Exception e) {
-            return HiddenApiBypass.getDeclaredMethod(mType, name, parameterTypes);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+                return HiddenApiBypass.getDeclaredMethod(mType, name, parameterTypes);
+            } else {
+                for (Class<?> cls = mType; cls != null; cls = cls.getSuperclass()) {
+                    try {
+                        return cls.getDeclaredMethod(name, parameterTypes);
+                    } catch (NoSuchMethodException ex) { }
+                }
+                throw e;
+            }
         }
     }
 
@@ -220,8 +243,14 @@ public class Reflector {
     }
 
     @SuppressLint("NewApi")
-    public static <R> R invoke(Class<?> clazz, Object thiz, String methodName, Object... args) {
-        return (R) HiddenApiBypass.invoke(clazz, thiz, methodName, args);
+    public static <R> R invoke(Class<?> clazz, Object thiz, String methodName, Object... args) throws Exception {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+            return (R) HiddenApiBypass.invoke(clazz, thiz, methodName, args);
+        } else {
+            Method m = Reflector.findMethodByFirstName(clazz, methodName);
+            m.setAccessible(true);
+            return (R) m.invoke(thiz, args);
+        }
     }
 
     public static Method findMethodByFirstName(Class<?> clazz, String methodName) {

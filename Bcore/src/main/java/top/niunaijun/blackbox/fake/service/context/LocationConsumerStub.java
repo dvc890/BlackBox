@@ -1,14 +1,8 @@
 package top.niunaijun.blackbox.fake.service.context;
 
 import android.location.Location;
-import android.location.LocationListener;
-import android.os.Build;
-import android.os.Handler;
-import android.os.Looper;
 
 import java.lang.reflect.Method;
-import java.util.ArrayList;
-import java.util.List;
 
 import top.niunaijun.blackbox.app.BActivityThread;
 import top.niunaijun.blackbox.entity.location.BLocation;
@@ -17,15 +11,8 @@ import top.niunaijun.blackbox.fake.hook.ClassInvocationStub;
 import top.niunaijun.blackbox.fake.hook.MethodHook;
 import top.niunaijun.blackbox.fake.hook.ProxyMethod;
 
-/**
- * Created by Refgd on 4/8/21.
- * * ∧＿∧
- * (`･ω･∥
- * 丶　つ０
- * しーＪ
- */
-public class LocationListenerStub extends ClassInvocationStub {
-    public static final String TAG = "LocationListenerStub";
+public class LocationConsumerStub extends ClassInvocationStub {
+    public static final String TAG = "ConsumerStub";
     private Object mBase;
 
     public Object wrapper(final Object locationListenerProxy) {
@@ -49,23 +36,19 @@ public class LocationListenerStub extends ClassInvocationStub {
 
     }
 
-    @ProxyMethod("onLocationChanged")
-    public static class OnLocationChanged extends MethodHook {
+    @ProxyMethod("accept")
+    public static class Accept extends MethodHook {
 
         @Override
         protected Object hook(Object who, Method method, Object[] args) throws Throwable {
-            BLocation bl = BLocationManager.get().getLocation(BActivityThread.getUserId(),
-                    BActivityThread.getAppPackageName());
-            if(args[0] instanceof List){
-                List<Location> locations = (List<Location>) args[0];
-                for(Location l: locations) {
-                    l.setLatitude(bl.getLatitude());
-                    l.setLongitude(bl.getLongitude());
-                }
-            }else if(args[0] instanceof Location){
+            try {
                 Location l = (Location)args[0];
+                BLocation bl = BLocationManager.get().getLocation(BActivityThread.getUserId(),
+                        BActivityThread.getAppPackageName());
                 l.setLatitude(bl.getLatitude());
                 l.setLongitude(bl.getLongitude());
+            } catch (Throwable t) {
+                t.printStackTrace();
             }
             return method.invoke(who, args);
         }

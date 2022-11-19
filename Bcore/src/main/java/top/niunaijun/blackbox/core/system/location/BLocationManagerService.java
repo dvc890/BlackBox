@@ -1,5 +1,7 @@
 package top.niunaijun.blackbox.core.system.location;
 
+import android.location.Location;
+import android.os.Build;
 import android.os.IBinder;
 import android.os.IInterface;
 import android.os.Parcel;
@@ -11,6 +13,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -19,6 +22,7 @@ import java.util.concurrent.Executors;
 
 import black.android.location.BRILocationListener;
 import black.android.location.BRILocationListenerStub;
+import black.android.location.ILocationListenerContext;
 import top.niunaijun.blackbox.BlackBoxCore;
 import top.niunaijun.blackbox.core.env.BEnvironment;
 import top.niunaijun.blackbox.core.system.ISystemService;
@@ -237,6 +241,12 @@ public class BLocationManagerService extends IBLocationManagerService.Stub imple
         mLocationListeners.remove(listener);
     }
 
+    private void sleep(long millis) {
+        try {
+            Thread.sleep(millis);
+        } catch (InterruptedException ignored) {}
+    }
+
     private void addTask(IBinder locationListener) {
         mThreadPool.execute(() -> {
             BLocation lastLocation = null;
@@ -244,21 +254,33 @@ public class BLocationManagerService extends IBLocationManagerService.Stub imple
             while (locationListener.pingBinder()) {
                 IInterface iInterface = BRILocationListenerStub.get().asInterface(locationListener);
                 LocationRecord locationRecord = mLocationListeners.get(locationListener);
-                if (locationRecord == null)
+                if (locationRecord == null) {
+                    sleep(100);
                     continue;
+                }
                 BLocation location = getLocation(locationRecord.userId, locationRecord.packageName);
-                if (location == null)
+                if (location == null) {
+                    sleep(100);
                     continue;
+                }
                 if (location.equals(lastLocation) && (System.currentTimeMillis() - l) < 3000) {
-                    try {
-                        Thread.sleep(1000);
-                    } catch (InterruptedException ignored) {
-                    }
+                    sleep(1000);
                     continue;
                 }
                 lastLocation = location;
                 l = System.currentTimeMillis();
-                BlackBoxCore.get().getHandler().post(() -> BRILocationListener.get(iInterface).onLocationChanged(location.convert2SystemLocation()));
+                //BlackBoxCore.get().getHandler().post(() -> BRILocationListener.get(iInterface).onLocationChanged(location.convert2SystemLocation()));
+                BlackBoxCore.get().getHandler().post(() -> {
+                    ILocationListenerContext illc = BRILocationListener.get(iInterface);
+                    Location lc = location.convert2SystemLocation();
+                    if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+                        List<Location> locations = new ArrayList<>();
+                        locations.add(lc);
+                        illc.onLocationChanged(locations, null);
+                    }
+                    else
+                        illc.onLocationChanged(lc);
+                });
             }
         });
     }
@@ -337,5 +359,31 @@ public class BLocationManagerService extends IBLocationManagerService.Stub imple
         for (IBinder iBinder : mLocationListeners.keySet()) {
             addTask(iBinder);
         }
+    }
+
+    @Override
+    public void postLocationChanged(IBinder listener, String provider, String packageName, int userId) {
+        if (listener == null || !listener.pingBinder())
+            return;
+        mThreadPool.execute(() -> {
+            if (listener.pingBinder()) {
+                IInterface iInterface = BRILocationListenerStub.get().asInterface(listener);
+                BLocation bl = getLocation(userId, packageName);
+                if (bl == null)
+                    return;
+                BlackBoxCore.get().getHandler().post(() -> {
+                    ILocationListenerContext illc = BRILocationListener.get(iInterface);
+                    Location lc = bl.convert2SystemLocation();
+                    lc.setProvider(provider);
+                    if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+                        List<Location> locations = new ArrayList<>();
+                        locations.add(lc);
+                        illc.onLocationChanged(locations, null);
+                    }
+                    else
+                        illc.onLocationChanged(lc);
+                });
+            }
+        });
     }
 }
