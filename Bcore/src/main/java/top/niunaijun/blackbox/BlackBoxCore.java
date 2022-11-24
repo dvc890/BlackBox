@@ -272,6 +272,10 @@ public class BlackBoxCore extends ClientConfiguration {
         return BXposedManager.get().isXPEnable();
     }
 
+    public boolean isJvmtiEnable() {
+        return false;
+    }
+
     public void setXPEnable(boolean enable) {
         BXposedManager.get().setXPEnable(enable);
     }

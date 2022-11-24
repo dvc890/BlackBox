@@ -2,6 +2,7 @@ package top.niunaijun.blackbox.fake.hook;
 
 import android.os.Build;
 import android.text.TextUtils;
+import android.util.Log;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
@@ -117,7 +118,9 @@ public abstract class ClassInvocationStub implements InvocationHandler, IInjectH
         MethodHook methodHook = mMethodHookMap.get(method.getName());
         if (methodHook == null || !methodHook.isEnable()) {
             try {
-                return method.invoke(mBase, args);
+                Object result = method.invoke(mBase, args);
+                Log.e("dvcproxy", this.getClass() + "===" + method.getName() + "（" + (args != null ?args[0] : "") + ")==" + (result != null ? result.toString() : "") );
+                return result;
             } catch (Throwable e) {
                 throw e.getCause();
             }

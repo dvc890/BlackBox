@@ -1,17 +1,23 @@
 package top.canyie.pine;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.os.Build;
+import android.os.Debug;
 import android.util.Log;
 
 import top.canyie.pine.callback.MethodHook;
 
+import java.io.File;
+import java.io.IOException;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Member;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.lang.reflect.Proxy;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Locale;
@@ -131,6 +137,37 @@ public final class Pine {
         } catch (Exception e) {
             throw new RuntimeException("Pine init error", e);
         }
+    }
+
+    //agent连接到JVMTI
+    public static void attachAgent(String soDir, Context context) throws IOException, ClassNotFoundException, InvocationTargetException, IllegalAccessException, NoSuchMethodException {
+        //Android 8.0+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+//            setDebuggable(true);
+            String agentPath = soDir + "/libpine.so";
+            File libDir = new File(context.getFilesDir(), "lib");
+            if (!libDir.exists()) {
+                libDir.mkdirs();
+            }
+            File libSo = new File(libDir, "libpine.so");
+            if (libSo.exists()) libSo.delete();
+            Files.copy(
+                    Paths.get(new File(agentPath).getAbsolutePath()),
+                    Paths.get(libSo.getAbsolutePath()
+                    )
+            );
+            PineConfig.solibPath = libSo.getAbsolutePath();
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+                Debug.attachJvmtiAgent(libSo.getAbsolutePath(), null, context.getClassLoader());
+            } else {
+                //android 9.0以下版本使用反射方式加载
+                Class<?> vmDebugClazz = Class.forName("dalvik.system.VMDebug");
+                Method attachAgentMethod = vmDebugClazz.getMethod("attachAgent", String.class);
+                attachAgentMethod.setAccessible(true);
+                attachAgentMethod.invoke(null, libSo.getAbsolutePath());
+            }
+        }
+
     }
 
     private static void initBridgeMethods() {

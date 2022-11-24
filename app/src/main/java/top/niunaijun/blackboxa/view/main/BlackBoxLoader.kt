@@ -78,6 +78,7 @@ class BlackBoxLoader {
                     "beforeCreateApplication: pkg $packageName, processName $processName,userID:${BActivityThread.getUserId()}"
                 )
                 //HookHelper.dumpDex(packageName)
+
                 if(packageName.equals("xyz.aethersx2.android")) {
                     HookHelper.hookClassAllMethods(context!!.classLoader,
                         object : XC_MethodHook() {
@@ -95,51 +96,71 @@ class BlackBoxLoader {
                                 Log.d(
                                     "Pipedvc",
                                     "beforeHookedMethod:" +
-                                            "NativeLibrary" + "->" + param.method.name + "" + argsstr
+                                            param.thisObject.javaClass.name + "->" + param.method.name + "" + argsstr
                                 )
                             }
-                            override fun afterHookedMethod(param: MethodHookParam?) {
-                                super.afterHookedMethod(param)
-                                var argsstr = "("
-                                for (item in param!!.args) {
-                                    argsstr += item.toString()
-                                    argsstr += ","
-                                }
-                                if(param.args.size > 0) {
-                                    argsstr = argsstr.subSequence(0,argsstr.length-1) as String
-                                }
-                                argsstr += ")"
-                                var result = ""
-                                if (param.result is String) {
-                                    result = param.result as String
-                                } else if (param.result is Array<*>) {
-                                    val r = param.result as Array<*>
-                                    result += "["
-                                    for (t in r) {
-                                        if (t is String) {
-                                            result += t
-                                        } else {
-                                            result += t.toString()
-                                        }
-                                        result += "|"
-                                    }
-                                    if(r.size > 0) {
-                                        result = result.subSequence(0,result.length-1) as String
-                                    }
-                                    result += "]"
-                                } else if(param.result == null) {
-                                    result = "void"
-                                } else {
-                                    result = param.result.toString()
-                                }
-                                Log.d(
-                                    "Pipedvc",
-                                    "callafterHooked:" +
-                                    "NativeLibrary" + "->" + param.method.name + "" + argsstr + "=" + result
-                                )
-
-                            }
-                        }, "xyz.aethersx2.android.NativeLibrary")
+                        }, "android.app.ContextImpl\$ApplicationContentResolver", "android.content.ContentResolver", "android.content.ContentInterface", "android.app.Application");
+//                    HookHelper.hookClassAllMethods(context!!.classLoader,
+//                        object : XC_MethodHook() {
+//                            override fun beforeHookedMethod(param: MethodHookParam?) {
+//                                super.beforeHookedMethod(param)
+//                                var argsstr = "("
+//                                for (item in param!!.args) {
+//                                    argsstr += item.toString()
+//                                    argsstr += ","
+//                                }
+//                                if(param.args.size > 0) {
+//                                    argsstr = argsstr.subSequence(0,argsstr.length-1) as String
+//                                }
+//                                argsstr += ")"
+//                                Log.d(
+//                                    "Pipedvc",
+//                                    "beforeHookedMethod:" +
+//                                            "NativeLibrary" + "->" + param.method.name + "" + argsstr
+//                                )
+//                            }
+//                            override fun afterHookedMethod(param: MethodHookParam?) {
+//                                super.afterHookedMethod(param)
+//                                var argsstr = "("
+//                                for (item in param!!.args) {
+//                                    argsstr += item.toString()
+//                                    argsstr += ","
+//                                }
+//                                if(param.args.size > 0) {
+//                                    argsstr = argsstr.subSequence(0,argsstr.length-1) as String
+//                                }
+//                                argsstr += ")"
+//                                var result = ""
+//                                if (param.result is String) {
+//                                    result = param.result as String
+//                                } else if (param.result is Array<*>) {
+//                                    val r = param.result as Array<*>
+//                                    result += "["
+//                                    for (t in r) {
+//                                        if (t is String) {
+//                                            result += t
+//                                        } else {
+//                                            result += t.toString()
+//                                        }
+//                                        result += "|"
+//                                    }
+//                                    if(r.size > 0) {
+//                                        result = result.subSequence(0,result.length-1) as String
+//                                    }
+//                                    result += "]"
+//                                } else if(param.result == null) {
+//                                    result = "void"
+//                                } else {
+//                                    result = param.result.toString()
+//                                }
+//                                Log.d(
+//                                    "Pipedvc",
+//                                    "callafterHooked:" +
+//                                    "NativeLibrary" + "->" + param.method.name + "" + argsstr + "=" + result
+//                                )
+//
+//                            }
+//                        }, "xyz.aethersx2.android.NativeLibrary")
                 }
             }
 

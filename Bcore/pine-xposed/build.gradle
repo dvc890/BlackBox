@@ -30,8 +30,8 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-//    compileOnly project(':Bcore:pine-core')
-    compileOnly 'top.canyie.pine:core:+'
+    compileOnly project(':Bcore:pine-core') //添加了jvmti
+//    compileOnly 'top.canyie.pine:core:+'
     implementation "androidx.core:core-ktx:$ktx_version"
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 }

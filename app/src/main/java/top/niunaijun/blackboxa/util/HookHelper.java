@@ -152,9 +152,9 @@ public class HookHelper {
             }
         }
 
-        Log.d("Pipedvc", "hookClassAllMethods->hookClassNum:"+ classes.size());
+//        Log.d("Pipedvc", "hookClassAllMethods->hookClassNum:"+ classes.size());
         for(Class c : classes) {
-            Log.d("Pipedvc", "hookClassAllMethods->hookClass:"+ c.toString());
+//            Log.d("Pipedvc", "hookClassAllMethods->hookClass:"+ c.toString());
             for (Method method : c.getDeclaredMethods()) {
                 if(Modifier.isAbstract(method.getModifiers())
                  /*|| Modifier.isStatic(method.getModifiers())*/) {
@@ -167,7 +167,7 @@ public class HookHelper {
                     }
                 }
                 objects.add(hookback);
-                Log.d("Pipedvc", c.getName() +"->"+ method.getName() +":"+ method.getModifiers());
+//                Log.d("Pipedvc", c.getName() +"->"+ method.getName() +":"+ method.getModifiers());
                 XposedHelpers.findAndHookMethod(c, method.getName(), objects.toArray());
             }
         }

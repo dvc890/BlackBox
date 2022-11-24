@@ -18,6 +18,8 @@ using namespace pine;
 int Android::version = -1;
 JavaVM* Android::jvm = nullptr;
 
+void (*Android::allowJdwp)(bool) = nullptr;
+
 void (*Android::suspend_vm)() = nullptr;
 void (*Android::resume_vm)() = nullptr;
 
@@ -42,6 +44,8 @@ void Android::Init(JNIEnv* env, int sdk_version, bool disable_hiddenapi_policy, 
 
     {
         ElfImg art_lib_handle("libart.so");
+        allowJdwp = reinterpret_cast<void (*)(bool)>(art_lib_handle.GetSymbolAddress(
+                "_ZN3art3Dbg14SetJdwpAllowedEb"));
         if (Android::version >= Android::kR) {
             suspend_all = reinterpret_cast<void (*)(void*, const char*, bool)>(art_lib_handle.GetSymbolAddress(
                     "_ZN3art16ScopedSuspendAllC1EPKcb"));

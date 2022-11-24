@@ -76,6 +76,7 @@ void Pine_init0(JNIEnv* env, jclass Pine, jint androidVersion, jboolean debug, j
     TrampolineInstaller::GetOrInitDefault(); // trigger TrampolineInstaller::default_ initialization
     Android::Init(env, androidVersion, disableHiddenApiPolicy, disableHiddenApiPolicyForPlatformDomain);
     {
+        Android::SetJdwpAllowed(PineConfig::debuggable);
         ScopedLocalClassRef Ruler(env, "top/canyie/pine/Ruler");
         auto m1 = art::ArtMethod::Require(env, Ruler.Get(), "m1", "()V", true);
         auto m2 = art::ArtMethod::Require(env, Ruler.Get(), "m2", "()V", true);
@@ -424,6 +425,7 @@ void Pine_syncMethodInfo(JNIEnv* env, jclass, jobject javaOrigin, jobject javaBa
 
 void Pine_setDebuggable(JNIEnv*, jclass, jboolean debuggable) {
     PineConfig::debuggable = static_cast<bool>(debuggable);
+    Android::SetJdwpAllowed(PineConfig::debuggable);
 }
 
 void Pine_disableHiddenApiPolicy0(JNIEnv*, jclass, jboolean application, jboolean platform) {

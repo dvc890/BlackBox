@@ -55,6 +55,7 @@ import black.android.graphics.BRCompatibility;
 import black.android.security.net.config.BRNetworkSecurityConfigProvider;
 import black.com.android.internal.content.BRReferrerIntent;
 import black.dalvik.system.BRVMRuntime;
+import top.canyie.pine.Pine;
 import top.canyie.pine.xposed.PineXposed;
 import top.niunaijun.blackbox.BlackBoxCore;
 import top.niunaijun.blackbox.app.configuration.AppLifecycleCallback;
@@ -341,8 +342,6 @@ public class BActivityThread extends IBActivityThread.Stub {
         if (BuildCompat.isS()) {
             BRCompatibility.get().setTargetSdkVersion(applicationInfo.targetSdkVersion);
         }
-
-        NativeCore.init(Build.VERSION.SDK_INT);
         assert packageContext != null;
         IOCore.get().enableRedirect(packageContext);
 
@@ -369,6 +368,11 @@ public class BActivityThread extends IBActivityThread.Stub {
         Application application;
         try {
             onBeforeCreateApplication(packageName, processName, packageContext);
+            if(BlackBoxCore.get().isJvmtiEnable()) {
+                Object obj = Reflector.with(BlackBoxCore.getContext()) .field("mPackageInfo").get();
+                Pine.attachAgent(BRLoadedApk.get(obj).mLibDir(), packageContext);
+            }
+            NativeCore.init(Build.VERSION.SDK_INT);//调整到这里初始化，原因是如果启用jvmti在jnihook修改内存后，jnihook会失效，所以后调位置
             application = BRLoadedApk.get(loadedApk).makeApplication(false, null);
             mInitialApplication = application;
             BRActivityThread.get(BlackBoxCore.mainThread())._set_mInitialApplication(mInitialApplication);

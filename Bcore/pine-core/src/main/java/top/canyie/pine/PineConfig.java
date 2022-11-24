@@ -34,13 +34,19 @@ import android.os.Build;
     /** Set to true will disable the hidden api policy for platform domain */
     public static boolean disableHiddenApiPolicyForPlatformDomain = true;
 
+    public static String solibPath = null;
+
     /**
      * A function to load our native library (libpine.so)
      * @see Pine.LibLoader
      */
     public static Pine.LibLoader libLoader = new Pine.LibLoader() {
         @Override public void loadLib() {
-            System.loadLibrary("pine");
+            if(solibPath == null) {
+                System.loadLibrary("pine");
+            } else {
+                System.load(solibPath);
+            }
         }
     };
 

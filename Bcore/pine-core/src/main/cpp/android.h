@@ -73,6 +73,10 @@ namespace pine {
             }
         }
 
+        static void SetJdwpAllowed(bool allowed) {
+            if (allowJdwp) allowJdwp(allowed);
+        }
+
         static void SuspendVM(void* cookie, void* self, const char* cause) {
             if (suspend_vm) {
                 suspend_vm();
@@ -127,6 +131,7 @@ namespace pine {
             }
         }
 
+        static void (*allowJdwp)(bool);
         static void (*suspend_vm)();
         static void (*resume_vm)();
         static void (*suspend_all)(void*, const char*, bool);
