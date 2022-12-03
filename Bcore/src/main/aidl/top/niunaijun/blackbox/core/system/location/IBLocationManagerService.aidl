@@ -42,4 +42,6 @@ interface IBLocationManagerService {
     void requestLocationUpdates(in IBinder listener, String packageName, int userId);
 
     void removeUpdates(in IBinder listener);
+
+    void postLocationChanged(in IBinder listener, String provider, String packageName, int userId);
 }

@@ -189,4 +189,13 @@ public class BLocationManager extends BlackManager<IBLocationManagerService> {
             e.printStackTrace();
         }
     }
+
+    public void postLocationChanged(IBinder listener, String provider) {
+        try {
+            getService().postLocationChanged(listener, provider,
+                    BActivityThread.getAppPackageName(), BActivityThread.getUserId());
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
+    }
 }

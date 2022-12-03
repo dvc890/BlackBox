@@ -84,7 +84,8 @@ class FollowMyLocationOverlay : AppCompatActivity() {
         mapController.setZoom(12.5)
 //        val startPoint = GeoPoint(30.2736, 120.1563)
         mapController.setCenter(startPoint)
-        binding.map.setTileSource(TileSourceFactory.MAPNIK)
+        // gfw block MAPNIK, change to WIKIMEDIA
+        binding.map.setTileSource(TileSourceFactory.WIKIMEDIA)
     }
 
     override fun onBackPressed() {

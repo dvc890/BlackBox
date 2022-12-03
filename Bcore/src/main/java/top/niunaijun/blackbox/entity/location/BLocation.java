@@ -60,6 +60,28 @@ public class BLocation implements Parcelable {
         return mLongitude;
     }
 
+    private String toGPSStr(double v) {
+        int d = (int)v;
+        double f = (v - d) * 60;
+        return String.format("%.4f", d * 100 + f);
+    }
+
+    public String getGPSLatitude() {
+        return toGPSStr(mLatitude);
+    }
+
+    public String getGPSLongitude() {
+        return toGPSStr(mLongitude);
+    }
+
+    public String getLatitudeDir() {
+        return mLatitude > 0.0d ? "N" : "S";
+    }
+
+    public String getLongitudeDir() {
+        return mLongitude > 0.0d ? "E" : "W";
+    }
+
     public BLocation() {
     }
 

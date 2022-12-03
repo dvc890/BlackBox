@@ -43,6 +43,7 @@ import top.niunaijun.blackbox.entity.pm.InstallResult;
 import top.niunaijun.blackbox.entity.pm.InstalledPackage;
 import top.niunaijun.blackbox.utils.AbiUtils;
 import top.niunaijun.blackbox.utils.FileUtils;
+import top.niunaijun.blackbox.utils.Reflector;
 import top.niunaijun.blackbox.utils.Slog;
 import top.niunaijun.blackbox.utils.compat.PackageParserCompat;
 import top.niunaijun.blackbox.utils.compat.XposedParserCompat;
@@ -717,7 +718,13 @@ public class BPackageManagerService extends IBPackageManagerService.Stub impleme
             result.packageName = aPackage.packageName;
 
             if (option.isFlag(InstallOption.FLAG_SYSTEM)) {
-                aPackage.applicationInfo = BlackBoxCore.getPackageManager().getPackageInfo(aPackage.packageName, 0).applicationInfo;
+                ApplicationInfo appInfo = BlackBoxCore.getPackageManager().getPackageInfo(aPackage.packageName, 0).applicationInfo;
+                try {
+                    aPackage.applicationInfo = appInfo;
+                } catch (Throwable t) {
+                    // android sdk <= 25, "applicationInfo" is a final var.
+                    Reflector.with(aPackage).field("applicationInfo").set(appInfo);
+                }
             }
             BPackageSettings bPackageSettings = mSettings.getPackageLPw(aPackage.packageName, aPackage, option);
 
