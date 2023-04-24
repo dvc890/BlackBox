@@ -2,7 +2,8 @@ package top.niunaijun.blackbox.view.main
 
 import android.app.Application
 import android.content.Context
-import android.util.Log
+import android.os.Build
+import com.wrbug.dumpdex.DumpDexUtil
 import top.niunaijun.bcore.BlackBoxCore
 import top.niunaijun.bcore.app.BActivityThread
 import top.niunaijun.bcore.app.configuration.AppLifecycleCallback
@@ -10,6 +11,7 @@ import top.niunaijun.bcore.app.configuration.ClientConfiguration
 import top.niunaijun.bcore.utils.Slog
 import top.niunaijun.blackbox.app.App
 import top.niunaijun.blackbox.biz.cache.AppSharedPreferenceDelegate
+import top.niunaijun.blackbox.util.HookHelper
 import java.io.File
 
 class BlackBoxLoader {
@@ -50,6 +52,11 @@ class BlackBoxLoader {
         BlackBoxCore.get().addAppLifecycleCallback(object : AppLifecycleCallback() {
             override fun beforeCreateApplication(packageName: String?, processName: String?, context: Context?, userId: Int) {
                 Slog.d(TAG, "beforeCreateApplication: pkg $packageName, processName $processName, userID:${BActivityThread.getUserId()}")
+                if (!DumpDexUtil.dump(context)) {
+                    if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
+                        HookHelper.dumpDex(packageName)
+                    }
+                }
             }
 
             override fun beforeApplicationOnCreate(packageName: String?, processName: String?, application: Application?, userId: Int) {

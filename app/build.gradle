@@ -79,6 +79,8 @@ tasks.withType(Javadoc) {
 
 dependencies {
     implementation project(':BCore')
+    implementation project(path: ':BCore:xposed')
+    implementation project(path: ':BCore:dump')
 
     // android
     implementation 'com.google.android.material:material:1.6.1'
