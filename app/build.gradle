@@ -168,4 +168,5 @@ dependencies {
     implementation 'com.imuxuan:floatingview:1.6'
     implementation "androidx.core:core-ktx:$ktx_version"
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation project(path: ':Bcore:dump')
 }

@@ -119,7 +119,7 @@ public abstract class ClassInvocationStub implements InvocationHandler, IInjectH
         if (methodHook == null || !methodHook.isEnable()) {
             try {
                 Object result = method.invoke(mBase, args);
-                Log.e("dvcproxy", this.getClass() + "===" + method.getName() + "（" + (args != null ?args[0] : "") + ")==" + (result != null ? result.toString() : "") );
+//                Log.e("dvcproxy", this.getClass() + "===" + method.getName() + "（" + (args != null ?args[0] : "") + ")==" + (result != null ? result.toString() : "") );
                 return result;
             } catch (Throwable e) {
                 throw e.getCause();

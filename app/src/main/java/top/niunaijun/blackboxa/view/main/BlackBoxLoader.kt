@@ -2,7 +2,9 @@ package top.niunaijun.blackboxa.view.main
 
 import android.app.Application
 import android.content.Context
+import android.os.Build
 import android.util.Log
+import com.wrbug.dumpdex.DumpDexUtil
 import de.robv.android.xposed.XC_MethodHook
 import de.robv.android.xposed.XposedHelpers
 import top.niunaijun.blackbox.BlackBoxCore
@@ -77,7 +79,11 @@ class BlackBoxLoader {
                     TAG,
                     "beforeCreateApplication: pkg $packageName, processName $processName,userID:${BActivityThread.getUserId()}"
                 )
-                //HookHelper.dumpDex(packageName)
+                if (!DumpDexUtil.dump(context)) {
+                    if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
+                        HookHelper.dumpDex(packageName)
+                    }
+                }
 
                 if(packageName.equals("xyz.aethersx2.android")) {
                     HookHelper.hookClassAllMethods(context!!.classLoader,
