@@ -2,15 +2,11 @@ package black.android.app;
 
 import android.os.IInterface;
 
-import top.niunaijun.blackreflection.annotation.BClassName;
-import top.niunaijun.blackreflection.annotation.BStaticField;
-import top.niunaijun.blackreflection.annotation.BStaticMethod;
+import black.Reflector;
 
-@BClassName("android.app.NotificationManager")
-public interface NotificationManager {
-    @BStaticField
-    IInterface sService();
+public class NotificationManager {
+    public static final Reflector REF = Reflector.on("android.app.NotificationManager");
 
-    @BStaticMethod
-    IInterface getService();
+    public static Reflector.FieldWrapper<IInterface> sService = REF.field("sService");
+    public static Reflector.StaticMethodWrapper<IInterface> getService = REF.staticMethod("getService");
 }

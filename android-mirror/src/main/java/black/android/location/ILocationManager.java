@@ -3,14 +3,11 @@ package black.android.location;
 import android.os.IBinder;
 import android.os.IInterface;
 
-import top.niunaijun.blackreflection.annotation.BClassName;
-import top.niunaijun.blackreflection.annotation.BStaticMethod;
+import black.Reflector;
 
-@BClassName("android.location.ILocationManager")
-public interface ILocationManager {
-    @BClassName("android.location.ILocationManager$Stub")
-    interface Stub {
-        @BStaticMethod
-        IInterface asInterface(IBinder IBinder0);
+public class ILocationManager {
+    public static class Stub {
+        public static final Reflector REF = Reflector.on("android.location.ILocationManager$Stub");
+        public static Reflector.StaticMethodWrapper<IInterface> asInterface = REF.staticMethod("asInterface", IBinder.class);
     }
 }

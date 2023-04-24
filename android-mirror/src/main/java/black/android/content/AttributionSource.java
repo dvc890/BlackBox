@@ -1,17 +1,11 @@
 package black.android.content;
 
-import top.niunaijun.blackreflection.annotation.BClassName;
-import top.niunaijun.blackreflection.annotation.BField;
-import top.niunaijun.blackreflection.annotation.BMethod;
+import black.Reflector;
 
-/**
- * Created by BlackBox on 2022/2/20.
- */
-@BClassName("android.content.AttributionSource")
-public interface AttributionSource {
-    @BField
-    Object mAttributionSourceState();
+public class AttributionSource {
+    public static final Reflector REF = Reflector.on("android.content.AttributionSource");
 
-    @BMethod
-    Object getNext();
+    public static Reflector.FieldWrapper<Object> mAttributionSourceState = REF.field("mAttributionSourceState");
+
+    public static Reflector.MethodWrapper<Object> getNext = REF.method("getNext");
 }

@@ -3,14 +3,11 @@ package black.android.app.servertransaction;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 
-import top.niunaijun.blackreflection.annotation.BClassName;
-import top.niunaijun.blackreflection.annotation.BField;
+import black.Reflector;
 
-@BClassName("android.app.servertransaction.LaunchActivityItem")
-public interface LaunchActivityItem {
-    @BField
-    ActivityInfo mInfo();
+public class LaunchActivityItem {
+    public static final Reflector REF = Reflector.on("android.app.servertransaction.LaunchActivityItem");
 
-    @BField
-    Intent mIntent();
+    public static Reflector.FieldWrapper<ActivityInfo> mInfo = REF.field("mInfo");
+    public static Reflector.FieldWrapper<Intent> mIntent = REF.field("mIntent");
 }

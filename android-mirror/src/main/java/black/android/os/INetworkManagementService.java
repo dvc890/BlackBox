@@ -3,14 +3,11 @@ package black.android.os;
 import android.os.IBinder;
 import android.os.IInterface;
 
-import top.niunaijun.blackreflection.annotation.BClassName;
-import top.niunaijun.blackreflection.annotation.BStaticMethod;
+import black.Reflector;
 
-@BClassName("android.os.INetworkManagementService")
-public interface INetworkManagementService {
-    @BClassName("android.os.INetworkManagementService$Stub")
-    interface Stub {
-        @BStaticMethod
-        IInterface asInterface(IBinder IBinder0);
+public class INetworkManagementService {
+    public static class Stub {
+        public static final Reflector REF = Reflector.on("android.os.INetworkManagementService$Stub");
+        public static Reflector.StaticMethodWrapper<IInterface> asInterface = REF.staticMethod("asInterface", IBinder.class);
     }
 }

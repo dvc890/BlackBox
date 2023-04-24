@@ -3,11 +3,10 @@ package black.android.app;
 import android.content.ComponentName;
 import android.os.IBinder;
 
-import top.niunaijun.blackreflection.annotation.BClassName;
-import top.niunaijun.blackreflection.annotation.BMethod;
+import black.Reflector;
 
-@BClassName("android.app.IServiceConnection")
-public interface IServiceConnectionO {
-    @BMethod
-    void connected(ComponentName ComponentName0, IBinder IBinder1, boolean boolean2);
+public class IServiceConnectionO {
+    public static final Reflector REF = Reflector.on("android.app.IServiceConnection");
+
+    public static Reflector.MethodWrapper<Void> connected = REF.method("connected", ComponentName.class, IBinder.class, boolean.class);
 }

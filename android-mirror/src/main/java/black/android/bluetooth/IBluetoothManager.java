@@ -3,14 +3,11 @@ package black.android.bluetooth;
 import android.os.IBinder;
 import android.os.IInterface;
 
-import top.niunaijun.blackreflection.annotation.BClassName;
-import top.niunaijun.blackreflection.annotation.BStaticMethod;
+import black.Reflector;
 
-@BClassName("android.bluetooth.IBluetoothManager")
-public interface IBluetoothManager {
-    @BClassName("android.bluetooth.IBluetoothManager$Stub")
-    interface Stub {
-        @BStaticMethod
-        IInterface asInterface(IBinder IBinder0);
+public class IBluetoothManager {
+    public static class Stub {
+        public static final Reflector REF = Reflector.on("android.bluetooth.IBluetoothManager$Stub");
+        public static Reflector.StaticMethodWrapper<IInterface> asInterface = REF.staticMethod("asInterface", IBinder.class);
     }
 }

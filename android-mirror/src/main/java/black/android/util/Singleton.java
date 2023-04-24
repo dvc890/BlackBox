@@ -1,15 +1,11 @@
 package black.android.util;
 
+import black.Reflector;
 
-import top.niunaijun.blackreflection.annotation.BClassName;
-import top.niunaijun.blackreflection.annotation.BField;
-import top.niunaijun.blackreflection.annotation.BMethod;
+public class Singleton {
+    public static final Reflector REF = Reflector.on("android.util.Singleton");
 
-@BClassName("android.util.Singleton")
-public interface Singleton {
-    @BField
-    Object mInstance();
+    public static Reflector.FieldWrapper<Object> mInstance = REF.field("mInstance");
 
-    @BMethod
-    Object get();
+    public static Reflector.MethodWrapper<Object> get = REF.method("get");
 }

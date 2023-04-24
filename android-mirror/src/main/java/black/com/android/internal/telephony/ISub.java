@@ -3,14 +3,11 @@ package black.com.android.internal.telephony;
 import android.os.IBinder;
 import android.os.IInterface;
 
-import top.niunaijun.blackreflection.annotation.BClassName;
-import top.niunaijun.blackreflection.annotation.BStaticMethod;
+import black.Reflector;
 
-@BClassName("com.android.internal.telephony.ISub")
-public interface ISub {
-    @BClassName("com.android.internal.telephony.ISub$Stub")
-    interface Stub {
-        @BStaticMethod
-        IInterface asInterface(IBinder IBinder0);
+public class ISub {
+    public static class Stub {
+        public static final Reflector REF = Reflector.on("com.android.internal.telephony.ISub$Stub");
+        public static Reflector.StaticMethodWrapper<IInterface> asInterface = REF.staticMethod("asInterface", IBinder.class);
     }
 }

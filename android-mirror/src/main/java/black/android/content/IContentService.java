@@ -3,14 +3,11 @@ package black.android.content;
 import android.os.IBinder;
 import android.os.IInterface;
 
-import top.niunaijun.blackreflection.annotation.BClassName;
-import top.niunaijun.blackreflection.annotation.BStaticMethod;
+import black.Reflector;
 
-@BClassName("android.content.IContentService")
-public interface IContentService {
-    @BClassName("android.content.IContentService$Stub")
-    interface Stub {
-        @BStaticMethod
-        IInterface asInterface(IBinder IBinder0);
+public class IContentService {
+    public static class Stub {
+        public static final Reflector REF = Reflector.on("android.content.IContentService$Stub");
+        public static Reflector.StaticMethodWrapper<IInterface> asInterface = REF.staticMethod("asInterface", IBinder.class);
     }
 }

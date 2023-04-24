@@ -1,38 +1,16 @@
 package black.android.content.pm;
 
-import android.os.Parcelable;
-import android.os.Parcelable.Creator;
-
 import java.util.List;
 
-import top.niunaijun.blackreflection.annotation.BClassName;
-import top.niunaijun.blackreflection.annotation.BConstructor;
-import top.niunaijun.blackreflection.annotation.BMethod;
-import top.niunaijun.blackreflection.annotation.BStaticField;
+import black.Reflector;
 
-@BClassName("android.content.pm.ParceledListSlice")
-public interface ParceledListSlice {
-    @BConstructor
-    Object _new();
+public class ParceledListSlice {
+    public static final Reflector REF = Reflector.on("android.content.pm.ParceledListSlice");
 
-    @BConstructor
-    Object _new(List<?> List0);
+    public static Reflector.ConstructorWrapper<Object> _new0 = REF.constructor();
+    public static Reflector.ConstructorWrapper<Object> _new1 = REF.constructor(List.class);
 
-    @BStaticField
-    Creator CREATOR();
-
-    @BMethod
-    Boolean append(Object item);
-
-    @BMethod
-    List<?> getList();
-
-    @BMethod
-    Boolean isLastSlice();
-
-    @BMethod
-    Parcelable populateList();
-
-    @BMethod
-    void setLastSlice(boolean b);
+    public static Reflector.MethodWrapper<Boolean> append = REF.method("append", Object.class);
+    public static Reflector.MethodWrapper<List<?>> getList = REF.method("getList");
+    public static Reflector.MethodWrapper<Void> setLastSlice = REF.method("setLastSlice", boolean.class);
 }

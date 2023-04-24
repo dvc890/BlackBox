@@ -26,18 +26,14 @@ public class SyncStatusInfo implements Parcelable {
     public boolean pending;
     public boolean initialize;
     
-  // Warning: It is up to the external caller to ensure there are
-  // no race conditions when accessing this list
-  private ArrayList<Long> periodicSyncTimes;
+    // Warning: It is up to the external caller to ensure there are
+    // no race conditions when accessing this list
+    private ArrayList<Long> periodicSyncTimes;
 
     private static final String TAG = "Sync";
 
     public SyncStatusInfo(int authorityId) {
         this.authorityId = authorityId;
-    }
-
-    public int getLastFailureMesgAsInt(int def) {
-        return 0;
     }
 
     public int describeContents() {
@@ -61,6 +57,7 @@ public class SyncStatusInfo implements Parcelable {
         parcel.writeLong(initialFailureTime);
         parcel.writeInt(pending ? 1 : 0);
         parcel.writeInt(initialize ? 1 : 0);
+
         if (periodicSyncTimes != null) {
             parcel.writeInt(periodicSyncTimes.size());
             for (long periodicSyncTime : periodicSyncTimes) {
@@ -76,6 +73,7 @@ public class SyncStatusInfo implements Parcelable {
         if (version != VERSION && version != 1) {
             Log.w("SyncStatusInfo", "Unknown version: " + version);
         }
+
         authorityId = parcel.readInt();
         totalElapsedTime = parcel.readLong();
         numSyncs = parcel.readInt();
@@ -91,6 +89,7 @@ public class SyncStatusInfo implements Parcelable {
         initialFailureTime = parcel.readLong();
         pending = parcel.readInt() != 0;
         initialize = parcel.readInt() != 0;
+
         if (version == 1) {
             periodicSyncTimes = null;
         } else {
@@ -98,8 +97,8 @@ public class SyncStatusInfo implements Parcelable {
             if (N < 0) {
                 periodicSyncTimes = null;
             } else {
-                periodicSyncTimes = new ArrayList<Long>();
-                for (int i=0; i<N; i++) {
+                periodicSyncTimes = new ArrayList<>();
+                for (int i = 0; i < N; i++) {
                     periodicSyncTimes.add(parcel.readLong());
                 }
             }
@@ -123,8 +122,9 @@ public class SyncStatusInfo implements Parcelable {
         initialFailureTime = other.initialFailureTime;
         pending = other.pending;
         initialize = other.initialize;
+
         if (other.periodicSyncTimes != null) {
-            periodicSyncTimes = new ArrayList<Long>(other.periodicSyncTimes);
+            periodicSyncTimes = new ArrayList<>(other.periodicSyncTimes);
         }
     }
 
@@ -138,9 +138,8 @@ public class SyncStatusInfo implements Parcelable {
     public long getPeriodicSyncTime(int index) {
         if (periodicSyncTimes != null && index < periodicSyncTimes.size()) {
             return periodicSyncTimes.get(index);
-        } else {
-            return 0;
         }
+        return 0;
     }
 
     public void removePeriodicSyncTime(int index) {

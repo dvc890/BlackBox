@@ -1,16 +1,10 @@
 package black.android.content;
 
-import top.niunaijun.blackreflection.annotation.BClassName;
-import top.niunaijun.blackreflection.annotation.BField;
+import black.Reflector;
 
-/**
- * Created by BlackBox on 2022/2/20.
- */
-@BClassName("android.content.AttributionSourceState")
-public interface AttributionSourceState {
-    @BField
-    String packageName();
+public class AttributionSourceState {
+    public static final Reflector REF = Reflector.on("android.content.AttributionSourceState");
 
-    @BField
-    int uid();
+    public static Reflector.FieldWrapper<String> packageName = REF.field("packageName");
+    public static Reflector.FieldWrapper<Integer> uid = REF.field("uid");
 }

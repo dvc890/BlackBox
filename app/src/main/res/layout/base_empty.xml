@@ -8,8 +8,7 @@
     <ImageView
             android:src="@drawable/ic_empty"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:contentDescription="TODO" />
+            android:layout_height="wrap_content" />
 
     <TextView
             android:text="@string/empty_empty"

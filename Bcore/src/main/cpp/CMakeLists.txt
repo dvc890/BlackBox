@@ -1,35 +1,35 @@
+# For more information about using CMake with Android Studio, read the
+# documentation: https://d.android.com/studio/projects/add-native-code.html
+
+# Sets the minimum version of CMake required to build the native library.
+
 cmake_minimum_required(VERSION 3.4.1)
-
-set(CMAKE_CXX_STANDARD 17)
-set(CMAKE_POSITION_INDEPENDENT_CODE ON)
-
-set(C_FLAGS "-Wall -Wextra -fvisibility=hidden -fvisibility-inlines-hidden -fno-exceptions -fno-rtti -flto=thin")
-set(LINKER_FLAGS "-fuse-ld=lld -flto=thin -ffixed-x18 -Wl,--hash-style=both -Wl,--unresolved-symbols=ignore-all")
-
-set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${C_FLAGS}")
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${C_FLAGS}")
-
-set(CMAKE_SHARED_LINKER_FLAGS "${CMAKE_SHARED_LINKER_FLAGS} ${LINKER_FLAGS}")
-set(CMAKE_MODULE_LINKER_FLAGS "${CMAKE_MODULE_LINKER_FLAGS} ${LINKER_FLAGS}")
-set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} ${LINKER_FLAGS}")
-
-ENABLE_LANGUAGE(ASM)
+enable_language(ASM)
 project(blackbox)
-find_package(shadowhook REQUIRED CONFIG)
+
 # Creates and names a library, sets it as either STATIC
 # or SHARED, and provides the relative paths to its source code.
 # You can define multiple libraries, and CMake builds them for you.
 # Gradle automatically packages shared libraries with your APK.
 include_directories(JniHook)
-include_directories(Hook)
-include_directories(Utils)
 include_directories(./)
 
+set(DobbyHome Dobby)
+include_directories(
+        ${DobbyHome}/include
+)
+macro(SET_OPTION option value)
+    set(${option} ${value} CACHE INTERNAL "" FORCE)
+endmacro()
+SET_OPTION(DOBBY_DEBUG OFF)
+SET_OPTION(DOBBY_GENERATE_SHARED OFF)
+
+add_subdirectory(${DobbyHome} dobby)
 aux_source_directory(./ SRC1)
-aux_source_directory(Utils SRC2)
-aux_source_directory(Hook SRC3)
-aux_source_directory(JniHook SRC4)
+aux_source_directory(Hook SRC2)
+aux_source_directory(JniHook SRC3)
 add_compile_options(-w)
+
 add_library( # Sets the name of the library.
         blackbox
         # Sets the library as a shared library.
@@ -38,9 +38,7 @@ add_library( # Sets the name of the library.
         BoxCore.cpp
         ${SRC1}
         ${SRC2}
-        ${SRC3}
-        ${SRC4}
-        )
+        ${SRC3})
 
 # Searches for a specified prebuilt library and stores the path as a
 # variable. Because CMake includes system libraries in the search path by
@@ -65,5 +63,4 @@ target_link_libraries( # Specifies the target library.
         # included in the NDK.
         ${log-lib}
         z
-        shadowhook::shadowhook
-        )
+        dobby)

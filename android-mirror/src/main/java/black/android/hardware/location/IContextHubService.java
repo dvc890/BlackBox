@@ -3,18 +3,11 @@ package black.android.hardware.location;
 import android.os.IBinder;
 import android.os.IInterface;
 
-import top.niunaijun.blackreflection.annotation.BClassName;
-import top.niunaijun.blackreflection.annotation.BStaticMethod;
+import black.Reflector;
 
-/**
- * Created by BlackBox on 2022/3/2.
- */
-@BClassName("android.hardware.location.IContextHubService")
-public interface IContextHubService {
-
-    @BClassName("android.hardware.location.IContextHubService$Stub")
-    interface Stub {
-        @BStaticMethod
-        IInterface asInterface(IBinder iBinder);
+public class IContextHubService {
+    public static class Stub {
+        public static final Reflector REF = Reflector.on("android.hardware.location.IContextHubService$Stub");
+        public static Reflector.StaticMethodWrapper<IInterface> asInterface = REF.staticMethod("asInterface", IBinder.class);
     }
 }

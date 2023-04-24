@@ -1,11 +1,9 @@
 package black.android.ddm;
 
+import black.Reflector;
 
-import top.niunaijun.blackreflection.annotation.BClassName;
-import top.niunaijun.blackreflection.annotation.BStaticMethod;
+public class DdmHandleAppName {
+    public static final Reflector REF = Reflector.on("android.ddm.DdmHandleAppName");
 
-@BClassName("android.ddm.DdmHandleAppName")
-public interface DdmHandleAppName {
-    @BStaticMethod
-    void setAppName(String String0, int i);
+    public static Reflector.StaticMethodWrapper<Void> setAppName = REF.staticMethod("setAppName", String.class, int.class);
 }

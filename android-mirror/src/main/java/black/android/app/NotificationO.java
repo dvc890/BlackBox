@@ -1,14 +1,10 @@
 package black.android.app;
 
+import black.Reflector;
 
-import top.niunaijun.blackreflection.annotation.BClassName;
-import top.niunaijun.blackreflection.annotation.BField;
+public class NotificationO {
+    public static final Reflector REF = Reflector.on("android.app.Notification");
 
-@BClassName("android.app.Notification")
-public interface NotificationO {
-    @BField
-    String mChannelId();
-
-    @BField
-    String mGroupKey();
+    public static Reflector.FieldWrapper<String> mChannelId = REF.field("mChannelId");
+    public static Reflector.FieldWrapper<String> mGroupKey = REF.field("mGroupKey");
 }

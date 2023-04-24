@@ -1,11 +1,9 @@
 package black.android.os;
 
+import black.Reflector;
 
-import top.niunaijun.blackreflection.annotation.BClassName;
-import top.niunaijun.blackreflection.annotation.BStaticMethod;
+public class Process {
+    public static final Reflector REF = Reflector.on("android.os.Process");
 
-@BClassName("android.os.Process")
-public interface Process {
-    @BStaticMethod
-    void setArgV0(String String0);
+    public static Reflector.StaticMethodWrapper<Void> setArgV0 = REF.staticMethod("setArgV0", String.class);
 }

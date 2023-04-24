@@ -1,11 +1,9 @@
 package black.android.os;
 
+import black.Reflector;
 
-import top.niunaijun.blackreflection.annotation.BClassName;
-import top.niunaijun.blackreflection.annotation.BStaticMethod;
+public class UserHandle {
+    public static final Reflector REF = Reflector.on("android.os.UserHandle");
 
-@BClassName("android.os.UserHandle")
-public interface UserHandle {
-    @BStaticMethod
-    Integer myUserId();
+    public static Reflector.StaticMethodWrapper<Integer> myUserId = REF.staticMethod("myUserId");
 }

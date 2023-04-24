@@ -3,14 +3,11 @@ package black.android.view.accessibility;
 import android.os.IBinder;
 import android.os.IInterface;
 
-import top.niunaijun.blackreflection.annotation.BClassName;
-import top.niunaijun.blackreflection.annotation.BStaticMethod;
+import black.Reflector;
 
-@BClassName("android.view.accessibility.IAccessibilityManager")
-public interface IAccessibilityManager {
-    @BClassName("android.view.accessibility.IAccessibilityManager$Stub")
-    interface Stub {
-        @BStaticMethod
-        IInterface asInterface(IBinder IBinder0);
+public class IAccessibilityManager {
+    public static class Stub {
+        public static final Reflector REF = Reflector.on("android.view.accessibility.IAccessibilityManager$Stub");
+        public static Reflector.StaticMethodWrapper<IInterface> asInterface = REF.staticMethod("asInterface", IBinder.class);
     }
 }

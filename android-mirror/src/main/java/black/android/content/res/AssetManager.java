@@ -1,23 +1,11 @@
 package black.android.content.res;
 
-import android.content.res.Configuration;
-import android.util.DisplayMetrics;
+import black.Reflector;
 
-import top.niunaijun.blackreflection.annotation.BClassName;
-import top.niunaijun.blackreflection.annotation.BConstructor;
-import top.niunaijun.blackreflection.annotation.BMethod;
+public class AssetManager {
+    public static final Reflector REF = Reflector.on("android.content.res.AssetManager");
 
-@BClassName("android.content.res.AssetManager")
-public interface AssetManager {
-    @BConstructor
-    android.content.res.AssetManager _new();
+    public static Reflector.ConstructorWrapper<android.content.res.AssetManager> _new = REF.constructor();
 
-    @BMethod
-    Integer addAssetPath(String String0);
-
-    @BMethod
-    Configuration getConfiguration();
-
-    @BMethod
-    DisplayMetrics getDisplayMetrics();
+    public static Reflector.MethodWrapper<Integer> addAssetPath = REF.method("addAssetPath", String.class);
 }

@@ -1,37 +1,17 @@
 package black.android.app;
 
-import android.content.ContentResolver;
 import android.content.Context;
 import android.content.pm.PackageManager;
 
-import top.niunaijun.blackreflection.annotation.BClassName;
-import top.niunaijun.blackreflection.annotation.BField;
-import top.niunaijun.blackreflection.annotation.BMethod;
-import top.niunaijun.blackreflection.annotation.BStaticMethod;
+import black.Reflector;
 
-@BClassName("android.app.ContextImpl")
-public interface ContextImpl {
-    @BField
-    String mBasePackageName();
+public class ContextImpl {
+    public static final Reflector REF = Reflector.on("android.app.ContextImpl");
 
-    @BField
-    ContentResolver mContentResolver();
+    public static Reflector.FieldWrapper<String> mBasePackageName = REF.field("mBasePackageName");
+    public static Reflector.FieldWrapper<Object> mPackageInfo = REF.field("mPackageInfo");
+    public static Reflector.FieldWrapper<PackageManager> mPackageManager = REF.field("mPackageManager");
 
-    @BField
-    Object mPackageInfo();
-
-    @BField
-    PackageManager mPackageManager();
-
-    @BStaticMethod
-    Object createAppContext();
-
-    @BMethod
-    Context getReceiverRestrictedContext();
-
-    @BMethod
-    void setOuterContext(Context Context0);
-
-    @BMethod
-    Object getAttributionSource();
+    public static Reflector.MethodWrapper<Void> setOuterContext = REF.method("setOuterContext", Context.class);
+    public static Reflector.MethodWrapper<Object> getAttributionSource = REF.method("getAttributionSource");
 }

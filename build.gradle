@@ -35,22 +35,21 @@ task clean(type: Delete) {
     delete rootProject.buildDir
 }
 
-
 ext {
+    kotlin_version = '1.7.10'
+    ktx_version = '1.9.0'
     minSdkVersion = 21
     compileSdkVersion = 33
-    buildToolsVersion = "30.0.3"
-    targetSdkVersion = 30
-    abiFilters = "armeabi-v7a,arm64-v8a"
+    buildToolsVersion = '33.0.0'
+    targetSdkVersion = 33
 
     ndkVersion = "22.1.7171670"
-    cmakeVersion = "3.18.1"
+    cmakeVersion = '3.22.1'
 
-    versionName = '1.0'
-    versionCode = 1
+    versionName = '1.8.0'
+    versionCode = 9
     useASAN = false
-
-    xVersion = '1.1.0'
-    blackReflection = '1.1.2'
-
+    blackReflection = '1.1.4'
+    hiddenApiBypass = '4.3'
+    xCrash = '3.1.0'
 }

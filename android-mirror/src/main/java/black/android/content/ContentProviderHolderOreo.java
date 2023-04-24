@@ -1,19 +1,11 @@
 package black.android.content;
 
-import android.content.pm.ProviderInfo;
 import android.os.IInterface;
 
-import top.niunaijun.blackreflection.annotation.BClassName;
-import top.niunaijun.blackreflection.annotation.BField;
+import black.Reflector;
 
-@BClassName("android.app.ContentProviderHolder")
-public interface ContentProviderHolderOreo {
-    @BField
-    ProviderInfo info();
+public class ContentProviderHolderOreo {
+    public static final Reflector REF = Reflector.on("android.app.ContentProviderHolder");
 
-    @BField
-    boolean noReleaseNeeded();
-
-    @BField
-    IInterface provider();
+    public static Reflector.FieldWrapper<IInterface> provider = REF.field("provider");
 }

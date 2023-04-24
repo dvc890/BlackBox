@@ -2,30 +2,19 @@ package black.android.app;
 
 import android.os.IInterface;
 
-import top.niunaijun.blackreflection.annotation.BClassName;
-import top.niunaijun.blackreflection.annotation.BField;
-import top.niunaijun.blackreflection.annotation.BStaticMethod;
+import black.Reflector;
 
-/**
- * Created by BlackBox on 2022/2/22.
- */
-@BClassName("android.app.ActivityClient")
-public interface ActivityClient {
-    @BField
-    Object INTERFACE_SINGLETON();
+public class ActivityClient {
+    public static final Reflector REF = Reflector.on("android.app.ActivityClient");
 
-    @BStaticMethod
-    Object getInstance();
+    public static Reflector.FieldWrapper<Object> INTERFACE_SINGLETON = REF.field("INTERFACE_SINGLETON");
 
-    @BStaticMethod
-    Object getActivityClientController();
+    public static Reflector.StaticMethodWrapper<Object> getInstance = REF.staticMethod("getInstance");
+    public static Reflector.StaticMethodWrapper<Object> getActivityClientController = REF.staticMethod("getActivityClientController");
 
-    @BStaticMethod
-    Object setActivityClientController(Object iInterface);
+    public static class ActivityClientControllerSingleton {
+        public static final Reflector REF = Reflector.on("android.app.ActivityClient$ActivityClientControllerSingleton");
 
-    @BClassName("android.app.ActivityClient$ActivityClientControllerSingleton")
-    interface ActivityClientControllerSingleton {
-        @BField
-        IInterface mKnownInstance();
+        public static Reflector.FieldWrapper<IInterface> mKnownInstance = REF.field("mKnownInstance");
     }
 }

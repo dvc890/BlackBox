@@ -2,11 +2,10 @@ package black.android.app;
 
 import android.os.IInterface;
 
-import top.niunaijun.blackreflection.annotation.BClassName;
-import top.niunaijun.blackreflection.annotation.BField;
+import black.Reflector;
 
-@BClassName("android.app.AppOpsManager")
-public interface AppOpsManager {
-    @BField
-    IInterface mService();
+public class AppOpsManager {
+    public static final Reflector REF = Reflector.on("android.app.AppOpsManager");
+
+    public static Reflector.FieldWrapper<IInterface> mService = REF.field("mService");
 }

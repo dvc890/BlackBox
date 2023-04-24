@@ -1,16 +1,11 @@
-//
-// Created by Milk on 4/10/21.
-//
-
-#ifndef VIRTUALM_IO_H
-#define VIRTUALM_IO_H
+#ifndef BLACKBOX_IO_H
+#define BLACKBOX_IO_H
 
 #if defined(__LP64__)
 #define LINKER_PATH_L "/system/bin/linker64"
 #define LINKER_PATH_Q "/apex/com.android.runtime/bin/linker64"
 #define LIBC_PATH_L "/system/lib64/libc.so"
 #define LIBC_PATH_Q "/apex/com.android.runtime/lib64/bionic/libc.so"
-
 #else
 #define LINKER_PATH_L "/system/bin/linker"
 #define LINKER_PATH_Q "/apex/com.android.runtime/bin/linker"
@@ -23,7 +18,6 @@
 #include <list>
 #include <iostream>
 #include "BoxCore.h"
-
 
 using namespace std;
 
@@ -44,8 +38,9 @@ public:
 
     static jobject redirectPath(JNIEnv *env, jobject path);
 
-    static const char *redirectPath(const char *__path);
+    static void replaceFD(JNIEnv *env, jobject fd);
+
+    static void unProtect(const char *libraryName, const char *symbol);
 };
 
-
-#endif //VIRTUALM_IO_H
+#endif // BLACKBOX_IO_H

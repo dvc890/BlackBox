@@ -2,14 +2,11 @@ package black.android.os.storage;
 
 import java.io.File;
 
-import top.niunaijun.blackreflection.annotation.BClassName;
-import top.niunaijun.blackreflection.annotation.BField;
+import black.Reflector;
 
-@BClassName("android.os.storage.StorageVolume")
-public interface StorageVolume {
-    @BField
-    File mInternalPath();
+public class StorageVolume {
+    public static final Reflector REF = Reflector.on("android.os.storage.StorageVolume");
 
-    @BField
-    File mPath();
+    public static Reflector.FieldWrapper<File> mInternalPath = REF.field("mInternalPath");
+    public static Reflector.FieldWrapper<File> mPath = REF.field("mPath");
 }

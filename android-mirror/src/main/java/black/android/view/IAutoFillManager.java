@@ -3,14 +3,11 @@ package black.android.view;
 import android.os.IBinder;
 import android.os.IInterface;
 
-import top.niunaijun.blackreflection.annotation.BClassName;
-import top.niunaijun.blackreflection.annotation.BStaticMethod;
+import black.Reflector;
 
-@BClassName("android.view.autofill.IAutoFillManager")
-public interface IAutoFillManager {
-    @BClassName("android.view.autofill.IAutoFillManager$Stub")
-    interface Stub {
-        @BStaticMethod
-        IInterface asInterface(IBinder IBinder0);
+public class IAutoFillManager {
+    public static class Stub {
+        public static final Reflector REF = Reflector.on("android.view.autofill.IAutoFillManager$Stub");
+        public static Reflector.StaticMethodWrapper<IInterface> asInterface = REF.staticMethod("asInterface", IBinder.class);
     }
 }

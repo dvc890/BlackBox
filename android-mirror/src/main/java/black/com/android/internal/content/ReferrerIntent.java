@@ -2,11 +2,10 @@ package black.com.android.internal.content;
 
 import android.content.Intent;
 
-import top.niunaijun.blackreflection.annotation.BClassName;
-import top.niunaijun.blackreflection.annotation.BConstructor;
+import black.Reflector;
 
-@BClassName("com.android.internal.content.ReferrerIntent")
-public interface ReferrerIntent {
-    @BConstructor
-    Intent _new(Intent Intent0, String String1);
+public class ReferrerIntent {
+    public static final Reflector REF = Reflector.on("com.android.internal.content.ReferrerIntent");
+
+    public static Reflector.ConstructorWrapper<Intent> _new = REF.constructor(Intent.class, String.class);
 }

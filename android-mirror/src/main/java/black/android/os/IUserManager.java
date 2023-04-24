@@ -3,14 +3,11 @@ package black.android.os;
 import android.os.IBinder;
 import android.os.IInterface;
 
-import top.niunaijun.blackreflection.annotation.BClassName;
-import top.niunaijun.blackreflection.annotation.BStaticMethod;
+import black.Reflector;
 
-@BClassName("android.os.IUserManager")
-public interface IUserManager {
-    @BClassName("android.os.IUserManager$Stub")
-    interface Stub {
-        @BStaticMethod
-        IInterface asInterface(IBinder IBinder0);
+public class IUserManager {
+    public static class Stub {
+        public static final Reflector REF = Reflector.on("android.os.IUserManager$Stub");
+        public static Reflector.StaticMethodWrapper<IInterface> asInterface = REF.staticMethod("asInterface", IBinder.class);
     }
 }

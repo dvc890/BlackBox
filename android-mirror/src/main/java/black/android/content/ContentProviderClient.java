@@ -2,11 +2,10 @@ package black.android.content;
 
 import android.os.IInterface;
 
-import top.niunaijun.blackreflection.annotation.BClassName;
-import top.niunaijun.blackreflection.annotation.BField;
+import black.Reflector;
 
-@BClassName("android.content.ContentProviderClient")
-public interface ContentProviderClient {
-    @BField
-    IInterface mContentProvider();
+public class ContentProviderClient {
+    public static final Reflector REF = Reflector.on("android.content.ContentProviderClient");
+
+    public static Reflector.FieldWrapper<IInterface> mContentProvider = REF.field("mContentProvider");
 }

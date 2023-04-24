@@ -1,11 +1,7 @@
-include ':Bcore'
-include ':app'
-include ':Bcore:black-fake'
-include ':Bcore:black-hook'
-include ':Bcore:pine-xposed'
-include ':Bcore:pine-core'
-include ':Bcore:pine-xposed-res'
-include ':Bcore:dump'
-include ':android-mirror'
-
 rootProject.name = "BlackBox"
+include ':BCore'
+include ':app'
+include ':BCore:black-fake'
+include ':BCore:black-hook'
+include ':BCore:xposed'
+include ':android-mirror'

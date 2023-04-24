@@ -1,21 +1,12 @@
 package top.niunaijun.jnihook;
 
-/**
- * Created by Milk on 3/8/21.
- * * ∧＿∧
- * (`･ω･∥
- * 丶　つ０
- * しーＪ
- * 此处无Bug
- */
-
 import androidx.annotation.Keep;
 
 import java.lang.reflect.Method;
+import java.util.Objects;
 
 @Keep
 public class MethodUtils {
-
     // native call
     public static String getDeclaringClass(final Method method) {
         return method.getDeclaringClass().getName().replace(".", "/");
@@ -28,11 +19,11 @@ public class MethodUtils {
 
     // native call
     public static String getDesc(final Method method) {
-        final StringBuffer buf = new StringBuffer();
+        final StringBuilder buf = new StringBuilder();
         buf.append("(");
         final Class<?>[] types = method.getParameterTypes();
-        for (int i = 0; i < types.length; ++i) {
-            buf.append(getDesc(types[i]));
+        for (Class<?> type : types) {
+            buf.append(getDesc(type));
         }
         buf.append(")");
         buf.append(getDesc(method.getReturnType()));
@@ -44,14 +35,14 @@ public class MethodUtils {
             return getPrimitiveLetter(returnType);
         }
         if (returnType.isArray()) {
-            return "[" + getDesc(returnType.getComponentType());
+            return "[" + getDesc(Objects.requireNonNull(returnType.getComponentType()));
         }
         return "L" + getType(returnType) + ";";
     }
 
     private static String getType(final Class<?> parameterType) {
         if (parameterType.isArray()) {
-            return "[" + getDesc(parameterType.getComponentType());
+            return "[" + getDesc(Objects.requireNonNull(parameterType.getComponentType()));
         }
         if (!parameterType.isPrimitive()) {
             final String clsName = parameterType.getName();

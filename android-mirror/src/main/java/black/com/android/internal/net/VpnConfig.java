@@ -2,20 +2,12 @@ package black.com.android.internal.net;
 
 import java.util.List;
 
-import top.niunaijun.blackreflection.annotation.BClassName;
-import top.niunaijun.blackreflection.annotation.BField;
+import black.Reflector;
 
-/**
- * Created by BlackBox on 2022/2/25.
- */
-@BClassName("com.android.internal.net.VpnConfig")
-public interface VpnConfig {
-    @BField
-    String user();
+public class VpnConfig {
+    public static final Reflector REF = Reflector.on("com.android.internal.net.VpnConfig");
 
-    @BField
-    List<String> disallowedApplications();
-
-    @BField
-    List<String> allowedApplications();
+    public static Reflector.FieldWrapper<String> user = REF.field("user");
+    public static Reflector.FieldWrapper<List<String>> disallowedApplications = REF.field("disallowedApplications");
+    public static Reflector.FieldWrapper<List<String>> allowedApplications = REF.field("allowedApplications");
 }

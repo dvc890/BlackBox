@@ -3,14 +3,11 @@ package black.android.app;
 import android.os.IBinder;
 import android.os.IInterface;
 
-import top.niunaijun.blackreflection.annotation.BClassName;
-import top.niunaijun.blackreflection.annotation.BStaticMethod;
+import black.Reflector;
 
-@BClassName("android.app.IAlarmManager")
-public interface IAlarmManager {
-    @BClassName("android.app.IAlarmManager$Stub")
-    interface Stub {
-        @BStaticMethod
-        IInterface asInterface(IBinder IBinder0);
+public class IAlarmManager {
+    public static class Stub {
+        public static final Reflector REF = Reflector.on("android.app.IAlarmManager$Stub");
+        public static Reflector.StaticMethodWrapper<IInterface> asInterface = REF.staticMethod("asInterface", IBinder.class);
     }
 }

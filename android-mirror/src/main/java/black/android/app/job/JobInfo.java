@@ -2,20 +2,10 @@ package black.android.app.job;
 
 import android.content.ComponentName;
 
-import top.niunaijun.blackreflection.annotation.BClassName;
-import top.niunaijun.blackreflection.annotation.BField;
+import black.Reflector;
 
-@BClassName("android.app.job.JobInfo")
-public interface JobInfo {
-    @BField
-    long flexMillis();
+public class JobInfo {
+    public static final Reflector REF = Reflector.on("android.app.job.JobInfo");
 
-    @BField
-    long intervalMillis();
-
-    @BField
-    int jobId();
-
-    @BField
-    ComponentName service();
+    public static Reflector.FieldWrapper<ComponentName> service = REF.field("service");
 }

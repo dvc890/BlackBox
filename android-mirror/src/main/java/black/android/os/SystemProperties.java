@@ -1,11 +1,11 @@
 package black.android.os;
 
+import black.Reflector;
 
-import top.niunaijun.blackreflection.annotation.BClassName;
-import top.niunaijun.blackreflection.annotation.BStaticMethod;
+public class SystemProperties {
+    public static final Reflector REF = Reflector.on("android.os.SystemProperties");
 
-@BClassName("android.os.SystemProperties")
-public interface SystemProperties {
-    @BStaticMethod
-    String get(String key, String def);
+    public static Reflector.StaticMethodWrapper<String> get0 = REF.staticMethod("get", String.class, String.class);
+    public static Reflector.StaticMethodWrapper<String> get1 = REF.staticMethod("get", String.class);
+    public static Reflector.StaticMethodWrapper<Integer> getInt = REF.staticMethod("getInt", String.class, int.class);
 }

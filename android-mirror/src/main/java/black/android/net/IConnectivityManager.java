@@ -3,14 +3,11 @@ package black.android.net;
 import android.os.IBinder;
 import android.os.IInterface;
 
-import top.niunaijun.blackreflection.annotation.BClassName;
-import top.niunaijun.blackreflection.annotation.BStaticMethod;
+import black.Reflector;
 
-@BClassName("android.net.IConnectivityManager")
-public interface IConnectivityManager {
-    @BClassName("android.net.IConnectivityManager$Stub")
-    interface Stub {
-        @BStaticMethod
-        IInterface asInterface(IBinder IBinder0);
+public class IConnectivityManager {
+    public static class Stub {
+        public static final Reflector REF = Reflector.on("android.net.IConnectivityManager$Stub");
+        public static Reflector.StaticMethodWrapper<IInterface> asInterface = REF.staticMethod("asInterface", IBinder.class);
     }
 }

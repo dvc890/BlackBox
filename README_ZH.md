@@ -14,18 +14,27 @@
 [Telegram](https://t.me/blackboxing)
 
 ## 支持
-暂不考虑4x，目前已兼容 5.0 ～ 12.0并跟进后续新系统。
+暂不考虑4x，目前已兼容 5.0 ～ 13.0并跟进后续新系统。
 
 如果条件允许，降级targetSdkVersion到28或以下可以获得更好的兼容性。
 
 ***稳定性未经大量测试，仅供学习交流，请勿用于其他用途***
 
-## 架构说明
-本项目区分32位与64位，目前是2个不同的app，如在Demo已安装列表内无法找到需要开启的app说明不支持，请编译其他的架构。
+## API
+- [BlackBoxCore](BlackBoxCore)
+- [BAccountManager](BAccountManager)
+- [BActivityManager](BActivityManager)
+- [BJobManager](BJobManager)
+- [BlackManager](BlackManager)
+- [BLocationManager](BLocationManager)
+- [BNotificationManager](BNotificationManager)
+- [BPackageManager](BPackageManager)
+- [BStorageManager](BStorageManager)
+- [BUserManager](BUserManager)
+- [BXposedManager](BXposedManager)
 
 ## 如何使用
 ### Step 1.初始化，在Application中加入以下代码初始化
-
 ```java
     @Override
     protected void attachBaseContext(Context base) {
@@ -100,16 +109,14 @@
 ```
 更多其他操作看BlackBoxCore函数名大概就知道了。
 
-
 #### Xposed相关
 - 已支持使用XP模块
 - Xposed已粗略过检测，[Xposed Checker](https://www.coolapk.com/apk/190247)、[XposedDetector](https://github.com/vvb2060/XposedDetector) 均无法检测
 
-
 ## 如何参与开发？
 ### 应用分2个模块
 - app模块，用户操作与UI模块
-- Bcore模块，此模块为BlackBox的核心模块，负责完成整个黑盒的调度。
+- BCore模块，此模块为BlackBox的核心模块，负责完成整个黑盒的调度。
 
 如需要参与开发请直接pr就可以了，相关教程请Google或者看 [如何在 GitHub 提交第一个 pull request](https://chinese.freecodecamp.org/news/how-to-make-your-first-pull-request-on-github/)
 ### PR须知
@@ -119,7 +126,7 @@
 
 ### 已知问题
 * 死亡进程重启出现多进程问题，活动无法正常交互。临时解决方法：手动将目标进程都杀死，重启目标应用
-* ~~vlc应用启动崩溃，96bd784版本正常启动~~
+* vlc应用启动崩溃，96bd784版本正常启动
 * 火狐浏览器点击输入网址崩溃
 * 调用content provider的getType崩溃
 * 静态广播测试失败
@@ -133,8 +140,6 @@
 
 ## 感谢
 - [VirtualApp](https://github.com/asLody/VirtualApp)
-- [VirtualAPK](https://github.com/didi/VirtualAPK)
-- [BlackReflection](https://github.com/CodingGay/BlackReflection)
 - [AndroidHiddenApiBypass](https://github.com/LSPosed/AndroidHiddenApiBypass)
 - [Pine](https://github.com/canyie/pine)
 

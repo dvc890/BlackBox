@@ -1,16 +1,9 @@
 package black.android.content;
 
-import android.os.IInterface;
+import black.Reflector;
 
-import top.niunaijun.blackreflection.annotation.BClassName;
-import top.niunaijun.blackreflection.annotation.BField;
-import top.niunaijun.blackreflection.annotation.BStaticField;
+public class ContentResolver {
+    public static final Reflector REF = Reflector.on("android.content.ContentResolver");
 
-@BClassName("android.content.ContentResolver")
-public interface ContentResolver {
-    @BStaticField
-    IInterface sContentService();
-
-    @BField
-    String mPackageName();
+    public static Reflector.FieldWrapper<String> mPackageName = REF.field("mPackageName");
 }
