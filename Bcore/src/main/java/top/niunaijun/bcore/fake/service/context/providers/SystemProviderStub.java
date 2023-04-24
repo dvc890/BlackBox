@@ -1,8 +1,10 @@
 package top.niunaijun.bcore.fake.service.context.providers;
 
 import android.os.IInterface;
+import android.util.Log;
 
 import java.lang.reflect.Method;
+import java.util.Objects;
 
 import black.android.content.AttributionSource;
 import top.niunaijun.bcore.BlackBoxCore;
@@ -45,7 +47,12 @@ public class SystemProviderStub extends ClassInvocationStub implements BContentP
                 ContextCompat.fixAttributionSourceState(arg, BlackBoxCore.getHostUid());
             }
         }
-        return method.invoke(mBase, args);
+        try {
+            return method.invoke(mBase, args);
+        } catch (Throwable e) {
+            Log.w("SystemProviderStubError", method.getName());
+            throw Objects.requireNonNull(e.getCause());
+        }
     }
 
     @Override

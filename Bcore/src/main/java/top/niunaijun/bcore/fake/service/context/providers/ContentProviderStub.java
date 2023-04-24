@@ -1,8 +1,10 @@
 package top.niunaijun.bcore.fake.service.context.providers;
 
 import android.os.IInterface;
+import android.util.Log;
 
 import java.lang.reflect.Method;
+import java.util.Objects;
 
 import black.android.content.AttributionSource;
 import top.niunaijun.bcore.app.BActivityThread;
@@ -44,7 +46,12 @@ public class ContentProviderStub extends ClassInvocationStub implements BContent
                 ContextCompat.fixAttributionSourceState(arg, BActivityThread.getBUid());
             }
         }
-        return method.invoke(mBase, args);
+        try {
+            return method.invoke(mBase, args);
+        } catch (Throwable e) {
+            Log.w("ContentProviderStubError", method.getName());
+            throw Objects.requireNonNull(e.getCause());
+        }
     }
 
     @Override
